@@ -1175,6 +1175,11 @@ button, select, input, [data-act] { touch-action: manipulation; -webkit-tap-high
 .quick__b svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 @media (prefers-reduced-motion: reduce) { .rc-dock .rc-btn.is-live svg { animation: none; } }
 .pnum { display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; min-width: 0; padding: 0; border-radius: 50%; font: 700 14px/1 system-ui, Roboto, "Segoe UI", sans-serif; }
+.mushaf .w { transition: background .15s; }
+.mushaf .w.cur { background: color-mix(in srgb, var(--gold) 16%, transparent); box-shadow: inset 0 -3px 0 var(--gold); border-radius: 4px; }
+.mushaf .w.bad { animation: none; }
+.mushaf .w.far { box-shadow: inset 0 -2px 0 color-mix(in srgb, var(--brand) 55%, transparent); }
+.mushaf .w.err { background: none; box-shadow: inset 0 -2px 0 #d6392d; }
 </style>
 </head>
 <body>
@@ -2525,7 +2530,8 @@ const RC_ICON = {
     bulb: '<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>',
     ayah: '<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5v-16z"/><path d="M8 8h8M8 12h6"/>',
     gear: '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>',
-    close: '<path d="M18 6L6 18M6 6l12 12"/>'
+    close: '<path d="M18 6L6 18M6 6l12 12"/>',
+    redo: '<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>'
 };
 let rcLock = null;
 async function rcWake(on) { try { if (on && navigator.wakeLock && !rcLock) { rcLock = await navigator.wakeLock.request("screen"); rcLock.addEventListener("release", () => { rcLock = null; }); } else if (!on && rcLock) { await rcLock.release(); rcLock = null; } } catch (err) { } }
@@ -2597,7 +2603,7 @@ function rcSetNext() {
 }
 /** هل الكلمة (أو علامة الآية) id مخفيّة الآن؟ كل ما بعد المؤشر مخفي ما لم تُكشف بتلميح. */
 const rcHidden = id => !!(state.rc.hide && ui.rc && id > ui.rc.ptr && !ui.rc.peek.has(id));
-const rcWordCls = id => (rcHidden(id) ? " hid" : "") + (ui.rc.next === id ? " cur" : "") + (ui.rc.errs.has(id) ? " err" : "");
+const rcWordCls = id => (rcHidden(id) ? " hid" : "") + (ui.rc.next === id ? " cur" : "") + (ui.rc.errs.has(id) ? " err" : "") + (ui.rc.far > ui.rc.ptr && ui.rc.far === id ? " far" : "");
 
 /** html كلمة واحدة في الصفحة: نص عادي خارج التسميع، وعنصر مستقل داخله ليمكن إخفاؤه وتظليله. */
 function rcWord(id, w, aya, tj) {
@@ -2615,6 +2621,7 @@ function rcPaint() {
         el.classList.toggle("hid", rcHidden(id));
         el.classList.toggle("cur", rc.next === id);
         el.classList.toggle("err", rc.errs.has(id));
+        el.classList.toggle("far", rc.far > rc.ptr && rc.far === id);
     });
 }
 function rcDockPaint() {
@@ -2627,6 +2634,7 @@ function rcDockInner() {
     const rc = ui.rc, hide = state.rc.hide, btn = (act, icon, label, extra = "") => `<button class="rc-btn${extra}" data-act="${act}" aria-label="${label}" title="${label}">${rcIcon(icon)}</button>`;
     return btn("rc-mic", "mic", rc.listening ? "إيقاف الاستماع" : "ابدأ الاستماع", rc.listening ? " is-live" : " is-mic")
         + btn("rc-hide", hide ? "eye" : "eyeOff", hide ? "إظهار الآيات" : "إخفاء الآيات", hide ? " is-on" : "")
+        + btn("rc-top", "redo", "من أول الصفحة")
         + btn("rc-hint-word", "bulb", "تلميح كلمة")
         + btn("rc-hint-ayah", "ayah", "تلميح آية")
         + btn("rc-options", "gear", "خيارات")
@@ -2639,7 +2647,7 @@ function rcControlsHTML() {
 /* --- بدء الجلسة وإنهاؤها --- */
 function rcOpen(startId) {
     const first = startId || rcPageFirst(ui.readerPage);
-    ui.rc = { on: true, ptr: first - 1, next: 0, peek: new Set(), errs: new Set(), strict: new Set(), seen: new Map(), heard: "", missRun: 0, wantListen: false, listening: false,
+    ui.rc = { on: true, far: 0, act: Date.now(), ptr: first - 1, next: 0, peek: new Set(), errs: new Set(), strict: new Set(), seen: new Map(), heard: "", missRun: 0, wantListen: false, listening: false,
         stats: { ok: 0, err: 0, hint: 0, start: first, t0: Date.now(), wrong: [] } };
     rcWake(true);
     rcSetNext();
@@ -2664,21 +2672,49 @@ function rcClose(silent) {
 }
 
 /* --- تقدّم المؤشر وحساب النتيجة --- */
+function rcCheckFlip() {
+    const rc = ui.rc; if (!rc || !rc.on || !rc.next) return;
+    const page = ui.readerPage;
+    if (rc.ptr >= rcPageLast(page) && page < PAGE_COUNT) { if (flip.active || flip.busy) setTimeout(rcCheckFlip, 300); else setReaderPage(page + 1); }
+}
 function rcAdvanceTo(id) {
-    const rc = ui.rc, d = getRcData(), st = rc.stats;
+    const rc = ui.rc, d = getRcData(), st = rc.stats, far = rc.far || 0;
+    rc.act = Date.now();
     for (let w = rc.ptr + 1; w <= id && w <= d.total; w++) {
         if (d.norm[w - 1] === "") { rc.ptr = w; continue; }   // علامة نهاية آية
-        const outcome = rc.peek.has(w) ? "hint" : (rc.errs.has(w) || rc.strict.has(w)) ? "err" : "ok";
-        st[outcome]++;
-        if (outcome === "err") { const M = getMushaf(); st.wrong.push({ id: w, text: M.words[w - 1], sura: M.sura[w], aya: M.aya[w] }); }
+        if (w > far) {   // ما سبق قراءته في هذه الجلسة لا يُحتسب مرة ثانية
+            const outcome = rc.peek.has(w) ? "hint" : (rc.errs.has(w) || rc.strict.has(w)) ? "err" : "ok";
+            st[outcome]++;
+            if (outcome === "err") { const M = getMushaf(); st.wrong.push({ id: w, text: M.words[w - 1], sura: M.sura[w], aya: M.aya[w] }); }
+        }
         rc.ptr = w;
     }
+    rc.far = Math.max(far, rc.ptr);
+    while (rc.ptr < d.total && d.norm[rc.ptr] === "") rc.ptr++;   // رقم الآية يظهر فور إنهائها
     rcSetNext();
     rcPaint();
-    const page = ui.readerPage;
-    if (rc.next && rc.ptr >= rcPageLast(page) && page < PAGE_COUNT && !flip.active && !flip.busy) { setReaderPage(page + 1); return; }
     if (!rc.next) { toast("وصلت إلى نهاية المصحف"); rcClose(); return; }
     rcDockPaint();
+    rcCheckFlip();
+}
+/** الرجوع بالمؤشر إلى كلمة سابقة مع حفظ أبعد نقطة وصلتَ إليها (rc.far) لنكمل منها لاحقًا. */
+function rcJumpTo(q) {
+    const rc = ui.rc; rc.far = Math.max(rc.far || 0, rc.ptr); rc.ptr = q - 1; rc.missRun = 0; rc.act = Date.now();
+    for (const e of [...rc.errs]) if (e >= q) rc.errs.delete(e);
+    rcSetNext();
+    const p = rcPageOfWord(q);
+    if (p !== ui.readerPage) setReaderPage(p); else { rcPaint(); rcDockPaint(); }
+}
+/** هل يعيد القارئ مقطعًا سبق؟ نبحث للخلف عن كلمتين متتاليتين مطابقتين. */
+function rcFindBack(tokens, k) {
+    const rc = ui.rc, d = getRcData(), t = tokens[k], t2 = tokens[k + 1];
+    if (!t2 || t.length < 3) return 0;
+    for (let q = rc.ptr - 1; q >= 1 && q > rc.ptr - 250; q--) {
+        const n = d.norm[q - 1]; if (!n || !rcMatch(t, n)) continue;
+        let r = q + 1; while (r <= d.total && !d.norm[r - 1]) r++;
+        if (d.norm[r - 1] && rcMatch(t2, d.norm[r - 1])) return q;
+    }
+    return 0;
 }
 function rcFlash(id) {
     document.querySelectorAll(`.mushaf .w[data-w="${id}"]`).forEach(el => { el.classList.remove("bad"); void el.offsetWidth; el.classList.add("bad"); setTimeout(() => el.classList.remove("bad"), 600); });
@@ -2687,7 +2723,7 @@ function rcFlash(id) {
 /** يعالج كلمة واحدة من التعرّف (tokens[k]) ويعيد كم كلمة استهلك (0 = انتظر النتيجة النهائية). */
 function rcStep(tokens, k, final) {
     const rc = ui.rc, d = getRcData(), lenient = state.rc.mode !== "strict";
-    const ahead = []; for (let id = rc.next; id && id <= d.total && ahead.length < 5; id++) if (d.norm[id - 1]) ahead.push({ id, n: d.norm[id - 1] });
+    const ahead = []; for (let id = rc.next; id && id <= d.total && ahead.length < 6; id++) if (d.norm[id - 1]) ahead.push({ id, n: d.norm[id - 1] });
     let prevId = rc.ptr; while (prevId >= 1 && !d.norm[prevId - 1]) prevId--;
     const prevN = prevId >= 1 ? d.norm[prevId - 1] : "";   // آخر كلمة نُطقت
     const e0 = ahead[0], t = tokens[k];
@@ -2700,12 +2736,14 @@ function rcStep(tokens, k, final) {
     if (ahead[1]) { const both = e0.n + ahead[1].n; if (rcSim(t, both) >= rcThr(Math.max(t.length, both.length))) { rc.missRun = 0; rcAdvanceTo(ahead[1].id); return 1; } }
     // قفز كلمة أو كلمتين: في الوضع المتساهل نعلّمهما خطأً ونكمل، وفي الصارم لا نتقدم
     for (let j = 1; j < ahead.length; j++) {
-        if (final && t.length >= 4 && rcSim(t, ahead[j].n) >= rcThr(Math.max(t.length, ahead[j].n.length)) + 0.05 + 0.03 * (j - 1)) {
+        if ((final && t.length >= 3 && rcSim(t, ahead[j].n) >= rcThr(Math.max(t.length, ahead[j].n.length)) + 0.05 + 0.03 * (j - 1)) || (tokens[k + 1] && ahead[j + 1] && rcMatch(t, ahead[j].n) && rcMatch(tokens[k + 1], ahead[j + 1].n))) {
             if (!lenient) break;
             for (let i = 0; i < j; i++) rc.errs.add(ahead[i].id);
             rc.missRun = 0; rcAdvanceTo(ahead[j].id); return 1;
         }
     }
+    const back = rcFindBack(tokens, k);
+    if (back) { rcJumpTo(back); return rcStep(tokens, k, final); }
     if (!final) return 0;   // قد يصحّح التعرّف نفسه في النتيجة التالية
     // تكرار لآخر كلمة نُطقت، أو كلمة زائدة تليها الكلمة الصحيحة: نتجاهلها دون احتساب خطأ
     if (prevN && rcMatch(t, prevN)) return 1;
@@ -2731,6 +2769,7 @@ function rcOnResult(ev) {
     rc.heard = last.trim();
     const heard = $("#rcHeard"); if (heard) heard.textContent = rc.heard;
     if ((rc.done || 0) > all.length) rc.done = all.length;
+    if (all.length) rc.act = Date.now();
     rc.missRun = 0;
     const startPtr = rc.ptr; let k = rc.done || 0;
     while (k < all.length && ui.rc === rc && rc.ptr - startPtr <= 12) { const used = rcStep(all, k, k < finalCount); if (!used) break; k += used; rc.done = k; }
@@ -2810,7 +2849,7 @@ function rcStartListening() {
     if (!rc || !rc.on) return;
     const page = rcPageOfWord(rc.next || 1);
     if (page !== ui.readerPage) setReaderPage(page);   // نعود لصفحة الكلمة التالية
-    rc.wantListen = true; rcStartRec(); rcDockPaint();
+    rc.act = Date.now(); rc.wantListen = true; rcStartRec(); rcDockPaint();
 }
 const rcLocal = () => location.protocol !== "https:" && !/^(localhost|127\.0\.0\.1)$/.test(location.hostname);
 const rcEmbedded = () => { try { if (window.top !== window.self) return true; } catch (err) { return true; } return /; wv\)|Claude/i.test(navigator.userAgent); };
@@ -2881,6 +2920,7 @@ function rcSaveReview() {
 
 document.addEventListener("visibilitychange", () => { if (document.hidden) { try { saveState(); } catch (err) { } if (rcOn()) { rcStopMic(); rcDockPaint(); } } });
 window.addEventListener("pagehide", () => { try { saveState(); } catch (err) { } });
+setInterval(() => { const rc = ui.rc; if (rc && rc.on && rc.wantListen && Date.now() - (rc.act || 0) > 60000) { rcStopMic(); rcDockPaint(); toast("توقف الاستماع لعدم النشاط"); } }, 5000);
 
 /* ===== نمط التجويد: خطوط صفحات QPC V4 الملوّنة (٦٠٤ خطًّا ≈ ٥٠ ميجا) تُستورد مرة واحدة من ملف zip وتُخزَّن على الجهاز ===== */
 const TJ = { ready: false, count: 0, memory: false, busy: false };
@@ -3283,7 +3323,8 @@ const ACTIONS = {
     "rc-options": () => rcOptions(),
     "rc-set": ({ k, val }) => { if (k === "mode") state.rc.mode = val === "strict" ? "strict" : "lenient"; if (k === "eval") state.rc.eval = +val ? 1 : 0; saveState(); rcOptions(); },
     "rc-restart": () => { closeModal(); const wasListening = ui.rc && ui.rc.wantListen; rcStopMic(); rcOpen(rcPageFirst(ui.readerPage)); if (wasListening) rcToggleMic(); },
-    "rc-tap": ({ w }) => { if (rcOn() && ui.rc.next === +w) rcAdvanceTo(+w); },
+    "rc-tap": ({ w }) => { if (!rcOn()) return; const rc = ui.rc, id = +w; rc.act = Date.now(); if (rc.next === id) rcAdvanceTo(id); else if (id <= Math.max(rc.far || 0, rc.ptr) + 1) rcJumpTo(id); },
+    "rc-top": () => { if (rcOn()) rcJumpTo(rcPageFirst(ui.readerPage)); },
     "rc-start-here": ({ s, a }) => { closeModal(); if (rcOn()) rcClose(true); rcOpen(rcAyahRange(+s, +a)[0]); },
     "rc-save-review": () => rcSaveReview(),
     "open-surahs": () => openSurahList(),
