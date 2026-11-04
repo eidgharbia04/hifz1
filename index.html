@@ -4,14 +4,9 @@
 <meta charset="utf-8">
 <script>window.addEventListener("error",function(e){var d=document.createElement("pre");d.style.cssText="position:fixed;z-index:99999;top:0;left:0;right:0;margin:0;padding:12px;background:#fff3f0;color:#8a1c1c;font:12px/1.5 monospace;white-space:pre-wrap;direction:ltr";d.textContent="خطأ في التطبيق / App error:\n"+e.message+(e.filename?"\n"+e.filename+":"+e.lineno:"");document.documentElement.appendChild(d)})</script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#2a3a1c">
-<meta name="description" content="تطبيق رحلة حفظ كتاب الله لمتابعة الحفظ والمراجعة والتسميع وقراءة المصحف.">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<link rel="manifest" href="./manifest.webmanifest">
-<link rel="icon" type="image/svg+xml" href="./icon.svg">
-<title>رحلة حفظ كتاب الله</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%234a5a2a'/%3E%3Cpath d='M18 34Q40 26 50 36Q60 26 82 34V70Q60 62 50 72Q40 62 18 70Z' fill='%23fffaf0' stroke='%23b8923a' stroke-width='3'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#F2F1E7" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0A1D18" media="(prefers-color-scheme: dark)"><meta name="color-scheme" content="light dark"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
+<title>رحلة لحفظ كتاب الله</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%232F6F5E'/%3E%3Cpath d='M18 34Q40 26 50 36Q60 26 82 34V70Q60 62 50 72Q40 62 18 70Z' fill='%23fffaf0' stroke='%23b8923a' stroke-width='3'/%3E%3C/svg%3E">
 <style>
 /* الخطوط مضمَّنة داخل الملف فيعمل بلا إنترنت.
    KFGQPC Uthmanic Script HAFS (V2.2): مجمع الملك فهد لطباعة المصحف الشريف.
@@ -49,65 +44,6 @@
 
 /* ===== المتشابهات ===== */
 .mut-search{display:flex;gap:8px;margin:10px 0}.mut-search input{flex:1;min-width:0}.mut-search button{white-space:nowrap}.mut-head h3{font-family:"KFGQPC Hafs","Amiri",serif;font-size:1.45rem;line-height:1.9;margin:.4rem 0}.mut-label{font-size:.8rem;color:var(--muted)}.mut-ayah{margin-bottom:10px}.mut-text{font-family:"KFGQPC Hafs","Amiri",serif;font-size:1.18rem;line-height:2.25;text-align:justify;padding:10px 0}.mut-hit{background:color-mix(in srgb,#d9b55a 38%,transparent);border-radius:4px;padding:0 2px;color:inherit}.mut-list .card{margin-bottom:8px}
-
-/* ===== تحسينات تجربة الاستخدام — إصدار 11 ===== */
-:root {
-  --ux-radius: 18px;
-  --ux-shadow: 0 3px 12px rgba(39, 46, 32, .055);
-}
-html { scroll-behavior: smooth; }
-body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
-#app { padding-inline: max(14px, env(safe-area-inset-left)); }
-.home { padding-bottom: 8px; }
-.home .quick { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 9px; }
-.home .quick__b {
-  min-width: 0; min-height: 76px; padding: 10px 6px;
-  display: flex; flex-direction: column; justify-content: center; align-items: center;
-  gap: 5px; line-height: 1.35; text-align: center;
-  border-radius: 16px; box-shadow: none;
-}
-.home .quick__b span { font-size: 13px; }
-.home .rings { align-items: stretch; gap: 4px; }
-.home .ring { min-width: 0; padding: 0 3px; }
-.home .ring small { line-height: 1.45; }
-.home .tiles { gap: 8px; }
-.home .tile {
-  min-width: 0; min-height: 76px; display: flex; align-items: center;
-  justify-content: flex-start; gap: 8px; padding: 10px;
-  border: 1px solid color-mix(in srgb, var(--brand) 13%, var(--line));
-  border-radius: 16px; text-align: start; box-shadow: none;
-}
-.home .tile__ico { flex: none; width: 30px; height: 30px; display: grid; place-items: center; border-radius: 10px; background: #ffffff22; }
-.home .tile__ico svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.8; }
-.home .tile__txt { min-width: 0; font-size: 12px; line-height: 1.4; }
-.home .tile__txt b { display: block; font-size: 19px; line-height: 1.25; }
-.home .practice { border-radius: 20px; box-shadow: var(--ux-shadow); }
-.home .practice__actions { gap: 7px; }
-.home .practice__actions button { min-width: 0; padding-inline: 8px; font-size: 13px; }
-.home details { border-radius: 16px; }
-.home details > summary { min-height: 50px; }
-.card, .panel, .stat { border-radius: 16px; box-shadow: none; }
-.card__head { min-height: 62px; }
-button, [role="button"], .tile, .card__head, .note-preview { -webkit-user-select: none; user-select: none; }
-button { transition: background-color .15s ease, border-color .15s ease, transform .12s ease; }
-button:active, .tile:active { transform: scale(.985); }
-button:focus-visible, [role="button"]:focus-visible, summary:focus-visible {
-  outline: 3px solid var(--gold); outline-offset: 3px;
-}
-.muted { overflow-wrap: anywhere; }
-@media (max-width: 380px) {
-  .home .tile { gap: 6px; padding: 8px 6px; }
-  .home .tile__ico { width: 26px; height: 26px; }
-  .home .tile__txt { font-size: 11px; }
-  .home .tile__txt b { font-size: 17px; }
-  .home .ring small { font-size: 10.5px; }
-  .home .practice__actions { flex-direction: column; }
-}
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  button { transition: none; }
-}
-
 </style>
 <style>
 /* ============ 1. Theme tokens (غيّر الألوان من هنا فقط) ============ */
@@ -1580,6 +1516,161 @@ button, [role="button"], a, summary, select, label, .mpill, .mbtn { touch-action
 :root[data-theme="onyx"] .reader-screen { --pg-bg:#000; --pg-bg-2:#0a0805; --pg-ink:#f6f1e3; --frame-c:#c9a24a; --pill-bg:#14110a; --pill-line:#6b5524; }
 :root[data-theme="onyx"] .mushaf .ayah-no { color: var(--gold-soft); }
 :root[data-theme="onyx"] .tabbar { background: #000; border-top-color: var(--gold); }
+
+/* ===== جولة 5: هوية بصرية موحّدة وتحسين سهولة الاستخدام (طبقة تعديلات مضافة فقط) ===== */
+:root{--brand:#5B6650;--brand-2:#6A765E;--muted:#63645B;--gold-ink:#7A6A3C;--radius:18px;--shadow-s:0 1px 2px rgba(63,66,59,.06),0 4px 14px rgba(63,66,59,.06);--shadow-m:0 2px 4px rgba(63,66,59,.08),0 10px 26px rgba(63,66,59,.10);--ease:cubic-bezier(.2,.7,.2,1)}
+:root[data-dark]{--shadow-s:0 1px 2px rgba(0,0,0,.35);--shadow-m:0 8px 24px rgba(0,0,0,.4)}
+html{-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%}
+button,summary,[data-act],select,label{touch-action:manipulation}
+body{line-height:1.7;text-rendering:optimizeLegibility}
+/* تركيز واضح للوحة المفاتيح وقارئات الشاشة */
+:focus-visible{outline:3px solid color-mix(in srgb,var(--gold-ink) 75%,transparent);outline-offset:2px;border-radius:10px}
+/* ضغط محسوس على كل عنصر قابل للنقر */
+button,.tile,.card__head,.quick__b,.row{transition:transform .15s var(--ease),box-shadow .2s var(--ease),background-color .2s var(--ease)}
+button:active,.tile:active,.quick__b:active,.card__head:active{transform:scale(.97)}
+/* مساحات لمس مريحة (٤٤px) للأزرار الشائعة */
+.scroll-row button,.btn-row button,.btn-primary,.practice__actions button,.mut-search button{min-height:44px}
+.scroll-row button{padding-inline:16px;border-radius:999px}
+/* بطاقات: ظل ناعم وزوايا موحّدة */
+.card,.practice,.panel,.stat,.achievement,.home details{border-radius:var(--radius);box-shadow:var(--shadow-s)}
+.tiles{box-shadow:none}
+.card[open],.card:focus-within{box-shadow:var(--shadow-m)}
+/* الشعار العلوي: زخرفة هندسية هادئة وخط ذهبي رفيع */
+.banner{padding-block:26px;box-shadow:var(--shadow-m);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56' fill='none' stroke='%23A89A78' stroke-opacity='.28' stroke-width='1'%3E%3Cpath d='M28 4l7 17 17 7-17 7-7 17-7-17-17-7 17-7z'/%3E%3Ccircle cx='28' cy='28' r='4'/%3E%3C/svg%3E"),linear-gradient(135deg,#EEEDE4,#DFE1D7)}
+:root[data-dark] .banner{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56' fill='none' stroke='%23cfab55' stroke-opacity='.18' stroke-width='1'%3E%3Cpath d='M28 4l7 17 17 7-17 7-7 17-7-17-17-7 17-7z'/%3E%3Ccircle cx='28' cy='28' r='4'/%3E%3C/svg%3E"),linear-gradient(135deg,var(--banner-1),var(--banner-2))}
+.banner__title{color:#6E6346}
+:root[data-dark] .banner__title{color:var(--gold-soft)}
+.banner__title::before,.banner__title::after{background:linear-gradient(90deg,transparent,var(--gold))}
+.banner__title::after{transform:scaleX(-1)}
+/* الزر الرئيسي في كل شاشة: أوضح وأقوى */
+.btn-primary,.practice__primary,.practice__actions button:first-child,.quick__b:first-child{background:linear-gradient(180deg,var(--brand-2),var(--brand));box-shadow:0 4px 12px color-mix(in srgb,var(--brand) 35%,transparent)}
+.quick__b{box-shadow:var(--shadow-s)}
+/* شريط التنقل: زجاجي عائم مع مؤشر للصفحة الحالية */
+.tabbar{backdrop-filter:blur(14px) saturate(1.3);-webkit-backdrop-filter:blur(14px) saturate(1.3);box-shadow:var(--shadow-m);border-radius:22px}
+.tabbar button{position:relative;font-size:11.5px}
+.tabbar button.is-active{font-weight:700}
+.tabbar button.is-active::after{content:"";position:absolute;bottom:2px;width:16px;height:3px;border-radius:3px;background:var(--gold-ink)}
+/* عناوين الأقسام بخط العرض وتمييز ذهبي */
+.home h2,#app>h2{font-family:var(--font-display);letter-spacing:.2px;display:flex;align-items:center;gap:10px}
+.home h2::before{content:"";width:6px;height:6px;rotate:45deg;background:var(--gold-ink);flex:none}
+/* شريط التقدم أنعم */
+.progress{height:10px;border-radius:999px;overflow:hidden}
+.progress>i{border-radius:999px;transition:width .5s var(--ease)}
+/* حقول الإدخال: أوضح عند التركيز، وبحجم ١٦px لمنع تكبير iOS */
+input,select,textarea{font-size:16px}
+input:focus,select:focus,textarea:focus{border-color:var(--brand);box-shadow:0 0 0 3px color-mix(in srgb,var(--brand) 22%,transparent);outline:0}
+/* تمرير سلس ومنع الارتداد المزعج */
+html{scroll-behavior:smooth}
+body{overscroll-behavior-y:contain}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+@media (hover:hover){.tile:hover,.card:hover,.quick__b:hover{box-shadow:var(--shadow-m);transform:translateY(-1px)}}
+
+/* ===== جولة 6: ألوان أهدأ، شاشة رئيسية بلا رموز في البلاطات، تظليل ناعم ===== */
+:root{--page:#F2EFE4;--page-2:#EEEADC;--surface:#F9F7F0;--surface-2:#F4F1E6;--line:#DCD7C5;--gold:#B4A47A;--text:#3D4039}
+.tile__ico{display:none!important}
+.tiles{gap:10px;padding:12px}
+.tiles>.tile{justify-content:center;text-align:center;min-height:68px;padding:12px 8px}
+.tiles>.tile .tile__txt{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12.5px;color:var(--muted)}
+.tiles>.tile .tile__txt b{font-size:22px;order:2}
+.mushaf .ayah.ayah-hl{background-image:linear-gradient(color-mix(in srgb,#8FAE8B 30%,transparent),color-mix(in srgb,#8FAE8B 30%,transparent))!important}
+:root[data-dark] .mushaf .ayah.ayah-hl{background-image:linear-gradient(color-mix(in srgb,#cfab55 26%,transparent),color-mix(in srgb,#cfab55 26%,transparent))!important}
+.tf-tabs.ay-tabs .tab-rel{border:1px dashed var(--brand);background:transparent;color:var(--brand)}
+
+/* ===== جولة 7 ===== */
+details.dt--sec{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:0 14px;margin:10px 0;box-shadow:var(--shadow-s)}
+details.dt--sec[open]{padding-bottom:14px}
+details.dt--in{border:1px solid var(--line);border-radius:12px;padding:0 12px;margin:10px 0}
+.dt--sec>summary,.dt--in>summary{display:flex;align-items:center;min-height:48px;list-style:none;font:600 15px var(--font-ui);color:var(--dark);cursor:pointer}
+.dt--sec>summary::-webkit-details-marker,.dt--in>summary::-webkit-details-marker{display:none}
+.dt--sec>summary::after,.dt--in>summary::after{content:"▾";margin-inline-start:auto;color:var(--brand);transition:transform .2s}
+.dt--sec[open]>summary::after,.dt--in[open]>summary::after{transform:rotate(180deg)}
+.nline{display:flex;gap:8px;align-items:flex-start;margin:8px 0}
+.nline textarea{flex:1;min-height:72px}
+.nline .nx{flex:none;width:40px;min-height:40px;border-radius:12px;font-size:20px;color:var(--danger)}
+.ay-link{all:unset;cursor:pointer;color:var(--brand);text-decoration:underline dotted;text-underline-offset:4px}
+.tf-tabs.ay-tabs .tab-rel.is-active{background:var(--brand);color:var(--on-brand);border-style:solid}
+.history-row[data-act]{cursor:pointer}
+.history-row[data-act]>span::after{content:" · المصحف ‹";color:var(--brand);font-size:12px}
+.practice__actions>button:nth-child(3){grid-column:1/-1;flex:1 1 100%}
+
+/* ===== جولة 8: الهوية «زمردي عميق وذهب عتيق» على التطبيق كله ===== */
+:root:not([data-theme]){--brand:#2F6F5E;--brand-2:#357765;--on-brand:#fff;--page:#F2F1E7;--page-2:#ECEBDD;--surface:#FAF9F2;--surface-2:#F1F0E4;--gold:#B8923A;--gold-soft:#E6C77A;--gold-ink:#7E6218;--text:#26332E;--muted:#5A6862;--line:#D8D8C5;--danger:#B03A3A;--dark:#1F4F43;
+--banner-1:#003D34;--banner-2:#004638;--banner-3:#00372F;--banner-text:#FFF9E9;--banner-border:#B8923A;
+--tint-green:#E0EDE6;--tint-blue:#E0ECEA;--tint-pink:#F1EBD6;--tint-grey:#E9EBE0;
+--grad-green:linear-gradient(145deg,#e0eee7,#bfdccd);--grad-blue:linear-gradient(145deg,#dcebea,#b8d6d3);--grad-pink:linear-gradient(145deg,#f6ecd0,#ead7a3);
+--green-1:#e0eee7;--green-2:#c4dfd0;--green-3:#a3cbb5;--teal-1:#dcebea;--teal-2:#bddad7;--teal-3:#9ac6c2;--clay-1:#f6ecd0;--clay-2:#eedcab;--clay-3:#e2c984;
+--accent-sage:#2F6F5E;--accent-teal:#3E8580;--calm-bg:#EEF1E7;--calm-bg-2:#E7ECE1;--calm-line:#D3DBCB;--calm-text:#1F4F43;--calm-muted:#5A6862;--calm-accent:#2F6F5E;--calm-on-accent:#fff}
+:root[data-dark]:not([data-theme]){--brand:#4FA58A;--brand-2:#63B79C;--on-brand:#06201A;--page:#0A1D18;--page-2:#07140F;--surface:#102A24;--surface-2:#0D221D;--gold:#D4B056;--gold-soft:#E6C77A;--gold-ink:#D9B960;--text:#EEEBDB;--muted:#9DB5AB;--line:#23443B;--danger:#E58A8A;--dark:#DCEBE3;
+--tint-green:#17382F;--tint-blue:#163836;--tint-pink:#3A3320;--tint-grey:#17302A;
+--grad-green:linear-gradient(145deg,#1B4237,#143129);--grad-blue:linear-gradient(145deg,#18413F,#112F2E);--grad-pink:linear-gradient(145deg,#4A4122,#352F18);
+--green-1:#1D4538;--green-2:#173A2F;--green-3:#112D24;--teal-1:#1A4442;--teal-2:#143836;--teal-3:#0F2C2B;--clay-1:#4A4122;--clay-2:#3B341B;--clay-3:#2D2815;
+--accent-sage:#4FA58A;--accent-teal:#6CBDB5;--calm-bg:#112B25;--calm-bg-2:#0D221D;--calm-line:#25463C;--calm-text:#E3EFE8;--calm-muted:#A5BDB3;--calm-accent:#4FA58A;--calm-on-accent:#06201A}
+:root[data-theme="onyx"]{--gold-ink:#cfab55;--shadow-s:0 1px 2px rgba(0,0,0,.35);--shadow-m:0 8px 24px rgba(0,0,0,.4)}
+.ring:nth-child(2) .ring__fill{stroke:var(--gold)!important}
+.progress i,.progress>i{background:linear-gradient(90deg,var(--brand),var(--gold))}
+.heatmap .l1{background:color-mix(in srgb,var(--brand) 28%,var(--surface))}
+.heatmap .l2{background:color-mix(in srgb,var(--brand) 58%,var(--surface))}
+/* الواجهة الرئيسية: خلفية المسجد والفوانيس وإطار الآية */
+.banner{position:relative;isolation:isolate;overflow:hidden;display:flex!important;flex-direction:column;align-items:center;padding:30px 14px 150px!important;border:1px solid rgba(184,146,58,.4)!important;border-radius:26px;color:#FFF9E9;
+background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20400%20190%22%20preserveAspectRatio%3D%22xMidYMax%20slice%22%20opacity%3D%22.55%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22m%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23247A65%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23002E28%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Cpath%20d%3D%22M15%20190V65L24%2048L33%2065V190Z%22%20fill%3D%22url%28%23m%29%22%2F%3E%3Cpath%20d%3D%22M19%2048L24%2035L29%2048%22%20fill%3D%22%23247A65%22%2F%3E%3Cpath%20d%3D%22M18%2080H30M18%20100H30%22%20stroke%3D%22%23B8923A%22%20stroke-width%3D%222%22%2F%3E%3Cpath%20d%3D%22M45%20190V130C45%20105%2065%2092%2085%2092C105%2092%20125%20105%20125%20130V190Z%22%20fill%3D%22url%28%23m%29%22%2F%3E%3Cpath%20d%3D%22M85%2092V75%22%20stroke%3D%22%23247A65%22%20stroke-width%3D%222%22%2F%3E%3Cpath%20d%3D%22M80%2075L85%2067L90%2075%22%20fill%3D%22%23247A65%22%2F%3E%3Cpath%20d%3D%22M125%20190V115C125%2075%20160%2055%20200%2055C240%2055%20275%2075%20275%20115V190Z%22%20fill%3D%22url%28%23m%29%22%2F%3E%3Cpath%20d%3D%22M200%2055V35%22%20stroke%3D%22%23247A65%22%20stroke-width%3D%222%22%2F%3E%3Cpath%20d%3D%22M194%2035L200%2025L206%2035%22%20fill%3D%22%23247A65%22%2F%3E%3Cpath%20d%3D%22M275%20190V130C275%20105%20295%2092%20315%2092C335%2092%20355%20105%20355%20130V190Z%22%20fill%3D%22url%28%23m%29%22%2F%3E%3Cpath%20d%3D%22M365%20190V65L375%2048L385%2065V190Z%22%20fill%3D%22url%28%23m%29%22%2F%3E%3Cpath%20d%3D%22M370%2048L375%2035L380%2048%22%20fill%3D%22%23247A65%22%2F%3E%3Cg%20fill%3D%22%23B8923A%22%20opacity%3D%22.65%22%3E%3Cpath%20d%3D%22M75%20155Q85%20140%2095%20155V170H75Z%22%2F%3E%3Cpath%20d%3D%22M185%20125Q200%20105%20215%20125V145H185Z%22%2F%3E%3Cpath%20d%3D%22M305%20155Q315%20140%20325%20155V170H305Z%22%2F%3E%3C%2Fg%3E%3Cpath%20d%3D%22M0%20175Q100%20165%20200%20175Q300%20165%20400%20175V190H0Z%22%20fill%3D%22%2300372F%22%2F%3E%3C%2Fsvg%3E") center bottom/100% 150px no-repeat,radial-gradient(ellipse at 50% 27%,rgba(31,119,94,.48),transparent 55%),radial-gradient(ellipse at 15% 75%,rgba(16,93,72,.35),transparent 45%),linear-gradient(180deg,#003D34 0%,#004638 45%,#002D27 100%)!important}
+.banner::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(circle at 50% 30%,rgba(225,190,103,.10),transparent 38%)!important}
+.banner .banner__title{order:-1;margin:0 0 16px;color:#E6C77A!important;font:700 16px var(--font-display)}
+.banner .banner__title::before,.banner .banner__title::after{display:none}
+.banner .banner__verse{width:min(100%,520px);min-height:150px;box-sizing:border-box;padding:30px 46px;display:flex;align-items:center;justify-content:center;text-align:center;font:400 clamp(21px,5.2vw,30px)/1.95 var(--font-quran);color:#FFF9E9!important;text-shadow:0 2px 8px rgba(0,0,0,.5);background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20600%20190%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23F4D98D%22%2F%3E%3Cstop%20offset%3D%22.5%22%20stop-color%3D%22%23B8923A%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23E9C66D%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Cpath%20d%3D%22M75%2010H525Q550%2010%20550%2035V55Q570%2070%20585%2095Q570%20120%20550%20135V155Q550%20180%20525%20180H75Q50%20180%2050%20155V135Q30%20120%2015%2095Q30%2070%2050%2055V35Q50%2010%2075%2010Z%22%20fill%3D%22none%22%20stroke%3D%22url%28%23g%29%22%20stroke-width%3D%222.5%22%2F%3E%3Cpath%20d%3D%22M85%2020H515Q540%2020%20540%2045V60Q560%2075%20570%2095Q560%20115%20540%20130V145Q540%20170%20515%20170H85Q60%20170%2060%20145V130Q40%20115%2030%2095Q40%2075%2060%2060V45Q60%2020%2085%2020Z%22%20fill%3D%22none%22%20stroke%3D%22%23B8923A%22%20stroke-width%3D%221.2%22%2F%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22url%28%23g%29%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M50%2055Q65%2055%2070%2035Q80%2025%2090%2035Q100%2045%2085%2055Q75%2065%2065%2055%22%2F%3E%3Cpath%20d%3D%22M550%2055Q535%2055%20530%2035Q520%2025%20510%2035Q500%2045%20515%2055Q525%2065%20535%2055%22%2F%3E%3Cpath%20d%3D%22M50%20135Q65%20135%2070%20155Q80%20165%2090%20155Q100%20145%2085%20135%22%2F%3E%3Cpath%20d%3D%22M550%20135Q535%20135%20530%20155Q520%20165%20510%20155Q500%20145%20515%20135%22%2F%3E%3Cpath%20d%3D%22M70%2045L82%2055L70%2065L58%2055Z%22%2F%3E%3Cpath%20d%3D%22M530%2045L518%2055L530%2065L542%2055Z%22%2F%3E%3Cpath%20d%3D%22M70%20125L82%20135L70%20145L58%20135Z%22%2F%3E%3Cpath%20d%3D%22M530%20125L518%20135L530%20145L542%20135Z%22%2F%3E%3C%2Fg%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23E6C77A%22%20stroke-width%3D%221.5%22%3E%3Cpath%20d%3D%22M15%2095Q35%2080%2045%2095Q35%20110%2015%2095Z%22%2F%3E%3Cpath%20d%3D%22M585%2095Q565%2080%20555%2095Q565%20110%20585%2095Z%22%2F%3E%3Ccircle%20cx%3D%2230%22%20cy%3D%2295%22%20r%3D%224%22%2F%3E%3Ccircle%20cx%3D%22570%22%20cy%3D%2295%22%20r%3D%224%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") center/100% 100% no-repeat}
+.lantern{position:absolute;top:26px;width:17px;height:29px;border:1px solid var(--gold);border-radius:5px 5px 8px 8px;background:linear-gradient(180deg,#F5D98D,#B8923A);box-shadow:0 0 10px rgba(230,199,122,.65),0 0 28px rgba(230,199,122,.28);pointer-events:none}
+.lantern::before{content:"";position:absolute;left:50%;bottom:100%;width:1px;height:30px;background:var(--gold)}
+.lantern-left{left:7%}.lantern-right{right:7%}
+.banner__verse::before,.banner__verse::after{display:none}
+
+/* ===== جولة 9 ===== */
+/* بطاقة الآية مختصرة: سطر واحد في إطار بسيط */
+.banner{padding:14px 12px 44px!important;border-radius:20px;background-size:100% 46px,100% 100%,100% 100%,100% 100%!important}
+.banner::before,.lantern{display:none!important}
+.banner .banner__title{margin:0 0 10px;font-size:14px}
+.banner .banner__verse{width:auto;max-width:100%;min-height:0;display:block;white-space:nowrap;overflow:hidden;padding:7px 22px;font-size:22px;line-height:1.9;border:1px solid rgba(230,199,122,.55);border-radius:999px;background:rgba(0,0,0,.16);box-shadow:inset 0 0 0 3px rgba(0,0,0,.10)}
+/* لوحة التسميع: الميكروفون في المنتصف أسفل الشاشة */
+.rc-dock{position:relative;display:flex!important;align-items:center;justify-content:space-between!important;gap:0;margin:0 10px calc(6px + env(safe-area-inset-bottom));padding:4px 10px!important;border-radius:999px;background:color-mix(in srgb,var(--surface) 88%,transparent)!important;border:1px solid var(--line)!important;box-shadow:var(--shadow-m);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.rc-dock .rc-pill,.rc-dock .rc-g{display:contents}
+.rc-dock .rc-sep{display:none}
+.rc-dock .rc-btn,.rc-dock .rc-play{flex:none;width:38px;height:38px;min-width:0;min-height:0;opacity:1;border-radius:50%}
+.rc-dock [data-act="rc-hide"]{order:1}.rc-dock [data-act="rc-top"]{order:2}.rc-dock [data-act="rc-hint-word"]{order:3}
+.rc-dock [data-act="rc-mic-main"]{order:4;flex:none;width:50px;height:50px;margin-top:-14px;background:var(--brand)!important;color:var(--on-brand)!important;border-color:var(--brand)!important;box-shadow:0 4px 14px color-mix(in srgb,var(--brand) 45%,transparent)}
+.rc-dock [data-act="rc-mic-main"].is-live{background:#C0392B!important;border-color:#C0392B!important;color:#fff!important}
+.rc-dock [data-act="rc-hint-ayah"]{order:5}.rc-dock [data-act="rc-options"]{order:6}.rc-dock [data-act="au-toggle"]{order:7}
+.rc-dock .rc-timer{position:absolute;order:0;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%)}
+.rec-choice{padding:12px;margin:0 0 12px;border:1px solid var(--line);border-radius:16px;background:var(--surface-2)}
+.rec-choice audio{width:100%;margin-top:10px}
+.rec-toggle{display:flex;gap:10px;align-items:flex-start;margin-top:14px;line-height:1.7}
+/* رقم الصفحة في مستطيل بحواف دائرية */
+.pnum{display:inline-flex;align-items:center;justify-content:center;min-width:36px;padding:2px 14px;border:1px solid color-mix(in srgb,var(--gold) 70%,transparent);border-radius:999px;background:color-mix(in srgb,var(--surface) 85%,transparent);color:var(--gold-ink);font:600 13px/1.7 var(--font-ui)}
+/* الإعدادات: كل قسم في شاشة جانبية */
+#app:has(.set-sec.is-open) .set-sec:not(.is-open),#app:has(.set-sec.is-open) .set-search,#app:has(.set-sec.is-open)>h2{display:none}
+.set-sec.is-open .set-head::before{content:"→";margin-inline-end:10px;font-size:20px;color:var(--brand)}
+.set-sec.is-open .set-head i{display:none}
+
+/* ===== جولة ٨: أرقام متوسطة، تبويبات، لافتة، رجوع، مذكرة ===== */
+.num { padding: 0; line-height: 1; }
+.num span { display: block; line-height: 1; font-variant-numeric: lining-nums; transform: rotate(-45deg) translateY(.16em); }
+.tabbar button.is-active::after { display: none; }
+.tabbar button.is-active { border-radius: 999px; }
+.banner { padding: 12px 12px 34px !important; border-radius: 20px; }
+.banner .banner__title { margin: 0 0 8px; font-size: 13px; }
+.banner .banner__verse { padding: 5px 18px; font-size: 19px; line-height: 1.8; min-height: 0; }
+.m-top .hizb { font-size: calc(19px * var(--tz, 1)); }
+.back-btn { display: inline-grid; place-items: center; width: 42px; height: 42px; padding: 0; margin: 0 0 8px; border: 1.5px solid var(--line); border-radius: 50%; background: var(--surface); color: var(--text); }
+.back-btn svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.set-sec.is-open .set-head { position: sticky; top: 0; z-index: 5; background: var(--surface); justify-content: flex-start; }
+.set-sec.is-open .set-head::before { display: grid; place-items: center; flex: none; width: 40px; height: 40px; margin: 0; border: 1.5px solid var(--line); border-radius: 50%; background: var(--surface-2); }
+#app:has(.set-sec.is-open) > .back-btn { display: none; }
+.note-preview { min-height: 110px; padding: 12px 14px; font: 400 19px/1.9 'Scheherazade New', var(--font-body); white-space: pre-wrap; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); }
+.note-preview.is-empty { color: var(--muted); }
+.block { display: flex; align-items: flex-start; gap: 6px; }
+.blk-mark { flex: none; min-width: 26px; padding-top: 4px; font: 700 18px/1.8 var(--font-body); color: var(--muted); text-align: center; }
+.editor-bar { display: flex; flex-direction: column; gap: 6px; }
+.eb-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.eb-row button.is-active { background: var(--brand); color: var(--on-brand); }
+.eb-colors .eb-color { width: 30px; height: 30px; min-height: 0; padding: 0; border-radius: 50%; background: var(--c); border: 2px solid var(--line); }
+.eb-colors .eb-color.is-active { outline: 2px solid var(--brand); outline-offset: 2px; }
 </style>
 </head>
 <body>
@@ -1641,7 +1732,7 @@ Please check updates at: http://tanzil.net/updates/
 "use strict";
 
 /* ============================================================
-   رحلة حفظ كتاب الله — الإصدار 3
+   رحلة لحفظ كتاب الله — الإصدار 3
    ------------------------------------------------------------
    الأقسام: 1 البيانات   2 الثوابت   3 أدوات مساعدة   4 الحالة والتخزين
             5 المنطق (الحفظ/المراجعة/الأولوية)   6 مكوّنات العرض
@@ -1813,7 +1904,8 @@ const FONT_FAMILIES = ["Aref Ruqaa", "Scheherazade New", "Amiri", "Noto Naskh Ar
 const APP_FONTS = [["Aref Ruqaa", "الرقعة"], ["Scheherazade New", "شهرزاد"], ["Amiri", "الأميري"], ["Noto Naskh Arabic", "نسخ"], ["KFGQPC Hafs", "العثماني"]];
 const FONT_DEFAULTS = { d: "Aref Ruqaa", u: "Noto Naskh Arabic", b: "Amiri" };
 
-const TEXT_COLORS = ["", "#3e5a3a", "#b8923a", "#2f6f9f", "#b0413e", "#7a55a8", "#7a5a3a", "#6b6b6b"];
+const TEXT_COLORS = ["", "#3e5a3a", "#b8923a", "#2f6f9f", "#b0413e", "#7a55a8", "#7a5a3a", "#6b6b6b", "#1f7a5c", "#c2570c", "#c2255c", "#111111"];
+const toArabicDigits = n => String(n).replace(/\d/g, d => "٠١٢٣٤٥٦٧٨٩"[d]);
 
 const SURAHS = SURAH_ROWS.map(([name, ayat, firstPage, lastPage]) => ({ name, ayat, firstPage, lastPage }));
 
@@ -2105,17 +2197,20 @@ function reconcileAutoStatus(id) { const data = state.s[id] || {}; if (data.auto
 /* ===== 6. مكوّنات العرض ===== */
 const ringHTML = (ratio, label, color, caption) => `<div class="ring"><svg viewBox="0 0 100 100"><circle class="ring__track" cx="50" cy="50" r="40"/><circle class="ring__fill" cx="50" cy="50" r="40" transform="rotate(-90 50 50)" style="stroke:${color};stroke-dashoffset:${251.3 * (1 - clamp(ratio, 0, 1))}"/><text x="50" y="57">${Math.round(ratio * 100)}%</text></svg><b>${label}</b><small>${caption}</small></div>`;
 
-function rowHTML({ number, title, subtitle = "", extra = "", act = "", id = "", list = "" }) {
-    return `<div class="card${act ? " card--link" : ""}"${act ? ` data-act="${act}" data-id="${id}" data-list="${list}"` : ""}><div class="card__head"><span class="num"><span>${number}</span></span><div><b>${title}</b><span class="muted">${subtitle}</span></div>${extra}</div></div>`;
+function rowHTML({ number, title, subtitle = "", extra = "", act = "", id = "", list = "", from = 1 }) {
+    // صف السورة يفتحها في المصحف مباشرة (من أول السورة، أو من أول آية في المقطع المسجّل)
+    const attrs = !act ? "" : act === "open-detail" ? ` data-act="go-ayah" data-s="${id}" data-a="${from}"` : ` data-act="${act}" data-id="${id}" data-list="${list}"`;
+    return `<div class="card${act ? " card--link" : ""}"${attrs}><div class="card__head"><span class="num"><span>${number}</span></span><div><b>${title}</b><span class="muted">${subtitle}</span></div>${extra}</div></div>`;
 }
 
-const backButton = (view = "home") => `<button data-act="nav" data-val="${view}">← رجوع</button>`;
+const BACK_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>';
+const backButton = () => `<button class="back-btn" data-act="go-back" aria-label="رجوع">${BACK_ICON}</button>`;
 
 const surahOptions = (ids, selected) => ids.map(id => `<option value="${id}"${id === selected ? " selected" : ""}>${id}. ${SURAHS[id - 1].name}</option>`).join("");
 
 const countBadge = text => `<span class="count">${text}</span>`;
 
-const noteText = note => note.b.map(b => (b.k === "c" ? (b.d ? "☑ " : "☐ ") : "") + b.x).filter(t => t.replace(/[☐☑]/g, "").trim()).join("\n");
+const noteText = note => note.b.map(b => (b.k === "c" ? (b.d ? "☑ " : "☐ ") : b.k === "b" ? "• " : b.k === "n" ? "– " : "") + b.x).filter(t => t.replace(/[☐☑]/g, "").trim()).join("\n");
 
 const taskProgress = task => { const items = task.b.filter(b => b.k === "c"); return items.length ? Math.round(items.filter(b => b.d).length / items.length * 100) : null; };
 
@@ -2139,16 +2234,16 @@ function quickHTML() {
 }
 function homeView() {
     const s = computeStats(), target = resumeTarget(), due = dueIds();
-    return `<div class="home"><div class="banner"><div class="banner__verse">﴿ ${BANNER_VERSE}&nbsp;﴾</div><div class="banner__title">رحلة حفظ كتاب الله</div></div>
+    return `<div class="home"><div class="banner"><i class="lantern lantern-left"></i><i class="lantern lantern-right"></i><div class="banner__verse">﴿ ${BANNER_VERSE}&nbsp;﴾</div><div class="banner__title">رحلة لحفظ كتاب الله</div></div>
  ${quickHTML()}<div class="rings">${ringHTML(s.surahRatio, "السور", "#6b7d3f", `${s.done} من 114`)}${ringHTML(s.pageRatio, "الصفحات", "#b8923a", `${+(s.pageRatio * PAGE_COUNT).toFixed(1)} من 604`)}${ringHTML(s.masteryAverage, "الإتقان", "#c4647f", "تقدير متوسط المحفوظ")}</div>
  <div class="tiles">${[["doneList", "تم الحفظ", s.done, '<path d="M12 3.2l2.3 1.6 2.8-.1 1 2.6 2.3 1.7-.9 2.7.9 2.7-2.3 1.7-1 2.6-2.8-.1L12 20.8l-2.3-1.6-2.8.1-1-2.6-2.3-1.7.9-2.7-.9-2.7 2.3-1.7 1-2.6 2.8.1z"/><path d="M8.7 12.2l2.2 2.2 4.4-4.6"/>'], ["progressList", "قيد الحفظ", s.inProgress, '<path d="M12 6.5C10.3 5.3 8 4.8 4 5v13c4-.2 6.3.3 8 1.5 1.7-1.2 4-1.7 8-1.5V5c-4-.2-6.3.3-8 1.5z"/><path d="M12 6.5v13"/>'], ["dueList", "المستحق", s.due, '<path d="M7 3.5h10M7 20.5h10"/><path d="M8 3.5c0 4 4 5.2 4 8.5s-4 4.5-4 8.5M16 3.5c0 4-4 5.2-4 8.5s4 4.5 4 8.5"/>'], ["surahs", "جدول السور", SURAH_COUNT, '<path d="M9 6h11M9 12h11M9 18h11"/><path d="M4.5 6h.01M4.5 12h.01M4.5 18h.01"/>'], ["segments", "مقاطع الحفظ", state.hifz.length, '<path d="M12 3.8l2.5 5.2 5.7.8-4.1 4 1 5.6L12 16.8 6.9 19.4l1-5.6-4.1-4 5.7-.8z"/>'], ["reviews", "المراجعات", s.reviewCount, '<path d="M20 11a8 8 0 0 0-14.3-4.2L4 9"/><path d="M4 4v5h5"/><path d="M4 13a8 8 0 0 0 14.3 4.2L20 15"/><path d="M20 20v-5h-5"/>']]
         .map(([view, label, n, icon]) => `<div class="tile" data-act="nav" data-val="${view}"><span class="tile__ico"><svg viewBox="0 0 24 24" aria-hidden="true">${icon}</svg></span><span class="tile__txt"><b>${n}</b>${label}</span></div>`).join("")}</div>
  ${s.weak.length ? "<h2>تحتاج اهتمامًا</h2>" + s.weak.map(id => rowHTML({ number: id, title: surahInfo(id).name, subtitle: "آخر مراجعتين ضعيفتان", act: "open-detail", id })).join("") : ""}
  ${due.length ? "<h2>المراجعة حسب الأولوية</h2>" + due.slice(0, 3).map(id => rowHTML({ number: priorityRank(id), title: surahInfo(id).name, subtitle: priorityReason(id), extra: countBadge(priorityRank(id)), act: "open-detail", id })).join("") + '<button class="btn-primary" data-act="nav" data-val="dueList">كل المستحق</button>' : ""}
  ${practiceHTML(target)}${paceNote()}
+ <details class="dt dt--note"><summary>حكايتي مع القرآن</summary><button class="btn-primary" data-act="new-note" data-list="nd">+ ملاحظة جديدة</button>${state.nd.map((note, i) => { const text = noteText(note); return `<label>${escapeHTML(note.t || "بدون عنوان")}</label><div class="note-preview${text ? "" : " is-empty"}" data-act="open-note" data-list="nd" data-id="${i}">${text ? escapeHTML(text) : "اضغط للكتابة"}</div>`; }).join("")}</details>
  <details class="dt dt--act"><summary>نشاط آخر ${ACTIVITY_DAYS} يومًا</summary><div class="heatmap">${Array.from({ length: ACTIVITY_DAYS }, (_, k) => { const day = addDays(todayISO(), k - ACTIVITY_DAYS + 1), n = activityOn(day); return `<i class="${n >= 4 ? "l3" : n >= 2 ? "l2" : n ? "l1" : ""}" title="${formatDate(day)}: ${n}"></i>`; }).join("")}</div></details>
  <details class="dt dt--juz"><summary>تقدم الأجزاء</summary><div class="juz-grid">${s.juzProgress.slice(1).map((p, k) => `<div class="juz${p > .999 ? " is-full" : ""}" style="--p:${Math.round(p * 100)}%">${k + 1}</div>`).join("")}</div></details>
- <details class="dt dt--note"><summary>حكايتي مع القرآن</summary><button class="btn-primary" data-act="new-note" data-list="nd">+ ملاحظة جديدة</button>${state.nd.map((note, i) => { const text = noteText(note); return `<label>${escapeHTML(note.t || "بدون عنوان")}</label><div class="note-preview${text ? "" : " is-empty"}" data-act="open-note" data-list="nd" data-id="${i}">${text ? escapeHTML(text) : "اضغط للكتابة"}</div>`; }).join("")}</details>
  <details open class="dt dt--tasks"><summary>مهام اليوم</summary>${ui.taskDraftOpen ? '<input id="taskTitle" placeholder="عنوان المهمة"><div class="btn-row"><button data-act="create-task" data-val="p">ملاحظة</button><button data-act="create-task" data-val="c">قائمة مهام</button></div>' : '<button class="btn-primary" data-act="show-task-form">+ إضافة مهمة</button>'}${state.k.map((task, i) => { const p = taskProgress(task); return rowHTML({ number: i + 1, title: escapeHTML(task.t || "بدون عنوان"), subtitle: escapeHTML(task.b.map(b => b.x).filter(Boolean).join("، ").slice(0, 50) || "اضغط للكتابة"), extra: countBadge(p === null ? "ملاحظة" : p + "%"), act: "open-note", id: i, list: "k" }); }).join("")}</details>
  <div class="closing-dua">رَبِّ اجْعَلْنِي مِنْ أَهْلِ الْقُرْآنِ الَّذِينَ هُمْ أَهْلُكَ وَخَاصَّتُكَ</div></div>`;
 }
@@ -2161,7 +2256,7 @@ function practiceHTML(id) {
     const info = surahInfo(id), cov = hifzCoverage(id), stop = stopPosition(id);
     return `<section class="practice"><div class="practice__label">تسجيل الحفظ والمراجعة</div>${inProgressIds().length > 1 ? `<select id="resumePicker">${surahOptions(inProgressIds(), id)}</select>` : ""}<div class="practice__name">${info.name}</div>
  <div class="practice__meta">${stop ? `آخر موضع: الآية ${stop} من ${info.ayat}` : `${info.ayat} آية — لم تبدأ التسجيل بعد`} · ${cov.pct}%</div><div class="progress"><i style="width:${cov.pct}%"></i></div>
- <div class="practice__actions"><button class="practice__primary" data-act="add-hifz" data-id="${id}">+ سجّل الحفظ من الآية ${nextStartAyah(id)}</button>${reviewButton}</div></section>`;
+ <div class="practice__actions"><button class="practice__primary" data-act="add-hifz" data-id="${id}">+ سجّل الحفظ من الآية ${nextStartAyah(id)}</button>${reviewButton}<button data-act="open-mushaf" data-id="${id}">افتح المصحف عند موضعي</button></div></section>`;
 }
 
 function surahCardHTML(id) {
@@ -2171,7 +2266,7 @@ function surahCardHTML(id) {
     if (isOpen)
         html += `<div class="card__body">${spCardHTML(id)}<h3>حالة السورة</h3>${statusButtonsHTML(id)}
   ${status === Status.IN_PROGRESS ? progressPanelHTML(id) : status === Status.DONE ? '<p class="muted">اكتمل حفظ السورة ✓</p>' : '<p class="muted">اجعل الحالة «قيد الحفظ» لتتمكن من تسجيل ما تحفظه.</p>'}
-  <div class="btn-row"><button data-act="open-detail" data-id="${id}">التفاصيل والسجل</button><button data-act="add-review" data-id="${id}">+ تسجيل مراجعة</button><button data-act="open-mushaf" data-id="${id}">📖 المصحف</button></div>
+  <div class="btn-row"><button data-act="open-detail" data-id="${id}">التفاصيل والسجل</button><button data-act="add-review" data-id="${id}">+ تسجيل مراجعة</button><button data-act="open-mushaf" data-id="${id}">المصحف</button></div>
   <label>ملاحظات<textarea data-field="surahNote:${id}">${escapeHTML(data.n)}</textarea></label>
   ${notes.map(m => `<div class="note"><span class="muted">متشابهة: ${m.s.map(z => surahInfo(z).name).join("، ")}</span>${escapeHTML(m.t)}</div>`).join("")}
   <details><summary>تعديل بيانات السورة</summary><div class="grid-3"><label>الآيات<input type="number" data-field="ayat:${id}" value="${info.ayat}"></label><label>من صفحة<input type="number" data-field="pageFrom:${id}" value="${info.firstPage}"></label><label>إلى صفحة<input type="number" data-field="pageTo:${id}" value="${info.lastPage}"></label></div>
@@ -2196,15 +2291,15 @@ function surahsView() {
 
 function detailView() {
     const id = ui.detailSurah, info = surahInfo(id), status = surahStatus(id), hifz = hifzCoverage(id), review = reviewCoverage(id), p = priorityOf(id), reviews = reviewsOf(id);
-    const historyRow = (kind, record, text) => `<div class="history-row"><span>${formatDate(record.d)} — ${text}${record.n ? " — " + escapeHTML(record.n) : ""}</span>${kind === "review" ? `<b>${LEVEL_LABELS[record.l]}</b>` : ""}<button data-act="edit-record" data-val="${kind}" data-id="${record.id}">تعديل</button><button data-act="delete-record" data-val="${kind}" data-id="${record.id}">حذف</button></div>`;
+    const historyRow = (kind, record, text) => `<div class="history-row" data-act="goto-mark" data-id="${record.i}:${record.to}"><span>${formatDate(record.d)} — ${text}${record.n ? " — " + escapeHTML(record.n) : ""}</span>${kind === "review" ? `<b>${LEVEL_LABELS[record.l]}</b>` : ""}<button data-act="edit-record" data-val="${kind}" data-id="${record.id}">تعديل</button><button data-act="delete-record" data-val="${kind}" data-id="${record.id}">حذف</button></div>`;
     return `${backButton("surahs")}<h2>${info.name}</h2><span class="muted">${info.ayat} آية — ${STATUS_LABELS[status]} — ${rankText(id)}</span>${statusButtonsHTML(id)}
- ${spCardHTML(id)}
+ ${surahSectionsHTML(id)}
  <div class="tiles" style="margin-top:8px"><div class="tile tile--green"><b>${status === Status.DONE ? 100 : hifz.pct}%</b>الحفظ</div><div class="tile tile--blue"><b>${review.pct}%</b>تغطية المراجعة</div><div class="tile tile--pink"><b>${reviews.length}</b>مراجعات</div></div>
  <div class="progress"><i style="width:${status === Status.DONE ? 100 : hifz.pct}%"></i></div>
  <p><b>آخر مراجعة:</b> ${p.last ? `${formatDate(p.last.d)} — ${rangeLabel(p.last)} — ${LEVEL_LABELS[p.last.l]}` : "لا توجد"}</p><p><b>سبب الأولوية:</b> ${priorityReason(id)}</p>
  <p><b>📍 آخر موضع حفظ:</b> ${stopPosition(id) ? `الآية ${stopPosition(id)}` : "غير مسجل"}</p>
  ${review.gaps.length ? `<span class="muted">أجزاء بلا مراجعة: ${review.gaps.slice(0, 4).map(g => g[0] === g[1] ? g[0] : g[0] + "–" + g[1]).join("، ")}${review.gaps.length > 4 ? "…" : ""}</span>` : ""}
- <div class="btn-row"><button class="btn-primary" data-act="add-review" data-id="${id}">+ مراجعة</button><button data-act="open-mushaf" data-id="${id}">📖 المصحف</button>${status === Status.IN_PROGRESS ? `<button class="btn-primary" data-act="add-hifz" data-id="${id}">+ حفظ</button>` : ""}</div>
+ <div class="btn-row"><button class="btn-primary" data-act="add-review" data-id="${id}">+ مراجعة</button><button data-act="open-mushaf" data-id="${id}">المصحف</button>${status === Status.IN_PROGRESS ? `<button class="btn-primary" data-act="add-hifz" data-id="${id}">+ حفظ</button>` : ""}</div>
  <h3>سجل الحفظ</h3>${hifzRecordsOf(id).reverse().map(r => historyRow("hifz", r, `الآيات ${r.from}–${r.to}`)).join("") || '<p class="empty">لا يوجد.</p>'}
  <h3>سجل المراجعات</h3>${[...reviews].reverse().map(r => historyRow("review", r, rangeLabel(r))).join("") || '<p class="empty">لا يوجد.</p>'}`;
 }
@@ -2219,12 +2314,12 @@ function reviewsView() {
     return `<h2>المراجعات</h2><button class="btn-primary" data-act="add-review">+ تسجيل ما راجعته</button>
  <div class="scroll-row">${[["recent", "الأحدث"], ["priority", "الأولوية"]].map(([v, l]) => `<button data-act="set-review-tab" data-val="${v}" class="${ui.reviewTab === v ? "is-active" : ""}">${l}</button>`).join("")}</div>
  ${ids.map(id => ui.reviewTab === "priority" ? rowHTML({ number: priorityRank(id), title: surahInfo(id).name, subtitle: priorityReason(id), extra: countBadge(priorityRank(id)), act: "open-detail", id }) : rowHTML({ number: id, title: surahInfo(id).name, subtitle: "آخر مراجعة: " + formatDate((reviewsOf(id).slice(-1)[0] || {}).d), extra: `<span class="chip">${reviewsOf(id).length}</span>`, act: "open-detail", id })).join("") || '<p class="empty">لا توجد مراجعات بعد.</p>'}
- <h3>سجل المراجعات</h3>${records.map(r => rowHTML({ number: r.i, title: surahInfo(r.i).name, subtitle: `${formatDate(r.d)} — ${rangeLabel(r)}${r.n ? " — " + escapeHTML(r.n) : ""}`, extra: `<span class="chip">${LEVEL_LABELS[r.l]}</span>`, act: "open-detail", id: r.i })).join("") || '<p class="empty">لا يوجد سجل بعد.</p>'}`;
+ <h3>سجل المراجعات</h3>${records.map(r => rowHTML({ number: r.i, title: surahInfo(r.i).name, subtitle: `${formatDate(r.d)} — ${rangeLabel(r)}${r.n ? " — " + escapeHTML(r.n) : ""}`, extra: `<span class="chip">${LEVEL_LABELS[r.l]}</span>`, act: "open-detail", id: r.i, from: r.from })).join("") || '<p class="empty">لا يوجد سجل بعد.</p>'}`;
 }
 
 function segmentsView() {
     const rows = [...state.hifz].sort((a, b) => -byDateThenId(a, b));
-    return `<h2>مقاطع الحفظ</h2>${backButton()}<button class="btn-primary" data-act="add-hifz">+ تسجيل ما حفظته</button>${rows.map(r => rowHTML({ number: r.i, title: surahInfo(r.i).name, subtitle: `${formatDate(r.d)} — الآيات ${r.from} إلى ${r.to}${r.n ? " — " + escapeHTML(r.n) : ""}`, act: "open-detail", id: r.i })).join("") || '<p class="empty">لم تُسجَّل مقاطع حفظ بعد.</p>'}`;
+    return `<h2>مقاطع الحفظ</h2>${backButton()}<button class="btn-primary" data-act="add-hifz">+ تسجيل ما حفظته</button>${rows.map(r => rowHTML({ number: r.i, title: surahInfo(r.i).name, subtitle: `${formatDate(r.d)} — الآيات ${r.from} إلى ${r.to}${r.n ? " — " + escapeHTML(r.n) : ""}`, act: "open-detail", id: r.i, from: r.from })).join("") || '<p class="empty">لم تُسجَّل مقاطع حفظ بعد.</p>'}`;
 }
 
 function timelineView() {
@@ -2346,7 +2441,7 @@ function setReaderPage(page, redraw = true) {
     if (redraw) { render(); scrollTo(0, 0); }
 }
 
-const goToReaderPage = page => { closeModal(); setReaderPage(page); };
+const goToReaderPage = page => { closeModal(); setReaderPage(page, false); ui.view === "reader" ? render() : navigate("reader"); };
 
 const typeButtonHTML = (t, current) => `<button class="type-btn${current === t.id ? " is-active" : ""}" style="--tc:${t.c}" data-act="apply-type" data-val="${t.id}" data-hold="edit-type" data-id="${t.id}" data-from="ayah"><i class="dot"></i>${escapeHTML(t.n)}<small>${t.g === "h" ? "حفظ" : "مراجعة"}</small></button>`;
 
@@ -2653,6 +2748,7 @@ function moreView() {
             ["journey", "رحلتي", "الإحصائيات والإنجازات", ico('<path d="M4 19V5M4 19h16M8 15l3-4 3 2 4-6"/>')],
         ]],
         ["استكشف", [
+            ["reader", "المصحف", "افتح المصحف من آخر موضع", ico('<rect x="5" y="3.5" width="14" height="17" rx="2.5"/><path d="M9 9h6M9 13h4"/>')],
             ["topics", "الموضوعات", `${getTopics().size} موضوعًا بآياتها`, ico('<path d="M3.5 12.5V5A1.5 1.5 0 0 1 5 3.5h7.5l8 8-8 8z"/><path d="M8 8h.01"/>')],
             ["marks", "التظليلات", "قوائم الحفظ والمراجعة", ico('<path d="M4 20h16M6 16l9-9 3 3-9 9H6z"/>')],
             ["act:open-purposes", "مقاصد السور", "مقصد كل سورة ومحاورها", ico('<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4"/><path d="M12 3.5V8M20.5 12H16"/>')],
@@ -2669,24 +2765,30 @@ function moreView() {
 function guideView() {
     const sections = [
         ["المصحف", [
-            ["تقليب الصفحات", "اسحب بإصبعك لليمين للصفحة التالية ولليسار للسابقة، والورقة تتبع إصبعك كالمصحف الورقي. أو المس الحافة اليسرى للصفحة التالية والحافة اليمنى للسابقة."],
-            ["الاستماع إلى التلاوة", "زر التشغيل (يسار الشريط السفلي) يقرأ من أول الصفحة ويكمل، والضغط المطوّل عليه أو على أي آية يفتح اختيار القارئ والمقطع والتكرار والسرعة. الكلمة الجارية مظلّلة والصفحة تتقلّب تلقائيًا."],
-            ["وضع الحفظ", "من قائمة المصحف (☰) أو من نافذة أي آية اختر «وضع الحفظ»، حدّد الآيات وعدد التكرار: يُسمعك كل آية عدة مرات، ثم تبدأ التسميع من حفظك (ويمكنك إخفاء الآيات بالضغط على العين)، ثم تسجّل حفظك."],
-            ["إخفاء الآيات", "زر العين في الشريط السفلي: ضغطة تُخفي الآيات في أي وقت، وضغطة ثانية تُظهرها. وأثناء التسميع أو الاستماع تظهر الكلمات تباعًا مع القراءة."],
-            ["تمييز الآية", "عند لمس آية تُميَّز بهايلايتر أصفر خفيف، ويزول التمييز عند إغلاق النافذة أو لمس مكان آخر في الصفحة."],
-            ["مؤقّت التسميع", "عند الضغط على الميكروفون يظهر مؤقّت صغير يعدّ مدة تسميعك، ويتوقف إذا أوقفت الميكروفون ويكمل إذا استأنفته، وتجد المدة في ملخّص التسميع."],
-            ["دراسة الآية", "المس أي آية فتظهر نافذتها، وبدّل من التبويبات أسفل نص الآية بين: التفسير، والإعراب، وابن كثير، وأسباب النزول، والقراءات العشر (واضغط اسم الراوي لتسمعها بروايته)، ومقصد السورة، وأصول الكلمات ومواضعها، وألوان التجويد. وفي بطاقة كل سورة (وتفاصيلها، وتُفتح من شعار السورة في المصحف) تجد مقصدها وآياتها التي لها سبب نزول وعدد آيات القراءات. و«المزيد» فيه قائمتا مقاصد السور وأسباب النزول."],
-            ["الانتقال السريع", "اضغط على الجزء (أعلى اليمين) لقائمة الأجزاء، وعلى اسم السورة (أعلى اليسار) لقائمة السور، وعلى رقم الصفحة أو زر ☰ لقائمة المصحف."],
-            ["تظليل الآيات", "المس أي آية ثم اختر القائمة التي تريدها من صف «تظليل». اضغط مطوّلًا على القائمة لتعديل اسمها ولونها أو حذفها."],
-            ["عبارات وآيات مشابهة وموضوعات", "من نافذة الآية تجد ثلاثة أشياء مختلفة: «عبارات متشابهة» (عبارات تتكرر في آيات أخرى وتتبّعها بالمفضلة والملاحظات)، و«آيات مشابهة» (آيات تشترك معها في تسلسل كلمات)، و«الموضوعات» المرتبطة بها."],
+            ["الانتقال إلى المصحف", "أي سورة أو مقطع حفظ أو مراجعة تضغط عليه في القوائم (الرئيسية، السور، المراجعات، مقاطع الحفظ، مقاصد السور) يفتح المصحف مباشرة عند موضعه."],
+            ["تقليب الصفحات", "اسحب بإصبعك لتقليب الصفحة، أو المس الحافة اليسرى للتالية والحافة اليمنى للسابقة."],
+            ["قوائم الانتقال السريع", "اضغط على الجزء (أعلى اليمين) لقائمة الأجزاء، وعلى اسم السورة لقائمة السور، وعلى رقم الصفحة أو زر ☰ لقائمة المصحف وفيها الانتقال لرقم صفحة وآخر موضع حفظ."],
+            ["الاستماع إلى التلاوة", "زر التشغيل يقرأ من أول الصفحة، والضغط المطوّل عليه أو على أي آية يفتح اختيار القارئ والمقطع والتكرار والسرعة. الكلمة الجارية مظلّلة والصفحة تتقلّب تلقائيًا."],
+            ["وضع الحفظ", "من قائمة المصحف أو نافذة الآية: يسمعك المقطع عدة مرات، ثم تسمّعه من حفظك مع إخفاء الآيات، ثم تسجّل حفظك."],
+            ["التسميع وإخفاء الآيات", "اضغط الميكروفون للتسميع، وزر العين يخفي الآيات أو يظهرها في أي وقت."],
+            ["دراسة الآية", "المس أي آية لتظهر نافذتها: التفسير والإعراب وابن كثير وأسباب النزول والقراءات ومقصد السورة وأصول الكلمات وألوان التجويد."],
         ]],
-        ["الحفظ والمراجعة", [
-            ["تسجيل الحفظ", "من «السور» اجعل السورة «قيد الحفظ» ثم سجّل آخر آية حفظتها، ويتحدد البدء تلقائيًا. يمكنك أيضًا الإدخال برقم الصفحة أو الربع."],
-            ["المراجعة", "الرئيسية وصفحة «المراجعة» ترتّبان لك السور حسب الأولوية، وتحسبان ما يحتاج مراجعة بناءً على مستواك."],
+        ["التظليل وتسجيل الحفظ", [
+            ["التظليل", "المس آية ثم اختر من صف «تظليل». والضغط المطوّل على القائمة يعدّل اسمها ولونها أو يحذفها."],
+            ["التسجيل التلقائي", "تظليل آية بقائمة «حفظ» يسجّل مقطعًا من بعد آخر تظليل حفظ في السورة إلى الآية الحالية، وكذلك «المراجعة»، بلا إدخال يدوي. وبلوغ آخر آية يكمل السورة."],
+            ["السور والحالة", "من «السور» تتابع حالة كل سورة وتعدّل بياناتها، وزر «المصحف» في بطاقتها يفتحها مباشرة."],
         ]],
-        ["الاستكشاف والتطبيق", [
-            ["الموضوعات والمتشابهات", "من «المزيد» تتصفح الموضوعات بآياتها، ومن تبويب «المتشابهات» العبارات المتكررة مع تتبّع ما تلتبس عليك."],
-            ["المظهر والنسخ", "من «الإعدادات» تختار المظهر والخطوط ونسخة المصحف، وتأخذ نسخة احتياطية من بياناتك."],
+        ["المراجعة والمتابعة", [
+            ["المراجعة", "الرئيسية وصفحة «المراجعات» ترتّبان السور حسب الأولوية بناءً على مستواك وآخر مراجعة."],
+            ["الأهداف والإحصائيات", "من «المزيد»: الأهداف، السجل الزمني، رحلتي، ومقاطع الحفظ."],
+        ]],
+        ["المذكرة والمهام", [
+            ["حكايتي مع القرآن", "في الرئيسية قبل النشاط: ملاحظات حرة تُكتب كمذكرة، مع عناوين ونقاط وترقيم وقوائم مهام، وخطوط وألوان وأحجام مختلفة لكل سطر من شريط الأدوات أسفل المحرر."],
+            ["مهام اليوم", "أضف مهمة كملاحظة أو قائمة مهام، وتتابع نسبة إنجازها."],
+        ]],
+        ["الاستكشاف والإعدادات", [
+            ["المزيد", "الموضوعات والمتشابهات ومقاصد السور وأسباب النزول والتظليلات، والمصحف، كلها من هنا."],
+            ["الإعدادات", "مقسّمة لأقسام قابلة للبحث: المظهر والخطوط، المصحف والتجويد (عادي أو ملوّن)، الاستماع، الحفظ، الأذونات، والنسخ الاحتياطي. وفي كل قسم زر رجوع بالأعلى."],
         ]],
     ];
     return `<h2>دليل الاستخدام</h2>${sections.map(([title, items]) => `<h3 class="more-title">${title}</h3>${items.map(([head, text]) => `<div class="card guide-card"><b>${head}</b><p>${text}</p></div>`).join("")}`).join("")}`;
@@ -2697,7 +2799,7 @@ function readerHeader(page) {
     const [endSura, endAya] = pageEnd(page), [firstSura, firstAya] = pageStart(page);
     const juz = juzOfAyah(endSura, endAya);
     const q = QURAN_META.quarters.findIndex(([s, a]) => cmpKey(s, a, firstSura, firstAya) >= 0 && cmpKey(s, a, endSura, endAya) <= 0);
-    const hizbLabel = q < 0 ? "" : `${["الحزب", "ربع الحزب", "نصف الحزب", "ثلاثة أرباع الحزب"][q % 4]} ${Math.floor(q / 4) + 1}`;
+    const hizbLabel = q < 0 ? "" : `${["الْحِزْبُ", "رُبُعُ الْحِزْبِ", "نِصْفُ الْحِزْبِ", "ثَلَاثَةُ أَرْبَاعِ الْحِزْبِ"][q % 4]} ${String(Math.floor(q / 4) + 1).replace(/\d/g, d => "٠١٢٣٤٥٦٧٨٩"[d])}`;
     const sids = [...new Set(ayahsOnPage(page).map(([sura]) => sura))], names = sids.map(sura => SURAHS[sura - 1].name).join(" ");
     const icon = path => `<svg viewBox="0 0 24 24" aria-hidden="true">${path}</svg>`;
     return `<div class="m-top">
@@ -2740,10 +2842,10 @@ function marksView() {
 
 function settingsView() {
     const g = state.g, levels = [0, 1, 2, 3];
-    if (ui.setSec === undefined) ui.setSec = "look";
+    if (ui.setSec === undefined) ui.setSec = "";
     if (ui.setQ) queueMicrotask(setSearchApply);   // يعيد تطبيق البحث بعد إعادة الرسم
     const fonts = `<h2>خطوط التطبيق</h2><p class="muted">اختر خطًا لكل مستوى، ويتغيّر التطبيق كله فورًا. خط المصحف نفسه ثابت (العثماني) لأن تقسيم الأسطر مبني عليه.</p>
- ${[["d", "العناوين الرئيسية", "رحلة حفظ كتاب الله"], ["u", "الواجهة والعناوين الفرعية", "الإعدادات · المراجعة · مقاطع الحفظ"], ["b", "النصوص والملاحظات", "اللهم اجعل القرآن ربيع قلوبنا"]].map(([k, label, sample]) => { const cur = appFonts()[k]; return `<label>${label}<select data-field="appFont:${k}">${APP_FONTS.map(([f, n]) => `<option value="${f}"${cur === f ? " selected" : ""}>${n}</option>`).join("")}</select></label><div class="font-preview" style="font-family:'${cur}',serif">${sample}</div>`; }).join("")}
+ ${[["d", "العناوين الرئيسية", "رحلة لحفظ كتاب الله"], ["u", "الواجهة والعناوين الفرعية", "الإعدادات · المراجعة · مقاطع الحفظ"], ["b", "النصوص والملاحظات", "اللهم اجعل القرآن ربيع قلوبنا"]].map(([k, label, sample]) => { const cur = appFonts()[k]; return `<label>${label}<select data-field="appFont:${k}">${APP_FONTS.map(([f, n]) => `<option value="${f}"${cur === f ? " selected" : ""}>${n}</option>`).join("")}</select></label><div class="font-preview" style="font-family:'${cur}',serif">${sample}</div>`; }).join("")}
  <button data-act="reset-fonts" style="width:100%;margin-bottom:8px">استعادة الخطوط الافتراضية</button>`;
     const hifz = `<h2>تقدير الإتقان %</h2><label>عند أول حفظ<input type="number" data-field="baseMastery" value="${g.base}"></label><div class="grid-4">${levels.map(k => `<label>${LEVEL_LABELS[k + 1]}<input type="number" data-field="levelMastery:${k}" value="${g.m[k]}"></label>`).join("")}</div>
  <h2>أيام المراجعة بعد كل مستوى</h2><div class="grid-4">${levels.map(k => `<label>${LEVEL_LABELS[k + 1]}<input type="number" min="1" data-field="reviewInterval:${k}" value="${g.iv[k]}"></label>`).join("")}</div>
@@ -2753,7 +2855,7 @@ function settingsView() {
     const about = `<p class="muted">نص القرآن الكريم (الرسم العثماني) وبنية الصفحات من مشروع تنزيل tanzil.net، مرخّص CC BY 3.0، والنص كما هو دون تعديل.<br>خطوط المصحف وإطار عناوين السور من مجمع الملك فهد لطباعة المصحف الشريف عبر مكتبة QUL.<br>بيانات الموضوعات وآيات التشابه والتجويد وأصول الكلمات من مكتبة QUL.<br>التفسير: «المختصر في تفسير القرآن الكريم». الإعراب: «إعراب القرآن الميسّر». ابن كثير: «تفسير القرآن العظيم». أسباب النزول: «المحرر في أسباب نزول القرآن» لخالد المزيني. القراءات العشر وبعض الأصوات من موسوعة القرآن quranpedia.net. مقاصد السور: ملخصات تعليمية موجزة.<br>أصوات التلاوة من خوادم Tarteel وmp3quran.</p><p class="muted" style="text-align:center;margin-top:12px">الإصدار ${APP_VERSION} · نظام التنقل ٢</p>`;
     const secs = [
         ["look", "المظهر والخطوط", "الألوان وخطوط التطبيق", "مظهر ثيم لون اسود ذهبي داكن فاتح اخضر خط خطوط", themePickerHTML() + fonts],
-        ["mushaf", "المصحف والتجويد", "نسخة المصحف وتلوين التجويد ومعنى الألوان", "مصحف نسخة طبعة تجويد الوان مد غنة اخفاء ادغام قلقلة علامات وقف حركات", editionsHTML() + tajweedHTML()],
+        ["mushaf", "المصحف والتجويد", "نسخة المصحف وتلوين التجويد ومعنى الألوان", "مصحف نسخة طبعة تجويد ملون عادي", editionsHTML() + tajweedHTML()],
         ["audio", "الاستماع والتلاوة", "القارئ والتكرار والسرعة", "استماع تلاوة قارئ منشاوي حصري عبد الباسط تكرار سرعة صوت", auSettingsHTML()],
         ["hifz", "الحفظ والمراجعة", "تقدير الإتقان وأيام المراجعة", "حفظ مراجعة اتقان ايام مستوى", hifz],
         ["perm", "الأذونات", "الميكروفون والتخزين", "اذونات ميكروفون تخزين خصوصية", permissionsHTML()],
@@ -2784,17 +2886,27 @@ function editorView() {
         return homeView();
     }
     const block = note.b[ui.editor.block] || note.b[0];
-    const blockHTML = (b, j) => `<div class="block${ui.editor.block === j ? " is-selected" : ""}">${b.k === "c" ? `<input type="checkbox" data-field="blockDone:${j}" ${b.d ? "checked" : ""}>` : ""}<textarea rows="1" data-block="${j}" data-field="blockText:${j}" style="font-size:${b.s || (b.k === "h" ? 24 : 18)}px;${b.c ? "color:" + b.c + ";" : ""}${b.f != null ? `font-family:'${FONT_FAMILIES[b.f]}',serif;` : ""}${b.k === "h" ? "font-weight:700;" : ""}${b.k === "c" && b.d ? "text-decoration:line-through;opacity:.6;" : ""}" placeholder="${b.k === "h" ? "عنوان" : b.k === "c" ? "مهمة" : "اكتب هنا…"}">${escapeHTML(b.x)}</textarea></div>`;
-    return `<div class="editor-head"><button data-act="close-editor">رجوع</button><button class="btn-danger" data-act="delete-note">حذف</button></div><input class="editor-title" data-field="noteTitle" value="${escapeHTML(note.t)}" placeholder="العنوان"><div>${note.b.map(blockHTML).join("")}</div>
- <div class="editor-bar">${[["p", "نص"], ["h", "عنوان"], ["c", "قائمة"]].map(([v, l]) => `<button data-act="format-block" data-val="kind:${v}" class="${block.k === v ? "is-active" : ""}">${l}</button>`).join("")}<button data-act="format-block" data-val="size:-2">A−</button><button data-act="format-block" data-val="size:2">A+</button>
- <select data-field="blockColor"><option value="">اللون</option>${TEXT_COLORS.slice(1).map((c, k) => `<option value="${k + 1}" style="color:${c}">● ${k + 1}</option>`).join("")}</select><select data-field="blockFont"><option value="">الخط</option>${FONT_LABELS.map((l, k) => `<option value="${k}">${l}</option>`).join("")}</select>
- <button data-act="format-block" data-val="add:">+ سطر</button><button data-act="format-block" data-val="remove:">حذف السطر</button></div>`;
+    const markOf = (b, j) => {
+        if (b.k === "c") return `<input type="checkbox" data-field="blockDone:${j}" ${b.d ? "checked" : ""}>`;
+        if (b.k === "b") return '<span class="blk-mark">•</span>';
+        if (b.k !== "n") return "";
+        let n = 0; for (let i = j; i >= 0 && note.b[i].k === "n"; i--) n++;
+        return `<span class="blk-mark">${toArabicDigits(n)}.</span>`;
+    };
+    const blockHTML = (b, j) => `<div class="block${ui.editor.block === j ? " is-selected" : ""}">${markOf(b, j)}<textarea rows="1" data-block="${j}" data-field="blockText:${j}" style="font-size:${b.s || (b.k === "h" ? 24 : 18)}px;${b.c ? "color:" + b.c + ";" : ""}${b.f != null ? `font-family:'${FONT_FAMILIES[b.f]}',serif;` : ""}${b.k === "h" ? "font-weight:700;" : ""}${b.k === "c" && b.d ? "text-decoration:line-through;opacity:.6;" : ""}" placeholder="${b.k === "h" ? "عنوان" : b.k === "c" ? "مهمة" : b.k === "b" || b.k === "n" ? "عنصر" : "اكتب هنا…"}">${escapeHTML(b.x)}</textarea></div>`;
+    const btn = (val, label, on, style = "") => `<button data-act="format-block" data-val="${val}" class="${on ? "is-active" : ""}"${style ? ` style="${style}"` : ""}>${label}</button>`;
+    const kinds = [["p", "نص"], ["h", "عنوان"], ["b", "• نقاط"], ["n", "١. ترقيم"], ["c", "☑ مهام"]];
+    return `<div class="editor-head"><button class="back-btn" data-act="close-editor" aria-label="رجوع">${BACK_ICON}</button><button class="btn-danger" data-act="delete-note">حذف</button></div><input class="editor-title" data-field="noteTitle" value="${escapeHTML(note.t)}" placeholder="العنوان"><div>${note.b.map(blockHTML).join("")}</div>
+ <div class="editor-bar"><div class="eb-row">${kinds.map(([v, l]) => btn("kind:" + v, l, block.k === v)).join("")}</div>
+ <div class="eb-row">${btn("size:-2", "A−")}${btn("size:2", "A+")}${btn("add:", "+ سطر")}${btn("remove:", "حذف السطر")}</div>
+ <div class="eb-row eb-colors">${TEXT_COLORS.map((c, k) => `<button class="eb-color${(block.c || "") === c ? " is-active" : ""}" data-act="format-block" data-val="color:${k}" style="--c:${c || "var(--text)"}" aria-label="لون ${k + 1}"></button>`).join("")}</div>
+ <div class="eb-row">${FONT_LABELS.map((l, k) => btn("font:" + k, l, block.f === k, `font-family:'${FONT_FAMILIES[k]}',serif`)).join("")}${btn("font:-1", "الافتراضي", block.f == null)}</div></div>`;
 }
 
 function openEditor(list, index) { if (ui.view !== "editor") navStack.push(snapshot()); ui.editor = { list, index, block: 0 }; ui.view = "editor"; render(); scrollTo(0, 0); }
 
 function insertBlockAfter(position) {
-    const note = currentNote(), source = note.b[position], block = { k: source.k === "c" ? "c" : "p", x: "" };
+    const note = currentNote(), source = note.b[position], block = { k: ["c", "b", "n"].includes(source.k) ? source.k : "p", x: "" };
     if (source.k === "c")
         block.d = false;
     if (source.k !== "h")
@@ -2818,6 +2930,8 @@ function formatBlock(command) {
         if (arg === "c")
             block.d = !!block.d;
     }
+    else if (name === "color") { if (TEXT_COLORS[+arg]) block.c = TEXT_COLORS[+arg]; else delete block.c; }
+    else if (name === "font") { if (+arg >= 0) block.f = +arg; else delete block.f; }
     else if (name === "size")
         block.s = clamp((block.s || (block.k === "h" ? 24 : 18)) + +arg, 12, 48);
     else if (name === "add")
@@ -2844,7 +2958,7 @@ function setAyahHl(sura, aya) {
     if (ui.hl) document.querySelectorAll(`.mushaf .ayah[data-s="${sura}"][data-a="${aya}"]`).forEach(el => el.classList.add("ayah-hl"));
 }
 function clearAyahHl() { if (ui.hl) setAyahHl(0, 0); }
-function closeModal() { ui.modal = null; ui.confirmAction = null; showModal(""); clearAyahHl(); }
+function closeModal() { recDrop(); ui.subBack = 0; ui.modal = null; ui.confirmAction = null; showModal(""); clearAyahHl(); }
 
 function askConfirm(title, onConfirm) { ui.confirmAction = onConfirm; showModal(`<h3>${title}</h3><button class="btn-primary" data-act="confirm-yes">تأكيد</button><button style="width:100%" data-act="close-modal">إلغاء</button>`); }
 
@@ -2940,9 +3054,9 @@ const TAB_OF_VIEW = { topics: "more", topic: "more", guide: "more", marks: "read
 
 /* ===== مظهر التطبيق: تلقائي / فاتح / داكن / ذهبي خفيف / أخضر هادئ ===== */
 const THEMES = [
-    ["auto", "تلقائي", "يتبع إعداد الجهاز", ["#f5efdc", "#171a12", "#4a5a2a"]],
-    ["light", "فاتح", "الألوان الافتراضية", ["#f5efdc", "#fffaf0", "#4a5a2a"]],
-    ["dark", "داكن", "مريح للقراءة ليلًا", ["#171a12", "#21251a", "#a9bd78"]],
+    ["light", "فاتح", "الألوان الافتراضية", ["#F2F1E7", "#FAF9F2", "#2F6F5E"]],
+    ["dark", "داكن", "مريح للقراءة ليلًا", ["#0A1D18", "#102A24", "#4FA58A"]],
+    ["auto", "تلقائي", "يتبع إعداد الجهاز", ["#F2F1E7", "#0A1D18", "#2F6F5E"]],
     ["gold", "ذهبي خفيف", "دفء ذهبي هادئ", ["#faf0d2", "#fffae8", "#7d5f1b"]],
     ["sage", "أخضر هادئ", "درجات خضراء فاتحة", ["#eaf0e0", "#f8fbf3", "#3b5a2e"]],
     ["onyx", "أسود ذهبي", "خلفية سوداء وإطارات ذهبية", ["#000000", "#14110a", "#d4b45a"]]
@@ -3456,61 +3570,6 @@ async function tjRefreshStatus() {
     if (ui.view === "settings" || (ui.view === "reader" && state.tj)) render();
 }
 
-/** قارئ zip مصغَّر: يقرأ الفهرس المركزي ثم كل ملف على حدة (مخزَّن أو deflate) بلا تحميل الملف كله في الذاكرة. */
-async function zipEntries(file) {
-    const tailSize = Math.min(file.size, 65557), tail = new DataView(await file.slice(file.size - tailSize).arrayBuffer());
-    let eocd = -1;
-    for (let i = tailSize - 22; i >= 0; i--) if (tail.getUint32(i, true) === 0x06054b50) { eocd = i; break; }
-    if (eocd < 0) throw new Error("ليس ملف zip صالحًا");
-    const total = tail.getUint16(eocd + 10, true), size = tail.getUint32(eocd + 12, true), offset = tail.getUint32(eocd + 16, true);
-    if (offset === 0xFFFFFFFF) throw new Error("صيغة zip64 غير مدعومة");
-    const cd = new DataView(await file.slice(offset, offset + size).arrayBuffer()), entries = [];
-    for (let i = 0, p = 0; i < total; i++) {
-        if (cd.getUint32(p, true) !== 0x02014b50) throw new Error("فهرس zip تالف");
-        const nameLen = cd.getUint16(p + 28, true), extraLen = cd.getUint16(p + 30, true), commentLen = cd.getUint16(p + 32, true);
-        entries.push({ method: cd.getUint16(p + 10, true), csize: cd.getUint32(p + 20, true), offset: cd.getUint32(p + 42, true), name: new TextDecoder().decode(new Uint8Array(cd.buffer, p + 46, nameLen)) });
-        p += 46 + nameLen + extraLen + commentLen;
-    }
-    return entries;
-}
-async function zipEntryData(file, entry) {
-    const lh = new DataView(await file.slice(entry.offset, entry.offset + 30).arrayBuffer());
-    const start = entry.offset + 30 + lh.getUint16(26, true) + lh.getUint16(28, true), raw = file.slice(start, start + entry.csize);
-    if (entry.method === 0) return raw.arrayBuffer();
-    if (entry.method === 8 && typeof DecompressionStream !== "undefined") return new Response(raw.stream().pipeThrough(new DecompressionStream("deflate-raw"))).arrayBuffer();
-    throw new Error("طريقة ضغط غير مدعومة في هذا المتصفح");
-}
-
-async function tjImportZip(file) {
-    if (!file || TJ.busy) return;
-    TJ.busy = true;
-    showModal(`<h3>تثبيت خطوط التجويد</h3><p class="muted" id="tjStatus">جارٍ قراءة الملف…</p><div class="progress"><i id="tjBar" style="width:0%"></i></div><p class="muted">لا تغلق الصفحة حتى ينتهي التثبيت.</p>`);
-    const tick = () => new Promise(resolve => setTimeout(resolve, 0));
-    try {
-        const entries = (await zipEntries(file)).map(e => ({ ...e, page: +((/(?:^|\/)p(\d+)\.woff2$/i.exec(e.name) || [])[1] || 0) })).filter(e => e.page >= 1 && e.page <= PAGE_COUNT);
-        const found = new Set(entries.map(e => e.page)).size;
-        if (found < PAGE_COUNT) throw new Error(`الحزمة ناقصة: وُجد ${found} من ${PAGE_COUNT} خطًّا`);
-        await tjClearStored();
-        let done = 0;
-        for (const entry of entries) {
-            const buf = await zipEntryData(file, entry);
-            if (new TextDecoder().decode(new Uint8Array(buf, 0, 4)) !== "wOF2") throw new Error(`الملف ${entry.name} ليس خط woff2`);
-            await tjPut(entry.page, buf);
-            if (++done % 10 === 0 || done === entries.length) {
-                const bar = $("#tjBar"), status = $("#tjStatus");
-                if (bar) bar.style.width = (done / entries.length * 100) + "%";
-                if (status) status.textContent = `${done} من ${entries.length}`;
-                await tick();
-            }
-        }
-        try { if (navigator.storage && navigator.storage.persist) await navigator.storage.persist(); } catch (err) { }   // حماية الخطوط من الحذف التلقائي
-        closeModal(); toast("تم تثبيت خطوط التجويد");
-    } catch (err) {
-        closeModal(); toast("تعذّر التثبيت: " + err.message);
-        await tjClearStored().catch(() => { });
-    } finally { TJ.busy = false; await tjRefreshStatus(); }
-}
-
 async function tjLoadPage(page) {
     if (tjFaces.has(page)) return false;
     const buf = await tjGet(page);
@@ -3540,19 +3599,14 @@ function permissionsHTML() {
     const persistText = PERM.persist === true ? "مفعّل" : PERM.persist === false ? "غير مفعّل" : "غير متاح";
     return `<h2>الأذونات</h2><p class="muted">ما يحتاجه التطبيق من جهازك، وتتحكم فيه بنفسك.</p>
     ${row("الميكروفون", "للتسميع الصوتي فقط، ولا يُحفظ أي تسجيل.", micText, PERM.mic === "granted" ? "" : `<button data-act="perm-mic">${PERM.mic === "denied" ? "كيف أفعّله؟" : "طلب الإذن"}</button>`)}
-    ${row("التخزين الدائم", "يحمي خطوط التجويد والنسخ المستوردة من الحذف التلقائي عند امتلاء مساحة الجهاز.", persistText, PERM.persist === false ? '<button data-act="perm-persist">طلب الإذن</button>' : "")}`;
+    ${row("التخزين الدائم", "يحمي النسخ المستوردة وبياناتك من الحذف التلقائي عند امتلاء مساحة الجهاز.", persistText, PERM.persist === false ? '<button data-act="perm-persist">طلب الإذن</button>' : "")}`;
 }
 
 function tajweedHTML() {
-    const on = state.tj || 0, v4 = activeEditionId() === "v4";
-    const status = TJ.busy ? "جارٍ التثبيت…" : TJ.ready ? `مثبّتة · ${TJ.count} خطًّا${TJ.memory ? " (مؤقتة: تُحذف عند إغلاق الصفحة لأن المتصفح لا يسمح بالتخزين الدائم)" : ""}` : "غير مثبّتة";
+    const on = state.tj === 2 ? 2 : 0;
     const mode = (v, name, hint) => `<button class="theme-card${on === v ? " is-active" : ""}" data-act="set-textmode" data-val="${v}" aria-pressed="${on === v}"><span class="theme-swatch tj-sw tj-${v}"></span><b>${name}</b><small>${hint}</small></button>`;
-    return `<h2>نمط النص في المصحف</h2><p class="muted">«عادي» بالخط العثماني الحالي. «تجويد ملوّن» نسخة كاملة من المصحف تلوّن الأحكام في كل الصفحات، وهي جاهزة بلا تثبيت وتعمل مع جميع نسخ المصحف.</p>
-    <div class="theme-grid">${mode(0, "عادي", "الخط العثماني")}${mode(2, "تجويد ملوّن", "كل المصحف · جاهز")}${mode(1, "خطوط V4", "حزمة خطوط خارجية")}</div>
-    ${on === 1 && !v4 ? '<p class="muted">نمط خطوط V4 يعمل مع «طبعة ١٤٤١هـ» فقط، فيبقى النص عاديًّا في النسخة المفعّلة حاليًّا.</p>' : ""}
-    ${tjLegendHTML()}
-    <div class="card ed-row"><div class="ed-info"><b>حزمة خطوط V4 (اختيارية)</b><span class="muted">${status}</span></div><div class="ed-actions">${TJ.ready && !TJ.busy ? '<button class="btn-danger" data-act="tj-delete">حذف</button>' : ""}</div></div>
-    ${TJ.ready ? "" : `<label class="btn-primary ed-import">+ استيراد حزمة الخطوط (ملف zip نحو ٥٠ ميجا)<input id="tjFile" type="file" accept=".zip,application/zip" hidden></label><p class="muted">لا تحتاجها مع «تجويد ملوّن». اختر ملف woff2.zip إن أردت خطوط صفحات QPC V4، فيُثبَّت مرة واحدة على جهازك ثم يعمل بدون إنترنت.</p>`}`;
+    return `<h2>نمط النص في المصحف</h2><p class="muted">«عادي» بالخط العثماني. «تجويد ملوّن» يلوّن أحكام التجويد في كل صفحات المصحف ويعمل مع جميع النسخ.</p>
+    <div class="theme-grid">${mode(0, "عادي", "الخط العثماني")}${mode(2, "تجويد ملوّن", "كل المصحف")}</div>`;
 }
 
 /* ===== نسخ المصحف: استيراد ملفات QUL (SQLite أو JSON)، تطبيق نسخة، حذف نسخة ===== */
@@ -3692,7 +3746,7 @@ function render() {
     document.body.classList.toggle("reader-mode", ui.view === "reader");
     $("#app").classList.toggle("is-editing", editing);
     const body = safeView();
-    $("#app").innerHTML = (storageAvailable ? "" : '<p class="notice">التخزين غير متاح هنا، البيانات مؤقتة وستضيع عند الإغلاق</p>') + (ui.view === "home" || ui.view === "reader" || editing ? "" : '<div class="page-title">رحلة حفظ كتاب الله</div>') + body;
+    $("#app").innerHTML = (storageAvailable ? "" : '<p class="notice">التخزين غير متاح هنا، البيانات مؤقتة وستضيع عند الإغلاق</p>') + (ui.view === "home" || ui.view === "reader" || editing ? "" : (ROOT_VIEWS.includes(ui.view) || body.includes("back-btn") ? "" : backButton()) + '<div class="page-title">رحلة لحفظ كتاب الله</div>') + body;
     document.querySelectorAll(".card--link,.card__head[data-act],.tile[data-act],.note-preview").forEach(el => { el.setAttribute("role", "button"); el.tabIndex = 0; });
     const activeTab = TAB_OF_VIEW[ui.view] || ui.view;
     document.querySelectorAll(".tabbar button").forEach(b => { b.classList.toggle("is-active", b.dataset.val === activeTab); b.setAttribute("aria-current", b.dataset.val === activeTab ? "page" : "false"); });
@@ -3831,26 +3885,18 @@ const navigate = (view, { push = true } = {}) => {
 
 /** رجوع خطوة واحدة: يقفل النافذة المفتوحة أولًا، ثم يعود للشاشة السابقة؛ يعيد false إن كنت في الرئيسية ولا شيء قبلها. */
 function goBack() {
-    if ($("#modal .overlay")) { closeModal(); return true; }
+    if ($("#modal .overlay")) { if (ui.subBack && ui.ayah) { ui.subBack = 0; openTafsir(...ui.ayah); return true; } closeModal(); return true; }
     if (rcOn()) { rcClose(); return true; }
+    if (ui.view === "settings" && ui.setSec) { ui.setSec = ""; render(); scrollTo(0, 0); return true; }
     if (ui.view === "editor") { saveState(); ui.editor = null; }
-    if (navStack.length) { restoreSnapshot(navStack.pop()); return true; }
+    if (navStack.length) { const wasTopic = ui.view === "topic" && ui.retSheet; restoreSnapshot(navStack.pop()); if (wasTopic && ui.view === "reader") { ui.ayah = ui.retSheet; ui.retSheet = null; openAyahTopics(); ui.subBack = 1; } return true; }
     if (ui.view !== "home") { ui.view = "home"; render(); scrollTo(0, 0); return true; }
     return false;
 }
 
 const goBackOr = view => { if (!goBack()) navigate(view, { push: false }); };
 
-function exportBackup() {
-    try {
-        const blob = new Blob([JSON.stringify(state)], { type: "application/json" });
-        const url = URL.createObjectURL(blob), link = document.createElement("a");
-        link.href = url; link.download = `hifz-backup-${todayISO()}.json`;
-        link.style.display = "none"; document.body.appendChild(link); link.click(); link.remove();
-        setTimeout(() => URL.revokeObjectURL(url), 1500);
-        toast("تم تجهيز النسخة الاحتياطية");
-    } catch (err) { console.error(err); toast("تعذّر إنشاء النسخة الاحتياطية"); }
-}
+function exportBackup() { const link = document.createElement("a"); link.href = URL.createObjectURL(new Blob([JSON.stringify(state)], { type: "application/json" })); link.download = `hifz-backup-${todayISO()}.json`; link.click(); }
 
 function deleteRecord(kind, id) { askConfirm("حذف هذا السجل؟", () => { const key = kind === "review" ? "r" : "hifz"; const removed = state[key].find(r => r.id === id); state[key] = state[key].filter(r => r.id !== id); if (removed)
     reconcileAutoStatus(removed.i); saveState(); render(); }); }
@@ -3871,8 +3917,7 @@ const ACTIONS = {
     "set-theme": ({ val }) => { if (!THEMES.some(t => t[0] === val)) return; state.th = val; saveState(); render(); },
     "set-edition": ({ val }) => { if (!BUILTIN_EDITIONS.some(e => e.id === val) && !state.ed.c.some(e => e.id === val)) return; state.ed.a = val; saveState(); render(); toast("تم تطبيق النسخة"); },
     "del-edition": ({ val }) => askConfirm("حذف هذه النسخة المستوردة؟", () => { state.ed.c = state.ed.c.filter(e => e.id !== val); if (state.ed.a === val) state.ed.a = "v4"; saveState(); render(); }),
-    "set-textmode": ({ val }) => { const v = +val; if (v === 1 && !TJ.ready) { toast("ثبّت حزمة خطوط التجويد أولًا"); return; } state.tj = v; saveState(); if (v === 2) tjxLoad(); render(); },
-    "tj-delete": () => askConfirm("حذف حزمة خطوط التجويد من جهازك؟ يمكنك استيرادها مرة أخرى.", async () => { await tjClearStored(); state.tj = 0; saveState(); await tjRefreshStatus(); toast("تم حذف الحزمة"); }),
+    "set-textmode": ({ val }) => { const v = +val === 2 ? 2 : 0; state.tj = v; saveState(); if (v === 2) tjxLoad(); render(); },
     "rc-open": () => { rcOpen(); if (SR_CLASS) rcToggleMic(); },
     "quick-recite": () => { navigate("reader"); rcOpen(); if (SR_CLASS) rcToggleMic(); },
     "rc-allow-mic": () => rcAllowMic(),
@@ -3900,11 +3945,8 @@ const ACTIONS = {
     "close-reader": () => goBackOr(ui.readerFrom && ui.readerFrom !== "reader" ? ui.readerFrom : "home"),
     "open-marks": () => { closeModal(); navigate("marks"); },
     "ayah-group": ({ val }) => openAyahSheet(...ui.ayah, val),
-    "open-mushaf": ({ id }) => {
-        const stop = surahStatus(+id) === Status.IN_PROGRESS ? (state.s[+id] || {}).stop : 0;
-        setReaderPage(pageOfAyah(+id, stop || 1), false);
-        navigate("reader");
-    },
+    "open-mushaf": ({ id }) => goToReaderPage(pageOfAyah(+id, 1)),
+    "go-back": () => goBackOr("home"),
     "mark-filter": ({ val }) => { ui.markFilter = ui.markFilter === val ? "all" : val; render(); },
     "apply-type": ({ val }) => {
         const key = markKey(...ui.ayah), at = state.mk.at;
@@ -4098,7 +4140,7 @@ function auBarPaint() { const bar = $("#auBar"); if (bar) { bar.hidden = !AU.cur
 function auMedia() {
     if (!("mediaSession" in navigator)) return;
     try {
-        navigator.mediaSession.metadata = AU.cur ? new MediaMetadata({ title: `${SURAHS[AU.cur[0] - 1].name} — الآية ${AU.cur[1]}`, artist: `${auRec().name} (${auRec().style})`, album: "رحلة حفظ كتاب الله" }) : null;
+        navigator.mediaSession.metadata = AU.cur ? new MediaMetadata({ title: `${SURAHS[AU.cur[0] - 1].name} — الآية ${AU.cur[1]}`, artist: `${auRec().name} (${auRec().style})`, album: "رحلة لحفظ كتاب الله" }) : null;
     } catch (err) { }
 }
 function auPaint() {
@@ -4272,16 +4314,6 @@ async function tjxLoad() {
     try { TJX.words = (await tfLoad("tj", "tj-data")).map(tjxDecode); }
     catch (err) { toast("متصفحك لا يدعم هذا النمط، حدّثه ثم أعد المحاولة"); state.tj = 0; saveState(); }
     TJX.busy = false; render();
-}
-function tjLegendHTML() {
-    const row = (icon, cls, name, desc) => `<div class="tj-lg"><i class="${cls}">${icon}</i><span><b>${name}</b><small>${desc}</small></span></div>`;
-    const group = (title, names) => `<div class="card tj-card"><h3>${title}</h3>${TJ_RULES.filter(r => names.includes(r[0])).map(([n, label, desc]) => row("●", "tj-" + n, label, desc)).join("")}</div>`;
-    return `<h2>معنى الألوان</h2>
-        ${group("المدود وعدد حركاتها", ["madda_normal", "madda_permissible", "madda_necessary", "madda_obligatory_mottasel", "madda_obligatory_monfasel"])}
-        ${group("الغنة والإدغام والإخفاء والإقلاب", ["ghunnah", "idgham_ghunnah", "idgham_wo_ghunnah", "idgham_shafawi", "idgham_mutajanisayn", "idgham_mutaqaribayn", "ikhafa", "ikhafa_shafawi", "iqlab"])}
-        ${group("القلقلة والحروف غير المنطوقة", ["qalaqah", "ham_wasl", "laam_shamsiyah", "slnt"])}
-        <h2>علامات المد والوقف والحركات</h2>
-        <div class="card tj-card">${TJ_SIGNS.map(([g, name, desc]) => row(g, "tj-sgn", name, desc)).join("")}</div>`;
 }
 /* --- أسباب النزول والقراءات ومقاصد السور --- */
 function tfEmpty(id, sura, aya) {
@@ -4520,24 +4552,24 @@ async function openTafsir(sura, aya) {
         if (pg !== ui.readerPage && !AU.cur) setReaderPage(pg);
         if (ui.hl !== sura + ":" + aya) setAyahHl(sura, aya);
     }
-    const src = TAFSIRS.find(t => t.id === TF.src), M = getMushaf(), [f, l] = rcAyahRange(sura, aya);
+    const xs = ui.xsrc && xAvail(ui.xsrc, sura, aya) ? ui.xsrc : (ui.xsrc = null), src = xs ? { id: xs, name: "" } : TAFSIRS.find(t => t.id === TF.src), M = getMushaf(), [f, l] = rcAyahRange(sura, aya);
     const page = pageOfAyah(sura, aya);
     const draw = (verse, body, sized) => {
         const phrases = mutGroupsOfAyah(sura, aya).length, sim = similarAyahs(sura, aya).length, topics = topicsOfAyah(sura, aya).length;
-        const rel = [phrases ? ["ayah-phrases", `عبارات متشابهة (${phrases})`] : 0, sim ? ["ayah-similar", `آيات مشابهة (${sim})`] : 0, topics ? ["ayah-topics", `الموضوعات (${topics})`] : 0].filter(Boolean);
+        const rel = [phrases ? ["ayah-phrases", `متشابهات (${phrases})`] : 0, sim ? ["ayah-similar", `مشابهة (${sim})`] : 0, topics ? ["ayah-topics", `الموضوعات (${topics})`] : 0].filter(Boolean);
         const tabs = TAFSIRS.filter(t => t.id === TF.src || !((t.id === "asbab" && !hasAsbab(sura, aya)) || (t.id === "qiraat" && !hasQiraat(sura, aya))));
         showModal(`<div class="ay-fixed">
             <div class="ay-top">
                 <button class="ay-nav" data-act="tf-go" data-val="-1" aria-label="الآية السابقة"${tfPrev([sura, aya]) ? "" : " disabled"}>›</button>
-                <div class="ay-title"><b>${SURAHS[sura - 1].name} — الآية ${aya}</b><small>صفحة ${page} · ${pageLabel(page)}</small></div>
+                <div class="ay-title"><b><button class="ay-link" data-act="ay-detail" data-id="${sura}">${SURAHS[sura - 1].name}</button> — الآية ${aya}</b><small>صفحة ${page} · ${pageLabel(page)}</small></div>
                 <button class="ay-nav" data-act="tf-go" data-val="1" aria-label="الآية التالية"${tfNext([sura, aya]) ? "" : " disabled"}>‹</button>
                 <button class="ay-x" data-act="close-modal" aria-label="إغلاق">×</button>
             </div>
             <div class="tf-verse">${verse}</div>
-            <div class="tf-tabs ay-tabs">${tabs.map(t => `<button data-act="tf-src" data-val="${t.id}" class="${t.id === TF.src ? "is-active" : ""}">${t.short}</button>`).join("")}</div>
+            <div class="tf-tabs ay-tabs">${tabs.map(t => `<button data-act="tf-src" data-val="${t.id}" class="${!xs && t.id === TF.src ? "is-active" : ""}">${t.short}</button>`).join("")}${rel.map(([act, label]) => { const x = act.replace("ayah-", "x-"); return `<button data-act="tf-x" data-val="${x}" class="tab-rel${xs === x ? " is-active" : ""}">${label}</button>`; }).join("")}</div>
         </div>
         <div class="ay-body">${body}
-            ${rel.length ? `<div class="ay-rel">${rel.map(([act, label]) => `<button data-act="${act}">${label}</button>`).join("")}</div>` : ""}
+            
             ${sized ? '<div class="ay-sz"><button data-act="tf-size" data-val="-1">A−</button><button data-act="tf-size" data-val="1">A+</button></div>' : ""}
         </div>
         <div class="ay-foot">${ayMarksHTML(sura, aya)}${ayActionsHTML(sura, aya)}</div>`);
@@ -4548,7 +4580,7 @@ async function openTafsir(sura, aya) {
     const slow = setTimeout(() => draw(verse0, '<p class="muted">جارٍ التحميل…</p>', false), 180);   // لا تنتظر التحميل الأول بشاشة فارغة
     let verse = verse0, body, sized = false;
     try {
-        if (src.id === "words") body = await wsBody(sura, aya);
+        if (xs) body = xBody(xs); else if (src.id === "words") body = await wsBody(sura, aya);
         else if (src.id === "qiraat") body = await qrBody(sura, aya);
         else if (src.id === "purpose") body = spBody(sura);
         else if (src.id === "tajweed") { const t = await tjBody(sura, aya); verse = t.verse; body = t.body; }
@@ -4581,7 +4613,7 @@ function readerTap(e) {
     if (ui.view !== "reader" || $("#modal .overlay")) return;
     if (performance.now() - (flip.lastTurn || 0) < 700) return;   // النقرة التي تلي تقليب الصفحة
     const span = e.target.closest && e.target.closest('#book [data-hold="open-ayah"]');
-    if (span) { ACTIONS["open-ayah"](span.dataset); return; }
+    if (span) { const k = span.dataset.s + ":" + span.dataset.a; if (ui.hl === k) ACTIONS["open-ayah"](span.dataset); else setAyahHl(+span.dataset.s, +span.dataset.a); return; }
     clearAyahHl();
 }
 document.addEventListener("click", e => {
@@ -4742,7 +4774,6 @@ const ELEMENT_HANDLERS = {
     jumpJuz: v => { if (+v) goToReaderPage(pageOfAyah(...QURAN_META.juz[+v - 1])); },
     formSurah: refreshHifzHint,
     editionFile: (v, el) => importEditionFile(el.files[0]),
-    tjFile: (v, el) => tjImportZip(el.files[0]),
     importFile: (v, el) => {
         const file = el.files[0];
         if (!file)
@@ -4793,19 +4824,146 @@ document.addEventListener("beforeinput", e => { const el = e.target; if (ui.view
     insertBlockAfter(+el.dataset.block);
 } });
 
+
+/* ===== جولة 6: ربط علامات الحفظ والمراجعة بالسجل، وتحسين الرجوع ===== */
+(function () {
+    MARK_COLORS.splice(0, MARK_COLORS.length, "#6B8F71", "#8FAE8B", "#5F8F8A", "#7FA7A8", "#B89A4A", "#D4B56A", "#C98F6A", "#B77A6E", "#A9899E", "#8A8FB0", "#9A8466", "#8A9488");
+    const NEWC = { h: ["#4f8fc0", "#6B8F71"], r: ["#d9625b", "#C2A15A"], n: ["#e0b030", "#B89A4A"] };
+    state.mk.types.forEach(t => { const m = NEWC[t.id]; if (m && t.c === m[0]) t.c = m[1]; });
+    const R = () => state.mk.rec || (state.mk.rec = {}), sur = k => +k.split(":")[0], ay = k => +k.split(":")[1], tracked = v => v === "h" || v === "r";
+    function dropRecord(key) {
+        const rec = R()[key]; if (!rec) return;
+        delete R()[key];
+        const arr = rec.k === "h" ? state.hifz : state.r, n = arr.findIndex(r => r.id === rec.id);
+        if (n >= 0) arr.splice(n, 1);
+        reconcileAutoStatus(sur(key));
+    }
+    function addRecord(key, tid) {
+        const s = sur(key), a = ay(key), info = surahInfo(s), d = todayISO(), id = Date.now() + Math.floor(Math.random() * 999);
+        if (tid === "h") {
+            // بداية المقطع = بعد آخر تظليل «حفظ» سابق في السورة، وإن لم يوجد فبعد موضع التوقف المسجّل (أو أول السورة)
+            let prev = 0;
+            Object.keys(state.mk.at).forEach(k => { if (k !== key && sur(k) === s && state.mk.at[k] === "h" && ay(k) < a) prev = Math.max(prev, ay(k)); });
+            if (!prev) { const stop = stopPosition(s); prev = stop < a ? stop : 0; }
+            state.hifz.push({ id, i: s, from: prev + 1, to: a, d, n: "" });
+            const data = state.s[s] = state.s[s] || {}; if (!data.b) data.b = d;
+            reconcileAutoStatus(s);
+            if (hifzCoverage(s).count >= info.ayat) setSurahStatus(s, Status.DONE, true);
+            toast(`سُجّل الحفظ من الآية ${prev + 1} إلى ${a}`);
+        } else {
+            let prev = 0;
+            Object.keys(state.mk.at).forEach(k => { if (k !== key && sur(k) === s && state.mk.at[k] === "r" && ay(k) < a) prev = Math.max(prev, ay(k)); });
+            state.r.push({ id, i: s, from: prev + 1, to: a, full: false, l: 3, d, n: "" });
+            toast(`سُجّلت المراجعة من الآية ${prev + 1} إلى ${a}`);
+        }
+        R()[key] = { k: tid, id };
+    }
+    /* الوصول إلى أول آية في السورة التالية = انتهت السابقة: تُحذف علاماتها وتبقى تفاصيلها في السجل */
+    function endPrevMarks(s, tid) {
+        if (s < 2) return;
+        Object.keys(state.mk.at).forEach(k => { if (sur(k) === s - 1 && state.mk.at[k] === tid) { delete state.mk.at[k]; delete R()[k]; } });
+    }
+    const finish = () => { saveState(); closeModal(); render(); };
+    Object.assign(ACTIONS, {
+        "apply-type": ({ val }) => {
+            const key = markKey(...ui.ayah), at = state.mk.at, old = at[key];
+            if (tracked(old)) dropRecord(key);
+            if (old === val) delete at[key];
+            else { at[key] = val; if (tracked(val)) { if (ay(key) === 1) endPrevMarks(sur(key), val); addRecord(key, val); } }
+            finish();
+        },
+        "clear-ayah": () => { const key = markKey(...ui.ayah); if (tracked(state.mk.at[key])) dropRecord(key); delete state.mk.at[key]; finish(); },
+        "close-modal": () => { if (ui.subBack && ui.ayah) { ui.subBack = 0; openTafsir(...ui.ayah); } else closeModal(); },
+    });
+    ["ayah-phrases", "ayah-similar", "ayah-topics"].forEach(n => { const f = ACTIONS[n]; ACTIONS[n] = d => { f(d); ui.subBack = 1; }; });
+    const openTopic = ACTIONS["open-topic"];
+    ACTIONS["open-topic"] = d => { const from = ui.subBack && ui.ayah ? [...ui.ayah] : null; openTopic(d); if (from) ui.retSheet = from; };
+})();
+
+
+/* ===== جولة 7: لوحات داخل التفاصيل، شاشة سورة موحّدة، ملاحظات متعددة، زر «سجّل اليوم» ===== */
+(function () {
+    ui.keep = ui.keep || {};
+    function xCapture(fn) { const prev = showModal; let html = ""; showModal = h => { html = h; }; try { fn(); } finally { showModal = prev; } return html; }
+    const xClean = h => h.replace(/<button[^>]*data-act="close-modal"[^>]*>[^<]*<\/button>/g, "").replace(/^<h3>[^<]*<\/h3>/, "");
+    const X = { "x-phrases": () => openAyahPhrases(), "x-similar": () => openSimilarAyahs(), "x-topics": () => openAyahTopics() };
+    window.xBody = x => xClean(xCapture(X[x]));
+    window.xAvail = (x, s, a) => x === "x-phrases" ? mutGroupsOfAyah(s, a).length : x === "x-similar" ? similarAyahs(s, a).length : x === "x-topics" ? topicsOfAyah(s, a).length : 0;
+    const notes = id => { const d = state.s[id] || {}; return Array.isArray(d.ns) ? d.ns : (d.n ? [d.n] : []); };
+    const syncNotes = (id, ns) => { const d = state.s[id] = state.s[id] || {}; d.ns = ns; d.n = ns.filter(Boolean).join("\n\n"); saveState(); };
+    window.surahSectionsHTML = function (id) {
+        const info = surahInfo(id), data = state.s[id] || {}, [, purpose, themes] = spOf(id), n = SURAHS[id - 1].ayat, as = [];
+        let q = 0, firstQ = 0;
+        for (let a = 1; a <= n; a++) { if (hasAsbab(id, a)) as.push(a); if (hasQiraat(id, a)) { q++; firstQ = firstQ || a; } }
+        const ns = notes(id), others = state.m.filter(m => (m.s || []).includes(id));
+        return `${surahStatus(id) === Status.IN_PROGRESS ? progressPanelHTML(id) : ""}
+        <details class="dt dt--sec"><summary>مقصد السورة</summary><p>${escapeHTML(purpose)}</p>${themes && themes.length ? `<ul class="sp-ul">${themes.map(x => `<li>${escapeHTML(x)}</li>`).join("")}</ul>` : ""}${q ? `<button data-act="qr-first" data-val="${id}:${firstQ}">القراءات (${q} آية)</button>` : ""}</details>
+        ${as.length ? `<details class="dt dt--sec"><summary>أسباب النزول (${as.length})</summary><div class="ws-refs">${as.map(a => `<button class="ws-ref" data-act="as-open" data-val="${id}:${a}">${a}</button>`).join("")}</div></details>` : ""}
+        <details class="dt dt--sec" data-keep="notes"${ui.keep.notes ? " open" : ""}><summary>الملاحظات${ns.length ? ` (${ns.length})` : ""}</summary>
+            ${ns.map((x, i) => `<div class="nline"><textarea data-snote="${id}:${i}" placeholder="ملاحظة ${i + 1}">${escapeHTML(x)}</textarea><button class="nx" data-act="del-snote" data-id="${id}" data-val="${i}" aria-label="حذف الملاحظة">×</button></div>`).join("")}
+            <button class="btn-primary" data-act="add-snote" data-id="${id}">+ إضافة ملاحظة</button>
+            ${others.map(m => `<div class="note"><span class="muted">متشابهة: ${m.s.map(z => surahInfo(z).name).join("، ")}</span>${escapeHTML(m.t)}</div>`).join("")}
+            <details class="dt dt--in"><summary>تعديل بيانات السورة</summary><div class="grid-3"><label>الآيات<input type="number" data-field="ayat:${id}" value="${info.ayat}"></label><label>من صفحة<input type="number" data-field="pageFrom:${id}" value="${info.firstPage}"></label><label>إلى صفحة<input type="number" data-field="pageTo:${id}" value="${info.lastPage}"></label></div>
+            <label>تاريخ البدء<input type="date" data-field="startDate:${id}" value="${data.b || ""}"></label><label>تاريخ الإتمام<input type="date" data-field="endDate:${id}" value="${data.e || ""}"></label></details>
+        </details>`;
+    };
+    document.addEventListener("input", e => { const el = e.target; if (!el.dataset || !el.dataset.snote) return; const [id, i] = el.dataset.snote.split(":").map(Number), ns = notes(id).slice(); ns[i] = el.value; syncNotes(id, ns); });
+    document.addEventListener("toggle", e => { const el = e.target; if (el.dataset && el.dataset.keep) ui.keep[el.dataset.keep] = el.open; }, true);
+    const baseRender = render;
+    render = function () { baseRender.apply(this, arguments); fitVerse(); };
+    window.fitVerse = function () { const el = document.querySelector(".banner__verse"); if (!el) return; let fs = 22; el.style.fontSize = fs + "px"; while (el.scrollWidth > el.clientWidth + 1 && fs > 11) { fs -= 1; el.style.fontSize = fs + "px"; } };
+    window.addEventListener("resize", () => fitVerse());
+    Object.assign(ACTIONS, {
+        "tf-x": ({ val }) => { ui.xsrc = val; openTafsir(...ui.ayah); },
+        "toggle-surah": ({ id }) => ACTIONS["open-detail"]({ id }),
+        "add-snote": ({ id }) => { syncNotes(+id, [...notes(+id), ""]); ui.keep.notes = true; render(); setTimeout(() => { const t = [...document.querySelectorAll("[data-snote]")].pop(); if (t) t.focus(); }, 50); },
+        "del-snote": ({ id, val }) => { const ns = notes(+id).slice(); ns.splice(+val, 1); syncNotes(+id, ns); render(); },
+        "ay-detail": ({ id }) => { closeModal(); ACTIONS["open-detail"]({ id }); },
+    });
+    ["tf-src", "ayah-asbab", "ayah-qiraat", "ayah-purpose", "qr-first", "as-open"].forEach(n => { const f = ACTIONS[n]; if (f) ACTIONS[n] = d => { ui.xsrc = null; f(d); }; });
+})();
+
+
+/* ===== جولة 9: تسجيل التسميع مؤقتًا، لوحة الميكروفون، إعدادات في شاشات ===== */
+(function () {
+    window.recDrop = () => { if (ui.recUrl) { try { URL.revokeObjectURL(ui.recUrl); } catch (e) { } ui.recUrl = null; } };
+    function recStart(rc) {
+        if (!rc || rc.mr || rc.mrWait || state.rc.keep === false || !window.MediaRecorder || !navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) return;
+        rc.mrWait = true;
+        navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+            rc.mrWait = false;
+            if (ui.rc !== rc || !rc.wantListen) { stream.getTracks().forEach(x => x.stop()); return; }
+            const chunks = [], mr = new MediaRecorder(stream);
+            rc.mr = mr;
+            mr.ondataavailable = e => { if (e.data && e.data.size) chunks.push(e.data); };
+            mr.onstop = () => { stream.getTracks().forEach(x => x.stop()); if (rc.mr === mr) rc.mr = null; if (chunks.length) recPresent(new Blob(chunks, { type: mr.mimeType || "audio/webm" })); };
+            mr.start();
+        }).catch(() => { rc.mrWait = false; });
+    }
+    function recEnd(rc) { if (rc && rc.mr && rc.mr.state !== "inactive") { try { rc.mr.stop(); } catch (e) { } } }
+    function recPresent(blob) {
+        recDrop(); ui.recUrl = URL.createObjectURL(blob);
+        const block = `<div class="rec-choice"><b>🎙 تسجيل تسميعك جاهز</b><div class="btn-row"><button class="btn-primary" data-act="rec-listen">🎧 استمع ثم يُحذف</button><button data-act="rec-discard">تجاهل وحذف</button></div><div id="recPlayer"></div></div>`;
+        const sheet = $("#modal .sheet");
+        if (sheet) sheet.insertAdjacentHTML("afterbegin", block); else showModal(block + '<button style="width:100%" data-act="close-modal">إغلاق</button>');
+    }
+    const baseStart = rcStartRec; rcStartRec = function () { baseStart.apply(this, arguments); recStart(ui.rc); };
+    const baseStop = rcStopMic; rcStopMic = function () { const rc = ui.rc; baseStop.apply(this, arguments); recEnd(rc); };
+    const basePerm = permissionsHTML;
+    permissionsHTML = function () { return basePerm.apply(this, arguments) + `<label class="rec-toggle"><input type="checkbox" data-field="rcKeepRec"${state.rc.keep === false ? "" : " checked"}> سجّل صوتي مؤقتًا في التسميع لأستمع إليه بعد الانتهاء (يُحذف تلقائيًا ولا يُحفظ)</label>`; };
+    FIELDS.rcKeepRec = (v, j, el) => { state.rc.keep = !!el.checked; saveState(); };
+    Object.assign(ACTIONS, {
+        "rec-listen": () => { const box = $("#recPlayer"); if (!box || !ui.recUrl) return; box.innerHTML = `<audio controls autoplay src="${ui.recUrl}"></audio>`; const a = box.querySelector("audio"); a.onended = () => { recDrop(); box.innerHTML = '<p class="muted">تم حذف التسجيل ✓</p>'; }; },
+        "rec-discard": () => { recDrop(); const c = $(".rec-choice"); if (c) c.remove(); toast("حُذف التسجيل"); },
+    });
+    const baseSec = ACTIONS["set-sec"]; ACTIONS["set-sec"] = d => { baseSec(d); scrollTo(0, 0); };
+})();
+
 /* ===== 11. التشغيل ===== */
 renderTabbar();
 window.addEventListener("resize", () => ui.view === "reader" && layoutReader());
 
 render();
-
-
-/* ===== PWA: التخزين المؤقت والعمل دون اتصال ===== */
-if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
-    window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js").catch(err => console.warn("تعذّر تسجيل Service Worker:", err));
-    }, { once: true });
-}
 
 </script>
 </body>
