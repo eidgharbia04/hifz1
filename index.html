@@ -1682,18 +1682,13 @@ background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2
 .rc-chip b { flex: none; direction: ltr; font-variant-numeric: tabular-nums; font-weight: 700; }
 .rc-chip span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); font-weight: 500; }
 @media (prefers-reduced-motion: reduce) { .rc-chip.is-run i { animation: none; } }
-/* بطاقة الاستماع للتسجيل: ضغطة واحدة تشغّل، وبعد الانتهاء يُحذف التسجيل تلقائيًا */
-.rec-card { position: fixed; z-index: 8; left: 12px; right: 12px; margin: 0 auto; max-width: 460px; bottom: calc(84px + env(safe-area-inset-bottom)); display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 22px; background: var(--surface); color: var(--text); border: 1px solid var(--line); box-shadow: 0 8px 28px #0003; animation: recin .25s ease-out; }
+/* بطاقة مدة الجلسة: تظهر عند الإيقاف وتُغلق بلمسة */
+.dur-card { position: fixed; z-index: 8; left: 12px; right: 12px; margin: 0 auto; max-width: 300px; bottom: calc(92px + env(safe-area-inset-bottom)); display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 12px 18px 14px; border-radius: 22px; background: var(--surface); color: var(--text); border: 1px solid var(--line); box-shadow: 0 8px 28px #0003; text-align: center; cursor: pointer; animation: recin .25s ease-out; }
 @keyframes recin { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
-.rec-card .rec-play { flex: none; width: 52px; height: 52px; padding: 0; display: flex; align-items: center; justify-content: center; border: 0; border-radius: 50%; background: var(--brand); color: var(--on-brand, #fff); box-shadow: 0 4px 12px color-mix(in srgb, var(--brand) 40%, transparent); }
-.rec-card .rec-play svg { width: 24px; height: 24px; }
-.rec-card .rec-mid { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
-.rec-card .rec-mid b { font: 700 14px/1.3 var(--font-ui); }
-.rec-card .rec-mid small { direction: ltr; text-align: start; color: var(--muted); font: 600 12px/1 var(--font-ui); font-variant-numeric: tabular-nums; }
-.rec-card input[type=range] { width: 100%; margin: 0; accent-color: var(--brand); direction: ltr; height: 20px; }
-.rec-card .rec-x { flex: none; width: 38px; height: 38px; padding: 0; display: flex; align-items: center; justify-content: center; border: 0; border-radius: 50%; background: transparent; color: var(--muted); }
-.rec-card .rec-x svg { width: 20px; height: 20px; }
-@media (prefers-reduced-motion: reduce) { .rec-card { animation: none; } }
+.dur-card small { color: var(--muted); font: 600 12.5px/1.4 var(--font-ui); }
+.dur-card b { direction: ltr; font: 700 34px/1.2 system-ui, Roboto, "Segoe UI", sans-serif; font-variant-numeric: tabular-nums; letter-spacing: .5px; color: var(--brand); }
+.dur-card span { color: var(--muted); font: 500 13px/1.4 var(--font-ui); }
+@media (prefers-reduced-motion: reduce) { .dur-card { animation: none; } }
 </style>
 </head>
 <body>
@@ -3249,11 +3244,12 @@ function rcOpen(startId) {
 function rcStopMic() {
     const rc = ui.rc;
     if (!rc) return;
-    if (rc.tRun) { rc.tAcc = (rc.tAcc || 0) + (Date.now() - rc.tRun); rc.tRun = 0; }   // العدّاد يُصفَّر ويختفي، والمجموع يبقى للملخّص
+    let seg = 0;
+    if (rc.tRun) { seg = Date.now() - rc.tRun; rc.tAcc = (rc.tAcc || 0) + seg; rc.tRun = 0; }   // العدّاد يُصفَّر ويختفي، والمجموع يبقى للملخّص
     rc.wantListen = false; rc.listening = false; rc.status = "";
     try { if (rc.rec) { rc.rec.onend = null; rc.rec.stop(); } } catch (err) { }
     rc.rec = null;
-    recEnd(rc);
+    durShow(seg);
 }
 function rcClose(silent) {
     if (!rcOn()) return;
@@ -3519,21 +3515,19 @@ function rcStartRec() {
     if (!rc || !rc.on || !rc.wantListen || rc.rec) return;
     const rec = new SR_CLASS(), t0 = Date.now();
     rec.lang = state.rc.lang || "ar-SA"; rec.continuous = true; rec.interimResults = true; rec.maxAlternatives = 1;
-    const fail = msg => { rcPauseClock(rc); rc.wantListen = false; rc.listening = false; rc.rec = null; recEnd(rc); rcDockPaint(); if (msg) toast(msg); };
-    rec.onstart = () => { rc.listening = true; rc.seen = new Map(); rc.done = 0; rc.lastSound = Date.now(); rcDockPaint(); rcSay(rc.locked ? "أستمع…" : "ابدأ القراءة من أي موضع، سأجده"); recAfterStart(rc); };
+    const fail = msg => { rcPauseClock(rc); rc.wantListen = false; rc.listening = false; rc.rec = null; rcDockPaint(); if (msg) toast(msg); };
+    rec.onstart = () => { rc.listening = true; rc.seen = new Map(); rc.done = 0; rc.lastSound = Date.now(); rcDockPaint(); rcSay(rc.locked ? "أستمع…" : "ابدأ القراءة من أي موضع، سأجده"); };
     rec.onresult = rcOnResult;
     rec.onerror = e => {
         const er = e.error;
         if (er === "not-allowed" || er === "service-not-allowed") { fail(); rcMicHelp(); }
         else if (er === "network") fail("التعرّف على الكلام يحتاج اتصالًا بالإنترنت");
-        else if (er === "audio-capture") { if (!recFallback(rc)) fail("لم أجد ميكروفونًا يعمل"); }
-        else if (er === "aborted") { recFallback(rc); }
+        else if (er === "audio-capture") fail("لم أجد ميكروفونًا يعمل");
         else if (er !== "no-speech") fail("تعذّر الاستماع: " + er);
     };
     rec.onend = () => {
         rc.listening = false; rc.rec = null; rcDockPaint();
         rc.quick = Date.now() - t0 < 700 ? (rc.quick || 0) + 1 : 0;
-        if (rc.quick >= 2 && recFallback(rc)) rc.quick = 0;   // انقطاع متكرر مع التسجيل = تعارض: نوقف التسجيل ونكمل التتبع
         if (rc.quick >= 4) { fail("توقف الاستماع، اضغط الميكروفون للمحاولة"); return; }
         if (rc.wantListen && ui.rc === rc) setTimeout(rcStartRec, 150);   // المتصفح يوقف الاستماع بعد صمت؛ نعيد التشغيل تلقائيًا
     };
@@ -3589,7 +3583,7 @@ function rcStartListening() {
     auStop(true);
     const rc = ui.rc;
     if (!rc || !rc.on) return;
-    recDrop();   // أي تسجيل سابق يُحذف عند بدء استماع جديد
+    durHide();   // بطاقة المدة السابقة تختفي عند بدء جلسة جديدة
     const page = rcPageOfWord(rc.next || 1);
     if (page !== ui.readerPage) setReaderPage(page);   // نعود لصفحة الكلمة التالية
     if (!rc.pinned) rc.locked = false;   // كل تشغيل: نسمع أول كلامك ونحدد موضعك ثم نتتبع
@@ -3640,7 +3634,6 @@ function rcOptions() {
     <p class="muted">تقييم الحفظ (اختياري)</p>
     <div class="theme-grid">${choice("eval", 1, "مفعّل", "ملخّص ودرجة عند الإنهاء")}${choice("eval", 0, "متوقف", "تسميع بلا تقييم")}</div>
     <label>لهجة التعرّف على الكلام<select data-field="rcLang">${[["ar-SA", "العربية (السعودية)"], ["ar-EG", "العربية (مصر)"], ["ar-AE", "العربية (الإمارات)"], ["ar-JO", "العربية (الأردن)"]].map(([v, n]) => `<option value="${v}"${r.lang === v ? " selected" : ""}>${n}</option>`).join("")}</select></label>
-    <label class="rec-toggle"><input type="checkbox" data-field="rcKeepRec"${state.rc.keep === false ? "" : " checked"}> سجّل صوتي مؤقتًا لأستمع إليه بعد التسميع (يُحذف تلقائيًا ولا يُحفظ)</label>
     <button style="width:100%" data-act="rc-restart">ابدأ من أول هذه الصفحة</button>
     ${rcOn() ? '<button style="width:100%" data-act="rc-end">إنهاء التسميع</button>' : ""}
     <button class="btn-primary" style="width:100%" data-act="close-modal">تم</button>`);
@@ -5063,87 +5056,28 @@ document.addEventListener("beforeinput", e => { const el = e.target; if (ui.view
 })();
 
 
-/* ===== تسجيل التسميع المؤقت وبطاقة الاستماع (ضغطة واحدة) ===== */
+/* ===== مدة الجلسة: تظهر عند الإيقاف (كل تشغيل/إيقاف مدة مستقلة، وتتحمل ساعات) ===== */
 (function () {
-    const REC = { url: null, mr: null, stream: null, chunks: [], t0: 0, wait: false, keep: true, audio: null, timer: 0, dur: 0 };
-    const ICON = { play: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg>', pause: '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6.5" y="5" width="4" height="14" rx="1.2"/><rect x="13.5" y="5" width="4" height="14" rx="1.2"/></svg>', x: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>' };
-    const fmt = s => { s = Math.max(0, Math.floor(s || 0)); return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0"); };
-    const can = rc => !!(rc && state.rc.keep !== false && !state.rc.recBlocked && !rc.recOff && window.MediaRecorder && navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
-    const total = () => (REC.audio && isFinite(REC.audio.duration) && REC.audio.duration > 0 ? REC.audio.duration : REC.dur);
-    const setIcon = playing => { const b = document.querySelector("#recCard .rec-play"); if (b) { b.innerHTML = playing ? ICON.pause : ICON.play; b.setAttribute("aria-label", playing ? "إيقاف مؤقت" : "استمع إلى تسميعك"); } };
-
-    /** يحذف التسجيل وبطاقته نهائيًا. */
-    window.recDrop = function () {
-        clearTimeout(REC.timer);
-        if (REC.audio) { try { REC.audio.pause(); } catch (e) { } REC.audio.onended = REC.audio.ontimeupdate = REC.audio.onplay = REC.audio.onpause = null; REC.audio = null; }
-        if (REC.url) { try { URL.revokeObjectURL(REC.url); } catch (e) { } REC.url = null; }
-        const c = document.getElementById("recCard"); if (c) c.remove();
-    };
-    function release() { if (REC.stream) { REC.stream.getTracks().forEach(t => t.stop()); REC.stream = null; } REC.mr = null; REC.wait = false; }
-
-    /** يبدأ التسجيل بعد أن يستقر التعرّف على الكلام (له الأولوية)، حتى لا يتعارض الاثنان على الميكروفون. */
-    window.recAfterStart = function (rc) {
-        if (!can(rc) || REC.mr || REC.wait) return;
-        const seg = rc.segId; REC.wait = true;
-        setTimeout(() => {
-            if (ui.rc !== rc || !rc.wantListen || rc.segId !== seg || !can(rc)) { REC.wait = false; return; }
-            navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
-                REC.wait = false;
-                if (ui.rc !== rc || !rc.wantListen || rc.segId !== seg) { stream.getTracks().forEach(t => t.stop()); return; }
-                try {
-                    const mr = new MediaRecorder(stream);
-                    REC.stream = stream; REC.mr = mr; REC.chunks = []; REC.keep = true; REC.t0 = Date.now();
-                    mr.ondataavailable = e => { if (e.data && e.data.size) REC.chunks.push(e.data); };
-                    mr.onstop = () => { const chunks = REC.chunks, keep = REC.keep, dur = (Date.now() - REC.t0) / 1000, type = mr.mimeType || "audio/webm"; release(); if (keep && chunks.length && dur >= 2) present(new Blob(chunks, { type }), dur); };
-                    mr.start(1000);
-                } catch (e) { stream.getTracks().forEach(t => t.stop()); REC.mr = null; rc.recOff = true; }
-            }).catch(() => { REC.wait = false; rc.recOff = true; });
-        }, 900);
-    };
-    /** يوقف التسجيل؛ discard=true يتجاهله دون عرض البطاقة. */
-    window.recEnd = function (rc, discard) {
-        if (discard) REC.keep = false;
-        if (REC.mr && REC.mr.state !== "inactive") { try { REC.mr.stop(); } catch (e) { release(); } } else if (discard) release();
-    };
-    /** تعارض مع التعرّف (يحدث على بعض هواتف أندرويد): نوقف التسجيل ونحفظ ذلك حتى تبقى المتابعة تعمل. يعيد true إن كان هناك تسجيل أُوقف. */
-    window.recFallback = function (rc) {
-        if (!REC.mr && !REC.wait) return false;
-        rc.recOff = true; state.rc.recBlocked = 1; saveState();
-        window.recEnd(rc, true);
-        toast("تعذّر التسجيل مع التتبع على جهازك فأوقفته لتستمر المتابعة. يمكنك تفعيله من خيارات التسميع");
-        return true;
-    };
-
-    function ensureAudio() {
-        if (REC.audio || !REC.url) return;
-        const a = REC.audio = new Audio(REC.url);
-        a.onplay = () => setIcon(true); a.onpause = () => setIcon(false);
-        a.ontimeupdate = () => {
-            const d = total(), seek = document.getElementById("recSeek"), cur = document.getElementById("recCur");
-            if (cur) cur.textContent = fmt(a.currentTime);
-            if (seek && d && document.activeElement !== seek) seek.value = Math.min(1000, a.currentTime / d * 1000);
-        };
-        a.onended = () => { window.recDrop(); toast("تم حذف التسجيل ✓"); };   // انتهى الاستماع = انتهى كل شيء
+    let timer = 0;
+    const two = n => String(n).padStart(2, "0");
+    function words(ms) {
+        const t = Math.floor(ms / 1000), h = Math.floor(t / 3600), m = Math.floor(t % 3600 / 60), s = t % 60;
+        if (h) return h + " ساعة" + (m ? " و " + m + " دقيقة" : "");
+        if (m) return m + " دقيقة" + (s ? " و " + s + " ثانية" : "");
+        return s + " ثانية";
     }
-    function present(blob, dur) {
-        window.recDrop();
-        REC.url = URL.createObjectURL(blob); REC.dur = dur;
+    window.durHide = function () { clearTimeout(timer); const c = document.getElementById("durCard"); if (c) c.remove(); };
+    window.durShow = function (ms) {
+        window.durHide();
+        if (!(ms >= 1000)) return;
+        const t = Math.floor(ms / 1000), h = Math.floor(t / 3600), m = Math.floor(t % 3600 / 60), s = t % 60;
         const el = document.createElement("div");
-        el.id = "recCard"; el.className = "rec-card"; el.setAttribute("role", "region"); el.setAttribute("aria-label", "تسجيل التسميع");
-        el.innerHTML = `<button class="rec-play" data-act="rec-toggle" aria-label="استمع إلى تسميعك">${ICON.play}</button><div class="rec-mid"><b>استمع إلى تسميعك</b><input type="range" id="recSeek" min="0" max="1000" value="0" aria-label="موضع التشغيل"><small><span id="recCur">0:00</span> / <span id="recDur">${fmt(dur)}</span></small></div><button class="rec-x" data-act="rec-discard" aria-label="حذف التسجيل">${ICON.x}</button>`;
+        el.id = "durCard"; el.className = "dur-card"; el.dataset.act = "dur-close"; el.setAttribute("role", "status");
+        el.innerHTML = `<small>مدة هذه الجلسة</small><b>${h ? h + ":" + two(m) : m}:${two(s)}</b><span>${words(ms)}</span>`;
         document.body.appendChild(el);
-        el.querySelector("#recSeek").addEventListener("input", e => { ensureAudio(); const d = total(); if (REC.audio && d) { try { REC.audio.currentTime = d * e.target.value / 1000; } catch (err) { } } });
-        REC.timer = setTimeout(window.recDrop, 5 * 60 * 1000);   // لا يبقى أكثر من ٥ دقائق
-    }
-
-    const basePerm = permissionsHTML;
-    permissionsHTML = function () { return basePerm.apply(this, arguments) + `<label class="rec-toggle"><input type="checkbox" data-field="rcKeepRec"${state.rc.keep === false ? "" : " checked"}> سجّل صوتي مؤقتًا في التسميع لأستمع إليه بعد الانتهاء (يُحذف تلقائيًا ولا يُحفظ)</label>`; };
-    FIELDS.rcKeepRec = (v, j, el) => { state.rc.keep = !!el.checked; if (el.checked) state.rc.recBlocked = 0; saveState(); };
-    Object.assign(ACTIONS, {
-        "rec-toggle": () => { ensureAudio(); const a = REC.audio; if (!a) return; if (a.paused) a.play().catch(() => { }); else a.pause(); },
-        "rec-discard": () => { window.recDrop(); toast("حُذف التسجيل"); },
-    });
-    const baseSec = ACTIONS["set-sec"]; ACTIONS["set-sec"] = d => { baseSec(d); scrollTo(0, 0); };
+        timer = setTimeout(window.durHide, 15000);
+    };
+    Object.assign(ACTIONS, { "dur-close": () => window.durHide() });
 })();
 
 /* ===== معايرة رقم الصفحة: يقيس الخط الفعلي ويضع الرقم في منتصف الدائرة بالضبط ===== */
