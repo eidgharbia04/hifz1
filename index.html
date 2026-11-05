@@ -1689,6 +1689,45 @@ background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2
 .dur-card b { direction: ltr; font: 700 34px/1.2 system-ui, Roboto, "Segoe UI", sans-serif; font-variant-numeric: tabular-nums; letter-spacing: .5px; color: var(--brand); }
 .dur-card span { color: var(--muted); font: 500 13px/1.4 var(--font-ui); }
 @media (prefers-reduced-motion: reduce) { .dur-card { animation: none; } }
+/* ===== تحسينات: بطاقة المدة، تظليل الآية، رقم الصفحة، الحزب ===== */
+.dur-card { max-width: 168px; gap: 0; padding: 7px 14px 8px; border-radius: 16px; box-shadow: 0 5px 18px #0002; bottom: calc(98px + env(safe-area-inset-bottom)); pointer-events: none; cursor: default; transition: opacity .25s, transform .25s; }
+.dur-card.out { opacity: 0; transform: translateY(8px); }
+.dur-card small { font-size: 11px; line-height: 1.3; }
+.dur-card b { font-size: 21px; line-height: 1.15; letter-spacing: 0; }
+.dur-card span { font-size: 11.5px; line-height: 1.3; }
+.mushaf .ayah.rc-ay { background: color-mix(in srgb, var(--brand) 14%, transparent) !important; }
+.page > .pnum { padding: 0 !important; }
+.pnum .pn-t { display: block; line-height: 1; transform: translateY(var(--pn-dy, 0px)); }
+.m-top .mpill .hizb { display: inline-flex; align-items: center; gap: .26em; direction: rtl; font-family: 'KFGQPC Hafs', var(--font-quran), serif; font-weight: 400; font-size: calc(21px * var(--tz, 1)); line-height: 1; white-space: nowrap; color: inherit; padding-top: 0; }
+.m-top .hizb .hz-n { direction: ltr; font-size: 1em; }
+.m-top .hizb .hz-f { display: inline-flex; flex-direction: column; align-items: center; direction: ltr; font-size: .5em; line-height: 1; }
+.m-top .hizb .hz-f i { font-style: normal; display: block; padding: 0 .22em; }
+.m-top .hizb .hz-f i + i { border-top: .09em solid currentColor; padding-top: .06em; }
+@media (prefers-reduced-motion: reduce) { .dur-card { transition: none; } }
+/* ===== التعليمات والإرشادات: هادئة وصغيرة ولا تحجب المحتوى ===== */
+.toast.tip { bottom: calc(86px + env(safe-area-inset-bottom, 0px)); max-width: min(86vw, 340px); padding: 6px 13px; border-radius: 999px; background: color-mix(in srgb, var(--surface) 94%, var(--muted)); color: color-mix(in srgb, var(--text) 72%, var(--surface)); border: 1px solid var(--line); box-shadow: none; font-size: 12px; line-height: 1.55; text-align: center; opacity: .96; pointer-events: none; }
+body.reader-mode .toast.tip { font-size: 11.5px; bottom: calc(82px + env(safe-area-inset-bottom, 0px)); }
+.hold-hint { top: auto; bottom: calc(86px + env(safe-area-inset-bottom, 0px)); inset-inline: auto; left: 50%; max-width: min(86vw, 340px); padding: 6px 13px; border-radius: 999px; background: color-mix(in srgb, var(--surface) 94%, var(--muted)); color: color-mix(in srgb, var(--text) 72%, var(--surface)); border: 1px solid var(--line); box-shadow: none; font-size: 11.5px; line-height: 1.55; animation: holdHintCalm 5s ease forwards; }
+@keyframes holdHintCalm { 0% { opacity: 0; transform: translate(-50%, 6px); } 10%, 80% { opacity: .94; transform: translate(-50%, 0); } 100% { opacity: 0; transform: translate(-50%, 0); } }
+.no-hints .hint-msg, .no-hints .toast.tip, .no-hints .hold-hint { display: none !important; }
+.hint-switch, .tj-quick { display: flex; align-items: center; justify-content: space-between; gap: 14px; width: 100%; padding: 12px 14px; margin: 0 0 10px; text-align: start; background: var(--surface); color: var(--text); border: 1.5px solid var(--line); border-radius: 16px; cursor: pointer; }
+.hint-switch > span, .tj-quick > span { display: block; min-width: 0; }
+.hint-switch b, .tj-quick b { display: block; font-weight: 700; }
+.hint-switch small, .tj-quick small { display: block; margin-top: 3px; font-size: 12px; font-weight: 400; color: var(--muted); line-height: 1.6; }
+.tj-quick.is-on { border-color: var(--gold); box-shadow: 0 0 0 2px var(--gold-soft); background: var(--surface); color: var(--text); }
+.sw { position: relative; flex: none; display: block; width: 46px; height: 26px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--bg, var(--surface)); transition: background .2s, border-color .2s; }
+.sw > i { position: absolute; top: 3px; inset-inline-start: 3px; width: 17px; height: 17px; border-radius: 50%; background: var(--muted); transition: inset-inline-start .2s, background .2s; }
+.sw.sw-on { background: var(--brand); border-color: var(--brand); }
+.sw.sw-on > i { inset-inline-start: 22px; background: var(--on-brand); }
+.mm-fold { gap: 8px; padding: 0; }
+.mm-fold > summary { list-style: none; display: flex; align-items: center; justify-content: space-between; padding: 12px; font-weight: 700; cursor: pointer; }
+.mm-fold > summary::-webkit-details-marker { display: none; }
+.mm-fold > summary::after { content: ""; width: 8px; height: 8px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg); transition: transform .2s; opacity: .7; margin-inline-end: 4px; }
+.mm-fold[open] > summary::after { transform: rotate(-135deg); }
+.mm-fold > :not(summary) { margin-inline: 12px; }
+.mm-fold > :last-child { margin-bottom: 12px; }
+.mm-tj-sw { margin: 10px 0 0; }
+
 </style>
 </head>
 <body>
@@ -1963,7 +2002,7 @@ let storageAvailable = true, state = loadState(), memo = {};
 
 function createDefaultState() {
     return { s: {}, r: [], hifz: [], o: {}, k: [], m: [], nd: NOTE_TITLES.map(t => ({ t, b: [{ k: "p", x: "" }] })), ndm: 1, fv: 1,
-        g: { base: 85, m: [40, 60, 80, 95], iv: [1, 3, 7, 30] }, goal: { title: "إتمام حفظ القرآن", target: 114, deadline: "" }, mk: { types: [{ ...LEGACY_TYPES.h }, { ...LEGACY_TYPES.r }], at: {} }, rd: { p: 1 }, tips: {}, mut: { fav: [], notes: {} }, d: 0, ff: {}, th: "light", ed: { a: "v4", c: [] }, tj: 0, rc: { mode: "lenient", eval: 0, hide: 0, lang: "ar-SA", micAsked: 0 } };
+        g: { base: 85, m: [40, 60, 80, 95], iv: [1, 3, 7, 30] }, goal: { title: "إتمام حفظ القرآن", target: 114, deadline: "" }, mk: { types: [{ ...LEGACY_TYPES.h }, { ...LEGACY_TYPES.r }], at: {} }, rd: { p: 1 }, tips: {}, hints: true, mut: { fav: [], notes: {} }, d: 0, ff: {}, th: "light", ed: { a: "v4", c: [] }, tj: 0, rc: { mode: "lenient", eval: 0, hide: 0, lang: "ar-SA", micAsked: 0 } };
 }
 
 function migrateState(old) {
@@ -1992,6 +2031,7 @@ function migrateState(old) {
         old.marks = old.marks || savedMk;   // شكل قديم جدًا كان يُخزَّن تحت المفتاح نفسه
     old.rd.p = clamp(Math.floor(+old.rd.p) || 1, 1, PAGE_COUNT);
     old.tips = old.tips && typeof old.tips === "object" ? old.tips : {};
+    old.hints = old.hints !== false;   // إظهار التعليمات والإرشادات (افتراضيًا مفعّل)
     if (old.marks) {
         ["h", "r", "n"].forEach(k => Object.keys(old.marks[k] || {}).forEach(key => {
             let ref = key;
@@ -2618,7 +2658,7 @@ function readerBody(page) {
         // حالة السورة (تم الحفظ/قيد الحفظ/المراجعة) لا تلوّن المصحف.
         // التلوين داخل المصحف يقتصر فقط على التظليل الذي يضيفه المستخدم يدويًا.
         const type = state.mk.types.find(t => t.id === state.mk.at[markKey(sura, aya)]);
-        const cls = "ayah" + (ui.hl === sura + ":" + aya ? " ayah-hl" : "");
+        const cls = "ayah" + (ui.hl === sura + ":" + aya ? " ayah-hl" : "") + rcAyCls(sura, aya);
         const style = type ? ` style="background:${type.c}88;background:${tint(type.c, type.g === "h" ? 42 : 26)};${type.g === "r" ? `box-shadow:inset 0 -2px 0 ${tint(type.c, 85)}` : ""}"` : "";
         return `<span class="${cls}"${style} data-hold="open-ayah" data-s="${sura}" data-a="${aya}">${inner}</span>`;
     };
@@ -2685,7 +2725,7 @@ function topicRows() {
     return (rows.join("") || '<p class="muted">لا يوجد موضوع بهذا الاسم.</p>') + more;
 }
 function topicsView() {
-    return `<h2>الموضوعات</h2><p class="muted">اختر موضوعًا لترى كل آياته وتنتقل إليها في المصحف.</p><input id="topicSearch" placeholder="ابحث في الموضوعات" value="${escapeHTML(ui.topicQuery || "")}"><p class="muted">${getTopics().size} موضوعًا</p><div id="topicList">${topicRows()}</div>`;
+    return `<h2>الموضوعات</h2><p class="muted hint-msg">اختر موضوعًا لترى كل آياته وتنتقل إليها في المصحف.</p><input id="topicSearch" placeholder="ابحث في الموضوعات" value="${escapeHTML(ui.topicQuery || "")}"><p class="muted">${getTopics().size} موضوعًا</p><div id="topicList">${topicRows()}</div>`;
 }
 function topicView() {
     const t = getTopics().get(ui.topicId);
@@ -2737,7 +2777,7 @@ function openSimilarAyahs() {
         const text = mutAyahWords(ms, ma).map((w, k) => marked.has(k + 1) ? `<mark>${w}</mark>` : w).join(" ");
         return ayahRowHTML(ms, ma, `${count} كلمات متطابقة · ${coverage}% من الآية`, "go-ayah", `<div class="sim-text">${text}</div>`);
     });
-    showModal(`<h3>آيات مشابهة</h3><p class="muted">${SURAHS[sura - 1].name} — الآية ${aya}. آيات تشترك معها في تسلسل كلمات (الكلمات المتطابقة ملوّنة). اضغط على آية للانتقال إليها.</p><div class="sim-text">${mutAyahWords(sura, aya).join(" ")}</div>${rows.join("")}<button style="width:100%;margin-top:10px" data-act="close-modal">إغلاق</button>`);
+    showModal(`<h3>آيات مشابهة</h3><p class="muted">${SURAHS[sura - 1].name} — الآية ${aya}. آيات تشترك معها في تسلسل كلمات (الكلمات المتطابقة ملوّنة). <span class="hint-msg">اضغط على آية للانتقال إليها.</span></p><div class="sim-text">${mutAyahWords(sura, aya).join(" ")}</div>${rows.join("")}<button style="width:100%;margin-top:10px" data-act="close-modal">إغلاق</button>`);
 }
 function openAyahTopics() {
     const [sura, aya] = ui.ayah;
@@ -2745,14 +2785,14 @@ function openAyahTopics() {
 }
 /** تلميح عائم يظهر لحظات في أول ثلاث جلسات قراءة، حتى يتعلّم المستخدم الضغط المطوّل على الآية. */
 function holdHintHTML() {
-    if (state.tips.hold || ui.hh) return "";
+    if (!hintsOn() || state.tips.hold || ui.hh) return "";
     ui.hh = 1; state.tips.hn = (state.tips.hn || 0) + 1; saveState();
-    return state.tips.hn <= 3 ? '<div class="hold-hint">المس أي آية: تفسير · سبب النزول · قراءات · استماع · وضع الحفظ</div>' : "";
+    return state.tips.hn <= 3 ? '<div class="hold-hint hint-msg">المس أي آية: تفسير · سبب النزول · قراءات · استماع · وضع الحفظ</div>' : "";
 }
 function readerFirstTip() {
     if (state.tips.reader) return;
     state.tips.reader = 1; saveState();
-    toast("اسحب أو المس حافة الصفحة لتقليبها · المس أي آية للدراسة والاستماع والتظليل");
+    tip("اسحب أو المس حافة الصفحة لتقليبها · المس أي آية للدراسة والاستماع والتظليل");
 }
 
 /* ===== 7f. «المزيد» مجموعات واضحة + دليل الاستخدام ===== */
@@ -2817,12 +2857,13 @@ function readerHeader(page) {
     const [endSura, endAya] = pageEnd(page), [firstSura, firstAya] = pageStart(page);
     const juz = juzOfAyah(endSura, endAya);
     const q = QURAN_META.quarters.findIndex(([s, a]) => cmpKey(s, a, firstSura, firstAya) >= 0 && cmpKey(s, a, endSura, endAya) <= 0);
-    const hizbLabel = q < 0 ? "" : `${["الْحِزْبُ", "رُبُعُ الْحِزْبِ", "نِصْفُ الْحِزْبِ", "ثَلَاثَةُ أَرْبَاعِ الْحِزْبِ"][q % 4]} ${String(Math.floor(q / 4) + 1).replace(/\d/g, d => "٠١٢٣٤٥٦٧٨٩"[d])}`;
+    const hizbNo = Math.floor(q / 4) + 1, hizbFrac = ["", "¼", "½", "¾"][q % 4];   // ¼ الحزب 5 · ½ الحزب 5 · ¾ الحزب 5
+    const hizbLabel = q < 0 ? "" : `${hizbFrac ? hizbFrac + " " : ""}الحزب ${hizbNo}`;
     const sids = [...new Set(ayahsOnPage(page).map(([sura]) => sura))], names = sids.map(sura => SURAHS[sura - 1].name).join(" ");
     const icon = path => `<svg viewBox="0 0 24 24" aria-hidden="true">${path}</svg>`;
     return `<div class="m-top">
         <button class="mbtn" data-act="open-jump" aria-label="قائمة المصحف">${icon('<path d="M4 7h16M4 12h16M4 17h16"/>')}</button>
-        <div class="mpill" role="button" tabindex="0" data-act="open-juz" aria-label="قائمة الأجزاء — الجزء ${JUZ_NAMES[juz - 1]} ${hizbLabel}"><span class="juzname">juz${String(juz).padStart(3, "0")}</span>${hizbLabel ? `<span class="hizb">${hizbLabel}</span>` : ""}</div>
+        <div class="mpill" role="button" tabindex="0" data-act="open-juz" aria-label="قائمة الأجزاء — الجزء ${JUZ_NAMES[juz - 1]} ${hizbLabel}"><span class="juzname">juz${String(juz).padStart(3, "0")}</span>${hizbLabel ? `<span class="hizb">${hizbFrac ? `<span class="hz-f" aria-hidden="true"><i>${{"¼":1,"½":1,"¾":3}[hizbFrac]}</i><i>${{"¼":4,"½":2,"¾":4}[hizbFrac]}</i></span>` : ""}<span class="hz-w">الْحِزْبُ</span><span class="hz-n">${hizbNo}</span></span>` : ""}</div>
         <div class="mpill grow" role="button" tabindex="0" data-act="open-surahs" aria-label="قائمة السور — ${names}">${sids.map(id => `<span class="sname">surah${String(id).padStart(3, "0")}</span>`).join("")}</div>
         <button class="mbtn" data-act="close-reader" aria-label="رجوع">${icon('<path d="M20 12H5M11 6l-6 6 6 6"/>')}</button>
     </div>`;
@@ -2831,7 +2872,7 @@ function readerHeader(page) {
 /** صفحة واحدة كاملة (الأسطر + رقم الصفحة في ركنها السفلي)، تُستعمل للورقة الحالية والمجاورة أثناء التقليب. */
 const pageHTML = page => {
     const tj = tajweedOn(page);
-    return `<div class="page ${page % 2 ? "odd" : "even"}" data-pg="${page}"><div class="mushaf${page <= 2 ? " is-opening" : ""}${tj ? " is-tajweed" : ""}"${tj ? ` style="font-family:'v4p${page}',var(--font-quran)"` : ""}>${readerBody(page)}</div><span class="pnum" data-act="open-jump">${page}</span></div>`;
+    return `<div class="page ${page % 2 ? "odd" : "even"}" data-pg="${page}"><div class="mushaf${page <= 2 ? " is-opening" : ""}${tj ? " is-tajweed" : ""}"${tj ? ` style="font-family:'v4p${page}',var(--font-quran)"` : ""}>${readerBody(page)}</div><span class="pnum" data-act="open-jump"><span class="pn-t">${page}</span></span></div>`;
 };
 
 function readerView() {
@@ -2853,9 +2894,9 @@ function marksView() {
     }).filter(i => i.type).sort((x, y) => cmpKey(x.sura, x.aya, y.sura, y.aya));
     const rows = items.map(i => rowHTML({ number: i.page, title: `${SURAHS[i.sura - 1].name} — الآية ${i.aya}`, subtitle: `${escapeHTML(i.type.n)} · ${pageLabel(i.page)}`, extra: `<i class="dot big" style="--tc:${i.type.c}"></i>`, act: "goto-mark", id: i.key })).join("");
     return `<h2>التظليلات</h2>${backButton("reader")}
-        <p class="muted">اضغط على تظليل لتصفية الآيات، واضغط مطوّلًا لتعديله أو حذفه.</p>${typeRows}
+        <p class="muted hint-msg">اضغط على تظليل لتصفية الآيات، واضغط مطوّلًا لتعديله أو حذفه.</p>${typeRows}
         <button style="width:100%;margin-top:8px" data-act="new-type" data-from="list">+ تظليل جديد</button>
-        <h3>الآيات المظلَّلة (${items.length})</h3>${rows || '<p class="muted">اضغط على أي آية في المصحف لتظليلها.</p>'}`;
+        <h3>الآيات المظلَّلة (${items.length})</h3>${rows || '<p class="muted hint-msg">اضغط على أي آية في المصحف لتظليلها.</p>'}`;
 }
 
 function settingsView() {
@@ -2872,6 +2913,7 @@ function settingsView() {
  <button class="btn-danger" style="width:100%" data-act="reset-all">مسح كل البيانات</button>`;
     const about = `<p class="muted">نص القرآن الكريم (الرسم العثماني) وبنية الصفحات من مشروع تنزيل tanzil.net، مرخّص CC BY 3.0، والنص كما هو دون تعديل.<br>خطوط المصحف وإطار عناوين السور من مجمع الملك فهد لطباعة المصحف الشريف عبر مكتبة QUL.<br>بيانات الموضوعات وآيات التشابه والتجويد وأصول الكلمات من مكتبة QUL.<br>التفسير: «المختصر في تفسير القرآن الكريم». الإعراب: «إعراب القرآن الميسّر». ابن كثير: «تفسير القرآن العظيم». أسباب النزول: «المحرر في أسباب نزول القرآن» لخالد المزيني. القراءات العشر وبعض الأصوات من موسوعة القرآن quranpedia.net. مقاصد السور: ملخصات تعليمية موجزة.<br>أصوات التلاوة من خوادم Tarteel وmp3quran.</p><p class="muted" style="text-align:center;margin-top:12px">الإصدار ${APP_VERSION} · نظام التنقل ٢</p>`;
     const secs = [
+        ["general", "عام", "إظهار التعليمات والإرشادات", "تعليمات ارشادات تلميحات نصائح اظهار اخفاء عام", hintsHTML()],
         ["look", "المظهر والخطوط", "الألوان وخطوط التطبيق", "مظهر ثيم لون اسود ذهبي داكن فاتح اخضر خط خطوط", themePickerHTML() + fonts],
         ["mushaf", "المصحف والتجويد", "نسخة المصحف وتلوين التجويد ومعنى الألوان", "مصحف نسخة طبعة تجويد ملون عادي", editionsHTML() + tajweedHTML()],
         ["audio", "الاستماع والتلاوة", "القارئ والتكرار والسرعة", "استماع تلاوة قارئ منشاوي حصري عبد الباسط تكرار سرعة صوت", auSettingsHTML()],
@@ -2980,6 +3022,20 @@ function closeModal() { ui.subBack = 0; ui.modal = null; ui.confirmAction = null
 
 function askConfirm(title, onConfirm) { ui.confirmAction = onConfirm; showModal(`<h3>${title}</h3><button class="btn-primary" data-act="confirm-yes">تأكيد</button><button style="width:100%" data-act="close-modal">إلغاء</button>`); }
 
+/* ===== التعليمات والإرشادات: مكوّن مركزي هادئ يخضع لإعداد «إظهار التعليمات والإرشادات».
+   toast(): للأخطاء والتأكيدات والتنبيهات الضرورية (لا تتأثر بالإعداد). tip(): للتلميحات والإرشادات فقط. ===== */
+const hintsOn = () => state.hints !== false;
+function applyHints() { document.body.classList.toggle("no-hints", !hintsOn()); }
+function tip(text, ms = 3000) {
+    if (!hintsOn()) return;
+    document.querySelectorAll(".toast.tip").forEach(e => e.remove());
+    const el = document.createElement("div"); el.className = "toast tip"; el.setAttribute("role", "note"); el.textContent = text;
+    document.body.appendChild(el); setTimeout(() => el.remove(), ms);
+}
+function hintsHTML() {
+    const on = hintsOn();
+    return `<button class="hint-switch${on ? " is-on" : ""}" role="switch" aria-checked="${on}" data-act="set-hints"><span><b>إظهار التعليمات والإرشادات</b><small>تلميحات قصيرة تساعدك على استخدام التطبيق. لا تؤثر على رسائل الأخطاء ولا على تأكيد العمليات المهمة.</small></span><i class="sw${on ? " sw-on" : ""}" aria-hidden="true"><i></i></i></button>`;
+}
 function toast(text) { const el = document.createElement("div"); el.className = "toast"; el.textContent = text; document.body.appendChild(el); setTimeout(() => el.remove(), 3200); }
 
 /** نموذج تسجيل/تعديل مقطع حفظ: في التسجيل يُحدَّد البدء تلقائيًا ويُدخل المستخدم آخر آية فقط. */
@@ -3105,7 +3161,7 @@ const RC_ICON = {
     eye: '<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
     eyeOff: '<path d="M3 3l18 18"/><path d="M10.6 5.1A10 10 0 0 1 12 5c6.4 0 10 7 10 7a17 17 0 0 1-3.2 4.1M6.5 6.6C3.7 8.3 2 12 2 12s3.6 7 10 7c1.6 0 3-.4 4.3-1"/>',
     bulb: '<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>',
-    ayah: '<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5v-16z"/><path d="M8 8h8M8 12h6"/>',
+    ayah: '<path d="M3.5 6.5h17M3.5 11h10M3.5 15.5h6.5M3.5 20h4"/><circle cx="17.5" cy="16.5" r="4"/><circle cx="17.5" cy="16.5" r=".7"/>',
     gear: '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>',
     close: '<path d="M18 6L6 18M6 6l12 12"/>',
     redo: '<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>'
@@ -3177,10 +3233,21 @@ function rcSetNext() {
     let id = rc.ptr + 1;
     while (id <= d.total && d.norm[id - 1] === "") id++;
     rc.next = id <= d.total ? id : 0;
+    // مؤشر التتبع: آخر كلمة نُطقت فعلًا فقط؛ ولا علامة قبل أن تُنطق أول كلمة
+    let p = rc.ptr; while (p >= 1 && d.norm[p - 1] === "") p--;
+    rc.cur = (rc.fresh === false && p >= 1) ? p : 0;   // قبل نطق أي كلمة: لا علامة
 }
 /** هل الكلمة (أو علامة الآية) id مخفيّة الآن؟ كل ما بعد المؤشر مخفي ما لم تُكشف بتلميح. */
-const rcHidden = id => !!(state.rc.hide && ui.rc && id > ui.rc.ptr && !ui.rc.peek.has(id));
-const rcWordCls = id => (rcHidden(id) ? " hid" : "") + (ui.rc.next === id ? " cur" : "") + (ui.rc.errs.has(id) ? " err" : "") + (ui.rc.far > ui.rc.ptr && ui.rc.far === id ? " far" : "");
+const rcHidden = id => !!(state.rc.hide && ui.rc && id > Math.max(ui.rc.ptr, ui.rc.far || 0) && !ui.rc.peek.has(id));
+/** الآية الجارية: تظليل ذهبي خفيف للآية كلها حين تكون الآيات ظاهرة؛ وعند الإخفاء نكتفي بتتبع الكلمة. */
+function rcAyKey() {
+    const rc = ui.rc, id = rc && rc.on && rc.cur;
+    if (!id || state.rc.hide) return null;
+    const M = getMushaf();
+    return [M.sura[id], M.aya[id]];
+}
+function rcAyCls(sura, aya) { const k = rcAyKey(); return k && k[0] === sura && k[1] === aya ? " rc-ay" : ""; }
+const rcWordCls = id => (rcHidden(id) ? " hid" : "") + (ui.rc.cur === id ? " cur" : "") + (ui.rc.errs.has(id) ? " err" : "") + (ui.rc.far > ui.rc.ptr && ui.rc.far === id ? " far" : "");
 
 /** html كلمة واحدة في الصفحة: نص عادي خارج التسميع، وعنصر مستقل داخله ليمكن إخفاؤه وتظليله. */
 function rcWord(id, w, aya, tj) {
@@ -3194,15 +3261,26 @@ function rcWord(id, w, aya, tj) {
 function rcPaint() {
     if (!rcOn()) return;
     const rc = ui.rc;
+    document.querySelectorAll(".mushaf .ayah.rc-ay").forEach(e => e.classList.remove("rc-ay"));
+    const ak = rcAyKey();
+    if (ak) document.querySelectorAll(`.mushaf .ayah[data-s="${ak[0]}"][data-a="${ak[1]}"]`).forEach(e => e.classList.add("rc-ay"));
     document.querySelectorAll(".mushaf [data-w]").forEach(el => {
         const id = +el.dataset.w;
         el.classList.toggle("hid", rcHidden(id));
-        el.classList.toggle("cur", rc.next === id);
+        el.classList.toggle("cur", rc.cur === id);
         el.classList.toggle("err", rc.errs.has(id));
         el.classList.toggle("far", rc.far > rc.ptr && rc.far === id);
     });
 }
-function rcDockPaint() { const dock = $("#rcDock"); if (dock) dock.innerHTML = rcDockInner(); eyeSync(); }
+function rcDockPaint() {
+    const dock = $("#rcDock");
+    if (dock) {
+        // لا نستبدل الأزرار إلا إذا تغيّر شكلها فعلًا، وإلا ضاعت اللمسة التي تتزامن مع كلمة جديدة
+        const html = rcDockInner(), sig = html.replace(/<b id="rcTimer">[^<]*<\/b>/, "").replace(/<span id="rcStatus">[^<]*<\/span>/, "");
+        if (dock._sig !== sig) { dock.innerHTML = html; dock._sig = sig; }
+    }
+    eyeSync();
+}
 /** العين المغلقة تُخفي نص الصفحة كله في أي وقت؛ وأثناء التسميع أو الاستماع يتولّى إخفاءَ الكلمات تباعًا نظامُهما. */
 function eyeSync() { const el = document.querySelector(".reader-screen"); if (el) el.classList.toggle("eye-off", !!(state.rc.hide && !rcOn() && !AU.cur)); }
 /** مدة التسميع: تُحسب من أول ضغطة على الميكروفون، وتتوقف عند إيقافه وتكمل عند استئنافه. */
@@ -3227,7 +3305,7 @@ function rcDockInner() {
     const rcT = ui.rc, timer = on && rcT && rcT.wantListen ? `<div class="rc-chip${rcT.listening ? " is-run" : ""}" role="timer" aria-live="polite"><i></i><b id="rcTimer">${rcFmt(rcSeg(rcT))}</b><span id="rcStatus">${escapeHTML(rcT.status || "")}</span></div>` : "";
     const btn = (act, icon, label, extra = "", off = false) => `<button class="rc-btn${extra}" data-act="${act}" aria-label="${label}" title="${label}"${off ? " disabled" : ""}>${rcIcon(icon)}</button>`;
     return `${timer}<button class="rc-mic${live ? " is-live" : on ? " is-on" : ""}" data-act="rc-mic-main" aria-label="${live ? "إيقاف الاستماع" : "ابدأ التسميع"}">${rcIcon("mic")}</button>
-    <div class="rc-pill"><span class="rc-g">${btn("rc-hide", hide ? "eyeOff" : "eye", hide ? "إظهار الآيات" : "إخفاء الآيات", hide ? " is-on" : "")}${btn("rc-top", "redo", "من أول الصفحة", "", !on)}</span><i class="rc-sep"></i><span class="rc-g">${btn("rc-hint-word", "bulb", "تلميح كلمة", "", !on)}${btn("rc-hint-ayah", "ayah", "تلميح آية", "", !on)}</span><i class="rc-sep"></i>${btn("rc-options", "gear", "خيارات")}</div>${auPlayBtn()}`;
+    <div class="rc-pill"><span class="rc-g">${btn("rc-hide", hide ? "eyeOff" : "eye", hide ? "إظهار الآيات" : "إخفاء الآيات", hide ? " is-on" : "")}${btn("rc-top", "redo", "من أول الصفحة", "", !on)}</span><i class="rc-sep"></i><span class="rc-g">${btn("rc-hint-word", "bulb", "تلميح كلمة", "", !on)}${btn("rc-hint-ayah", "ayah", "إظهار الآية كاملة", "", !on)}</span><i class="rc-sep"></i>${btn("rc-options", "gear", "خيارات")}</div>${auPlayBtn()}`;
 }
 function rcControlsHTML() { return `<div class="rc-dock" id="rcDock">${rcDockInner()}</div>`; }
 
@@ -3240,6 +3318,16 @@ function rcOpen(startId) {
     rcSetNext();
     if (startId) setReaderPage(rcPageOfWord(first), false);
     render();
+}
+/** جلسة تتبع جديدة تمامًا: لا موضع سابق ولا علامات ولا بيانات تعرّف قديمة، وننتظر أول كلمة لنحدد الموضع. */
+function rcResetTracking() {
+    const rc = ui.rc; if (!rc || !rc.on) return;
+    rc.ptr = rcPageFirst(ui.readerPage) - 1; rc.far = 0; rc.locked = false; rc.pinned = false; rc.fresh = true;
+    rc.peek.clear(); rc.errs.clear(); rc.strict.clear(); rc.seen = new Map();
+    rc.missRun = 0; rc.jumped = 0; rc.relocating = 0; rc.heard = ""; rc.hold = 0; rc.done = rc.nAll || 0; rc._ayId = 0;
+    rcSetNext(); rcPaint(); rcDockPaint();
+    const h = $("#rcHeard"); if (h) h.textContent = "";
+    if (rc.wantListen) rcSay(hintsOn() ? "ابدأ القراءة من أي موضع، سأجده" : "أستمع…");
 }
 function rcStopMic() {
     const rc = ui.rc;
@@ -3269,7 +3357,7 @@ function rcCheckFlip() {
 }
 function rcAdvanceTo(id) {
     const rc = ui.rc, d = getRcData(), st = rc.stats, far = rc.far || 0;
-    rc.act = Date.now();
+    rc.act = Date.now(); rc.fresh = false;
     for (let w = rc.ptr + 1; w <= id && w <= d.total; w++) {
         if (d.norm[w - 1] === "") { rc.ptr = w; continue; }   // علامة نهاية آية
         if (w > far) {   // ما سبق قراءته في هذه الجلسة لا يُحتسب مرة ثانية
@@ -3289,7 +3377,7 @@ function rcAdvanceTo(id) {
 }
 /** الرجوع بالمؤشر إلى كلمة سابقة مع حفظ أبعد نقطة وصلتَ إليها (rc.far) لنكمل منها لاحقًا. */
 function rcJumpTo(q) {
-    const rc = ui.rc; rc.far = Math.max(rc.far || 0, rc.ptr); rc.ptr = q - 1; rc.missRun = 0; rc.act = Date.now(); rc.locked = true;
+    const rc = ui.rc; rc.far = Math.max(rc.far || 0, rc.ptr); rc.ptr = q - 1; rc.missRun = 0; rc.act = Date.now(); rc.locked = true; rc.fresh = true;
     for (const e of [...rc.errs]) if (e >= q) rc.errs.delete(e);
     rcSetNext();
     const p = rcPageOfWord(q);
@@ -3336,11 +3424,26 @@ function rcPreamble(tokens, k, final, e0) {
     return !final && atEnd(1) ? 0 : -1;
 }
 /** يبدأ القارئ من موضع آخر في الصفحة: ثلاث كلمات متتالية مطابقة أمام المؤشر. */
+/** أبعد كلمة يجوز الانتقال إليها: نهاية الآية التالية للآية المنتظَرة (لا نقفز آية كاملة دون قراءة). */
+function rcFwdLimit() {
+    const rc = ui.rc, M = getMushaf(), d = getRcData();
+    if (!rc.next) return 0;
+    const b = rcAyahRange(M.sura[rc.next], M.aya[rc.next])[1];
+    return b >= d.total ? b : rcAyahRange(M.sura[b + 1], M.aya[b + 1])[1];
+}
+/** أول كلمات الآية التالية للآية المنتظَرة. */
+function rcNextAyahHead(n) {
+    const rc = ui.rc, M = getMushaf(), d = getRcData(), out = [];
+    if (!rc.next) return out;
+    const b = rcAyahRange(M.sura[rc.next], M.aya[rc.next])[1];
+    for (let id = b + 1; id <= d.total && out.length < n; id++) { if (d.norm[id - 1]) out.push({ id, n: d.norm[id - 1] }); else if (out.length) break; }
+    return out;
+}
 function rcFindAhead(tokens, k) {
     const rc = ui.rc, d = getRcData(), t = tokens[k], end = rcPageLast(ui.readerPage);
     if (!tokens[k + 2] || t.length < 3) return 0;
     const nextWord = q => { let r = q + 1; while (r <= end && !d.norm[r - 1]) r++; return r; };
-    for (let q = (rc.next || 0) + 6; q <= end; q++) {
+    for (let q = (rc.next || 0) + 6, lim = Math.min(end, rcFwdLimit()); q <= lim; q++) {
         const n = d.norm[q - 1]; if (!n || !rcMatch(t, n)) continue;
         const r = nextWord(q), u = nextWord(r);
         if (d.norm[r - 1] && d.norm[u - 1] && rcMatch(tokens[k + 1], d.norm[r - 1]) && rcMatch(tokens[k + 2], d.norm[u - 1])) return q;
@@ -3349,10 +3452,12 @@ function rcFindAhead(tokens, k) {
 }
 function rcStep(tokens, k, final) {
     const rc = ui.rc, d = getRcData(), lenient = state.rc.mode !== "strict";
-    const ahead = []; for (let id = rc.next; id && id <= d.total && ahead.length < 6; id++) if (d.norm[id - 1]) ahead.push({ id, n: d.norm[id - 1] });
+    const ahead = [], lim = rcFwdLimit(); for (let id = rc.next; id && id <= Math.min(d.total, lim) && ahead.length < 6; id++) if (d.norm[id - 1]) ahead.push({ id, n: d.norm[id - 1] });
     let prevId = rc.ptr; while (prevId >= 1 && !d.norm[prevId - 1]) prevId--;
     const prevN = prevId >= 1 ? d.norm[prevId - 1] : "";   // آخر كلمة نُطقت
-    const e0 = ahead[0], t = tokens[k];
+    const e0 = ahead[0], t = tokens[k], M0 = getMushaf();
+    // أول كلمة من آية لم يُنطق منها شيء بعد: لا نقفز داخلها بكلمة مفردة (نشترط كلمتين متتابعتين صحيحتين)
+    const atAyStart = !!e0 && (!prevId || M0.aya[prevId] !== M0.aya[e0.id] || M0.sura[prevId] !== M0.sura[e0.id]);
     if (!e0) return tokens.length - k;
     const pre = rcPreamble(tokens, k, final, e0); if (pre >= 0) return pre;
     const single = rcSim(t, e0.n);
@@ -3363,28 +3468,30 @@ function rcStep(tokens, k, final) {
     if (ahead[1]) { const both = e0.n + ahead[1].n; if (rcSim(t, both) >= rcThr(Math.max(t.length, both.length))) { rc.missRun = 0; rcAdvanceTo(ahead[1].id); return 1; } }
     // قفز كلمة أو كلمتين: في الوضع المتساهل نعلّمهما خطأً ونكمل، وفي الصارم لا نتقدم
     for (let j = 1; j < ahead.length; j++) {
-        if ((final && t.length >= 3 && rcSim(t, ahead[j].n) >= rcThr(Math.max(t.length, ahead[j].n.length)) + 0.05 + 0.03 * (j - 1)) || (tokens[k + 1] && ahead[j + 1] && rcMatch(t, ahead[j].n) && rcMatch(tokens[k + 1], ahead[j + 1].n))) {
+        if ((final && t.length >= 3 && !atAyStart && M0.sura[ahead[j].id] === M0.sura[e0.id] && M0.aya[ahead[j].id] === M0.aya[e0.id] && rcSim(t, ahead[j].n) >= rcThr(Math.max(t.length, ahead[j].n.length)) + 0.05 + 0.03 * (j - 1)) || (tokens[k + 1] && ahead[j + 1] && rcMatch(t, ahead[j].n) && rcMatch(tokens[k + 1], ahead[j + 1].n))) {
             if (!lenient) break;
             for (let i = 0; i < j; i++) rc.errs.add(ahead[i].id);
             rc.missRun = 0; rcAdvanceTo(ahead[j].id); return 1;
         }
+    }
+    // بدأ الآية التالية دون أن ينطق شيئًا من الحالية: نتقدّم فقط إذا قرأ أول كلمات التالية قراءة صحيحة متتابعة
+    const nh = rcNextAyahHead(3);
+    if (lenient && nh.length >= 2 && nh[0].id > rc.next && tokens[k + nh.length - 1] && nh.every((w, i) => rcMatch(tokens[k + i], w.n))) {
+        for (let id = rc.next; id < nh[0].id; id++) if (d.norm[id - 1]) rc.errs.add(id);
+        rc.missRun = 0; rcAdvanceTo(nh[0].id); return 1;
     }
     const back = rcFindBack(tokens, k);
     if (back) { rcJumpTo(back); return rcStep(tokens, k, final); }
     const fwd = rcFindAhead(tokens, k);
     if (fwd) { rcJumpTo(fwd); return rcStep(tokens, k, final); }
     if (!final) return 0;   // قد يصحّح التعرّف نفسه في النتيجة التالية
-    // انتقل القارئ إلى موضع بعيد (سورة أخرى مثلًا): نبحث عن ثلاث كلمات متتالية في المصحف كله
-    if (!rc.relocating && tokens[k + 2]) {
-        const loc = rcLocate(tokens, k, true, 0);
-        if (loc && !loc.wait && Math.abs(loc.q - (rc.next || 0)) > 6) { rc.relocating = 1; rcRelocate(loc.q); const r = rcStep(tokens, k, final); rc.relocating = 0; return r; }
-    }
+    // تحديد الموضع يكون عند بدء كل جلسة تسميع فقط؛ بعدها نتبع التسلسل ولا نقفز بسبب تشابه الكلمات
     // تكرار لآخر كلمة نُطقت، أو كلمة زائدة تليها الكلمة الصحيحة: نتجاهلها دون احتساب خطأ
     if (prevN && rcMatch(t, prevN)) return 1;
     if (tokens[k + 1] && rcMatch(tokens[k + 1], e0.n)) return 1;
     if (++rc.missRun > 6) return tokens.length - k;   // ضجيج كثير: نهمل الباقي
-    if (lenient && rc.missRun >= 3) { rc.errs.add(e0.id); rcAdvanceTo(e0.id); rc.missRun = 0; }
-    else { rc.strict.add(e0.id); rcFlash(e0.id); }
+    // محاولة قريبة من الكلمة المنتظَرة تُحتسب خطأً؛ أما أي كلام ليس من المصحف فيُهمَل تمامًا ولا يحرّك المؤشر
+    if (rcSim(t, e0.n) >= 0.45) { rc.strict.add(e0.id); rcFlash(e0.id); }
     return 1;
 }
 
@@ -3407,12 +3514,11 @@ function rcPositions(tok) {
 }
 /** يبحث عن أفضل موضع تبدأ منه الكلمات المسموعة؛ يتجاوز حتى maxSkip كلمات مشوّهة من البداية. يعيد null أو {wait} أو {q, skip}. */
 function rcLocate(tokens, s, final, maxSkip) {
-    const d = getRcData(), rc = ui.rc, near = rc.next || 1;
+    const d = getRcData(), rc = ui.rc, near = rcPageFirst(ui.readerPage);
     for (let sk = 0; sk <= maxSkip; sk++) {
         const t = tokens.slice(s + sk, s + sk + 6), m = t.length;
         if (m < 3 && !(m === 2 && final && t[0].length + t[1].length >= 9)) break;
-        const need = m <= 3 ? m : m - 1;
-        let bestScore = 0, ties = [];
+        const need = m <= 3 ? m : m - 1, cands = [];
         for (const q of rcPositions(t[0])) {
             let pos = q, hit = 0, score = 0;
             for (let i = 0; i < m; i++) {
@@ -3421,13 +3527,19 @@ function rcLocate(tokens, s, final, maxSkip) {
                 if (rcMatch(t[i], d.norm[pos - 1])) { hit++; score += t[i].length; }
                 pos++;
             }
-            if (hit < need || score < 9) continue;
-            if (score > bestScore) { bestScore = score; ties = [q]; } else if (score === bestScore) ties.push(q);
+            if (hit >= need && score >= 9) cands.push({ q, hit, score });
         }
-        if (ties.length) {
-            if (ties.length > 1 && !final && m < 6) return { wait: true };
-            const q = ties.reduce((a, b) => Math.abs(b - near) < Math.abs(a - near) ? b : a);
-            return { q, skip: sk, score: bestScore };
+        if (cands.length) {
+            cands.sort((a, b) => b.hit - a.hit || b.score - a.score);
+            const best = cands[0], rival = cands.find(c => Math.abs(c.q - best.q) > m + 1);
+            // موضع آخر يشبه ما سمعناه: لا نثبّت الموضع حتى نتقدّم عليه بكلمتين مطابقتين على الأقل (أو تكتمل نافذة التحقق)
+            if (rival && best.hit - rival.hit < 2 && m < 6) return { wait: true };
+            let q = best.q;
+            if (rival && rival.hit === best.hit && rival.score === best.score) {   // تطابق تام: نرجّح الأقرب إلى الصفحة المعروضة
+                const tie = cands.filter(c => c.hit === best.hit && c.score === best.score);
+                q = tie.reduce((x, y) => Math.abs(y.q - near) < Math.abs(x.q - near) ? y : x).q;
+            }
+            return { q, skip: sk, score: best.score };
         }
     }
     return null;
@@ -3436,7 +3548,7 @@ function rcLocate(tokens, s, final, maxSkip) {
 function rcRelocate(q) {
     const rc = ui.rc, M = getMushaf(), st = rc.stats, jump = Math.abs(q - (rc.next || 0));
     rc.ptr = q - 1; rc.far = 0; rc.missRun = 0; rc.locked = true; rc.jumped = 1; rc.act = Date.now();
-    rc.peek.clear(); rc.errs.clear(); rc.strict.clear();
+    if (!rc.peek.has(q)) rc.peek.clear(); rc.errs.clear(); rc.strict.clear(); rc.fresh = true;   // الآية المكشوفة تبقى إن وقع الموضع داخلها
     if (st.ok + st.err + st.hint === 0) st.start = q;
     rcSetNext();
     const p = rcPageOfWord(q);
@@ -3452,17 +3564,9 @@ function rcTryLock(tokens, k, final) {
     const nb = rcPhrase(tokens, s, RC_BASM); if (nb >= 2) s += nb;
     const m = tokens.length - s;
     if (m < 2) return -1;
-    let hit = 0, id = rc.next || 1;
-    for (let i = 0; i < 3 && s + i < tokens.length; i++) {
-        while (id <= d.total && !d.norm[id - 1]) id++;
-        if (id > d.total) break;
-        if (rcMatch(tokens[s + i], d.norm[id - 1])) hit++;
-        id++;
-    }
-    if (hit >= 2) { rc.locked = true; return 0; }
     const loc = rcLocate(tokens, s, final, 2);
     if (loc && !loc.wait) { rcRelocate(loc.q); return (s - k) + loc.skip; }
-    if (!loc && (m >= 7 || (final && m >= 4))) { rc.locked = true; rcSay("لم أتعرّف على الموضع، سأتابع من الكلمة المنتظَرة", 3000); return 0; }
+    if (!loc && m >= 8) return 1;   // كلام ليس من المصحف: نُسقط أقدم كلمة ونواصل البحث دون تثبيت موضع خاطئ
     return -1;
 }
 
@@ -3479,7 +3583,7 @@ function rcOnResult(ev) {
         }
         all.push(...t); if (res.isFinal) finalCount = all.length; prev = full;
     }
-    rc.heard = last.trim();
+    rc.heard = last.trim(); rc.nAll = all.length;
     const heard = $("#rcHeard"); if (heard) heard.textContent = rc.heard;
     rc.lastSound = Date.now();
     if ((rc.done || 0) > all.length) rc.done = all.length;
@@ -3499,7 +3603,10 @@ function rcOnResult(ev) {
         k += used; rc.done = k;
     }
     if (finalCount >= all.length && rc.locked) rc.done = all.length;
-    if (ui.rc === rc) rcSay(rc.locked ? "سمعتُ: " + all.slice(-4).join(" ") : "أستمع وأبحث عن موضعك…");
+    if (ui.rc === rc) {   // نعرض ما سمعه الجهاز كما هو، دون كلمة «سمعتُ»
+        const shown = rc.heard.split(/\s+/).filter(Boolean).slice(-5).join(" ");
+        rcSay(shown || (rc.locked ? "أستمع…" : "أستمع وأبحث عن موضعك…"));
+    }
 }
 
 /* --- الميكروفون: يبدأ ← يبحث عن موضعك ← يتابع. الحالة ظاهرة دائمًا في شريط الحالة --- */
@@ -3516,7 +3623,7 @@ function rcStartRec() {
     const rec = new SR_CLASS(), t0 = Date.now();
     rec.lang = state.rc.lang || "ar-SA"; rec.continuous = true; rec.interimResults = true; rec.maxAlternatives = 1;
     const fail = msg => { rcPauseClock(rc); rc.wantListen = false; rc.listening = false; rc.rec = null; rcDockPaint(); if (msg) toast(msg); };
-    rec.onstart = () => { rc.listening = true; rc.seen = new Map(); rc.done = 0; rc.lastSound = Date.now(); rcDockPaint(); rcSay(rc.locked ? "أستمع…" : "ابدأ القراءة من أي موضع، سأجده"); };
+    rec.onstart = () => { rc.listening = true; rc.seen = new Map(); rc.done = 0; rc.lastSound = Date.now(); rcDockPaint(); rcSay(rc.locked || !hintsOn() ? "أستمع…" : "ابدأ القراءة من أي موضع، سأجده"); };
     rec.onresult = rcOnResult;
     rec.onerror = e => {
         const er = e.error;
@@ -3584,8 +3691,8 @@ function rcStartListening() {
     const rc = ui.rc;
     if (!rc || !rc.on) return;
     durHide();   // بطاقة المدة السابقة تختفي عند بدء جلسة جديدة
-    const page = rcPageOfWord(rc.next || 1);
-    if (page !== ui.readerPage) setReaderPage(page);   // نعود لصفحة الكلمة التالية
+    if (rc.pinned) { const page = rcPageOfWord(rc.next || 1); if (page !== ui.readerPage) setReaderPage(page); }
+    else rcResetTracking();   // كل تشغيل جديد للميكروفون = جلسة تتبع نظيفة تمامًا
     if (!rc.pinned) rc.locked = false;   // كل تشغيل: نسمع أول كلامك ونحدد موضعك ثم نتتبع
     rc.pinned = false; rc.segId = (rc.segId || 0) + 1; rc.quick = 0; rc.hold = 0;
     rc.status = "جارٍ تشغيل الميكروفون…"; rc.lastSound = Date.now();
@@ -3620,6 +3727,7 @@ function rcHintWord() {
 function rcHintAyah() {
     const rc = ui.rc, M = getMushaf();
     if (!rc.next) return;
+    if (!state.rc.hide) { tip("الآيات ظاهرة الآن؛ فعّل الإخفاء (العين) ليكشف لك هذا الزر الآية"); return; }
     const [a, b] = rcAyahRange(M.sura[rc.next], M.aya[rc.next]);
     for (let id = Math.max(a, rc.ptr + 1); id <= b; id++) rc.peek.add(id);
     rcPaint();
@@ -3737,7 +3845,8 @@ function permissionsHTML() {
 function tajweedHTML() {
     const on = state.tj === 2 ? 2 : 0;
     const mode = (v, name, hint) => `<button class="theme-card${on === v ? " is-active" : ""}" data-act="set-textmode" data-val="${v}" aria-pressed="${on === v}"><span class="theme-swatch tj-sw tj-${v}"></span><b>${name}</b><small>${hint}</small></button>`;
-    return `<h2>نمط النص في المصحف</h2><p class="muted">«عادي» بالخط العثماني. «تجويد ملوّن» يلوّن أحكام التجويد في كل صفحات المصحف ويعمل مع جميع النسخ.</p>
+    const quick = `<button class="tj-quick${on === 2 ? " is-on" : ""}" data-act="set-textmode" data-val="${on === 2 ? 0 : 2}" aria-pressed="${on === 2}"><span><b>الوضع المجود</b><small>${on === 2 ? "مفعّل — اضغط للعودة إلى المصحف العادي" : "اضغط للتحويل مباشرة إلى المصحف المجود"}</small></span><i class="sw${on === 2 ? " sw-on" : ""}" aria-hidden="true"><i></i></i></button>`;
+    return quick + `<h2>نمط النص في المصحف</h2><p class="muted">«عادي» بالخط العثماني. «تجويد ملوّن» يلوّن أحكام التجويد في كل صفحات المصحف ويعمل مع جميع النسخ.</p>
     <div class="theme-grid">${mode(0, "عادي", "الخط العثماني")}${mode(2, "تجويد ملوّن", "كل المصحف")}</div>`;
 }
 
@@ -3873,7 +3982,7 @@ function render() {
     memo = {};
     applyFonts();
     const editing = ui.view === "editor";
-    applyTheme();
+    applyTheme(); applyHints();
     document.body.classList.toggle("is-editing", editing);
     document.body.classList.toggle("reader-mode", ui.view === "reader");
     $("#app").classList.toggle("is-editing", editing);
@@ -4057,7 +4166,7 @@ const ACTIONS = {
     "perm-persist": async () => { let ok = false; try { ok = await navigator.storage.persist(); } catch (err) { } toast(ok ? "تم تفعيل التخزين الدائم" : "لم يمنح المتصفح التخزين الدائم"); await permRefresh(); },
     "rc-close": () => rcClose(),
     "rc-mic": () => rcToggleMic(),
-    "rc-hide": () => { state.rc.hide = state.rc.hide ? 0 : 1; saveState(); rcPaint(); rcDockPaint(); },
+    "rc-hide": () => { state.rc.hide = state.rc.hide ? 0 : 1; saveState(); if (state.rc.hide && rcOn()) rcResetTracking(); rcPaint(); rcDockPaint(); },
     "rc-hint-word": () => rcHintWord(),
     "rc-hint-ayah": () => rcHintAyah(),
     "rc-options": () => rcOptions(),
@@ -4067,7 +4176,7 @@ const ACTIONS = {
     "rc-mic-main": () => { if (!rcOn()) { rcOpen(); if (SR_CLASS) rcToggleMic(); } else { ui.rc.act = Date.now(); rcToggleMic(); } },
     "rc-end": () => { closeModal(); rcClose(); },
     "rc-top": () => { if (rcOn()) rcJumpTo(rcPageFirst(ui.readerPage)); },
-    "rc-start-here": ({ s, a }) => { closeModal(); if (rcOn()) rcClose(true); rcOpen(rcAyahRange(+s, +a)[0]); if (mutGroupsOfAyah(+s, +a).length) toast("تنبيه: لهذه الآية متشابهات، سنتابعك من موضعها هذا"); },
+    "rc-start-here": ({ s, a }) => { closeModal(); if (rcOn()) rcClose(true); rcOpen(rcAyahRange(+s, +a)[0]); if (mutGroupsOfAyah(+s, +a).length) tip("تنبيه: لهذه الآية متشابهات، سنتابعك من موضعها هذا"); },
     "rc-save-review": () => rcSaveReview(),
     "open-surahs": () => openSurahList(),
     "open-juz": () => openJuzList(),
@@ -4361,7 +4470,7 @@ function auPlay(from, to) {
 function auToggle() {
     if (auActive()) { AU.el.paused ? AU.el.play() : AU.el.pause(); return; }
     auPlay(pageStart(ui.readerPage), null);
-    toast(`القارئ: ${auRec().name} (${auRec().style}) — اضغط مطوّلًا على زر التشغيل للإعدادات`);
+    tip(`القارئ: ${auRec().name} (${auRec().style}) — اضغط مطوّلًا على زر التشغيل للإعدادات`);
 }
 function auJump(f) {
     if (!AU.cur) return;
@@ -4459,7 +4568,7 @@ function tfEmpty(id, sura, aya) {
 async function openAsbab() {
     const arr = await tfLoad("asbab", "tf-asbab"), by = {};
     arr.forEach((t, i) => { if (t) { const [s, a] = wsAyahOf(i); (by[s] = by[s] || []).push(a); } });
-    showModal(`<h3>أسباب النزول</h3><p class="muted">اضغط على رقم الآية لقراءة سبب نزولها. المصدر: «المحرر في أسباب نزول القرآن» لخالد المزيني.</p>
+    showModal(`<h3>أسباب النزول</h3><p class="muted"><span class="hint-msg">اضغط على رقم الآية لقراءة سبب نزولها.</span> المصدر: «المحرر في أسباب نزول القرآن» لخالد المزيني.</p>
         ${Object.keys(by).map(s => `<div class="as-sura"><b>${SURAHS[s - 1].name}</b><div class="ws-refs">${by[s].map(a => `<button class="ws-ref" data-act="as-open" data-val="${s}:${a}">${a}</button>`).join("")}</div></div>`).join("")}
         <button style="width:100%" data-act="close-modal">إغلاق</button>`);
 }
@@ -4474,7 +4583,7 @@ async function qrBody(sura, aya) {
     const d = await tfLoad("qr", "qr-data"), e = d.d[ayahIndex(sura, aya)];
     const src = '<p class="muted">القراءات العشر المتواترة، من موسوعة القرآن (quranpedia.net).</p>';
     if (!e) return `<p class="empty">لا اختلاف في القراءات العشر لهذه الآية في هذا المصدر؛ يقرؤها الجميع كما في رواية حفص.</p>${src}`;
-    return `<p class="muted">اضغط على اسم الراوي لتسمع الآية بروايته.</p>${e.map(([word, groups]) => `<div class="qr-word"><h4>${escapeHTML(word)}</h4>${groups.map(([text, ids]) => `<div class="qr-g"><p>${escapeHTML(text)}</p>${qrChips(d, ids)}</div>`).join("")}</div>`).join("")}${src}`;
+    return `<p class="muted hint-msg">اضغط على اسم الراوي لتسمع الآية بروايته.</p>${e.map(([word, groups]) => `<div class="qr-word"><h4>${escapeHTML(word)}</h4>${groups.map(([text, ids]) => `<div class="qr-g"><p>${escapeHTML(text)}</p>${qrChips(d, ids)}</div>`).join("")}</div>`).join("")}${src}`;
 }
 function spBody(sura) {
     const d = TF.sp || (TF.sp = auJSON("sp-data")), [name, purpose, themes] = d.s[sura - 1];
@@ -4530,7 +4639,7 @@ function openHifzSheet(s, from, to) {
     const n = SURAHS[s - 1].ayat, opts = sel => Array.from({ length: n }, (_, i) => `<option value="${i + 1}"${i + 1 === sel ? " selected" : ""}>${i + 1}</option>`).join("");
     const rep = [3, 5, 7, 10, 20].includes(AU.rep) ? AU.rep : 5;
     showModal(`<h3>وضع الحفظ — سورة ${SURAHS[s - 1].name}</h3>
-        <p class="muted">١) تستمع إلى كل آية عدة مرات ← ٢) تسمّع من حفظك (اضغط العين لإخفاء الآيات إن أردت) ← ٣) تسجّل حفظك.</p>
+        <p class="muted hint-msg">١) تستمع إلى كل آية عدة مرات ← ٢) تسمّع من حفظك (اضغط العين لإخفاء الآيات إن أردت) ← ٣) تسجّل حفظك.</p>
         <div class="au-range"><span>من الآية</span><select id="hfFrom">${opts(from)}</select><span>إلى</span><select id="hfTo">${opts(to)}</select></div>
         <label>تكرار كل آية<select id="hfRep">${auOpts([[3, "٣ مرات"], [5, "٥ مرات"], [7, "٧ مرات"], [10, "١٠ مرات"], [20, "٢٠ مرة"]], rep)}</select></label>
         <label>القارئ<select id="auRec">${auOpts(RECITERS.map(r => [r.id, `${r.name} (${r.style})`]), AU.rec)}</select></label>
@@ -4539,7 +4648,7 @@ function openHifzSheet(s, from, to) {
 }
 function hifzDone(h) {
     ui.ayah = [h.s, h.from];
-    showModal(`<h3>أتممت الاستماع</h3><p>سورة ${SURAHS[h.s - 1].name} — الآيات ${h.from}–${h.to}، كل آية ${h.rep} مرات.</p><p class="muted">الآن سمّع من حفظك، واضغط العين إن أردت إخفاء الآيات، ثم سجّل حفظك.</p>
+    showModal(`<h3>أتممت الاستماع</h3><p>سورة ${SURAHS[h.s - 1].name} — الآيات ${h.from}–${h.to}، كل آية ${h.rep} مرات.</p><p class="muted hint-msg">الآن سمّع من حفظك، واضغط العين إن أردت إخفاء الآيات، ثم سجّل حفظك.</p>
         <button class="btn-primary" style="width:100%" data-act="hf-recite" data-s="${h.s}" data-a="${h.from}">ابدأ التسميع</button>
         <button style="width:100%" data-act="hf-log" data-id="${h.s}">سجّل حفظ الآيات ${h.from}–${h.to}</button>
         <button style="width:100%" data-act="hf-again" data-s="${h.s}" data-from="${h.from}" data-to="${h.to}">أعد الاستماع</button>
@@ -4570,13 +4679,15 @@ Object.assign(ACTIONS, {
 queueMicrotask(() => { if (state.tj === 2) tjxLoad(); });   // بعد اكتمال تهيئة الملف
 /** معنى ألوان التجويد داخل قائمة المصحف (☰): سطر للمدود وسطر لباقي الأحكام، واضغط على أي لون لشرحه. */
 function tjMenuLegend() {
-    if (!state.tj) return "";
+    const on = state.tj === 2;
+    const sw = `<button class="tj-quick mm-tj-sw${on ? " is-on" : ""}" role="switch" aria-checked="${on}" data-act="mm-tj-toggle"><span><b>الوضع المجود</b><small>${on ? "مفعّل — اضغط للعودة إلى المصحف العادي" : "اضغط للتحويل إلى المصحف المجود"}</small></span><i class="sw${on ? " sw-on" : ""}" aria-hidden="true"><i></i></i></button>`;
+    if (!on) return sw;
     const chips = names => TJ_RULES.filter(r => names.includes(r[0])).map(([n, label]) => `<button class="tj-chip" data-act="tj-chip" data-val="${n}"><i class="tj-${n}">●</i>${label}</button>`).join("");
     const madd = TJ_RULES.filter(r => r[0].startsWith("madda_")).map(r => r[0]);
     const other = TJ_RULES.filter(r => !r[0].startsWith("madda_")).map(r => r[0]);
-    return `<div class="mm-tj"><b>معنى ألوان التجويد</b><span class="tj-chips-t">المدود</span><div class="tj-chips">${chips(madd)}</div><span class="tj-chips-t">باقي الأحكام</span><div class="tj-chips">${chips(other)}</div><small class="muted">اضغط على أي لون لشرحه</small></div>`;
+    return sw + `<details class="mm-tj mm-fold"><summary>ألوان التجويد وعلامات المد</summary><span class="tj-chips-t">المدود</span><div class="tj-chips">${chips(madd)}</div><span class="tj-chips-t">باقي الأحكام</span><div class="tj-chips">${chips(other)}</div><small class="muted hint-msg">اضغط على أي لون لشرحه</small></details>`;
 }
-Object.assign(ACTIONS, { "tj-chip": ({ val }) => { const r = TJ_RULES.find(x => x[0] === val); if (r) toast(`${r[1]}: ${r[2]}`); } });
+Object.assign(ACTIONS, { "mm-tj-toggle": () => { const v = state.tj === 2 ? 0 : 2; state.tj = v; saveState(); if (v === 2) tjxLoad(); render(); openMushafMenu(); }, "set-hints": () => { state.hints = !hintsOn(); saveState(); applyHints(); render(); }, "tj-chip": ({ val }) => { const r = TJ_RULES.find(x => x[0] === val); if (r) toast(`${r[1]}: ${r[2]}`); } });
 
 try {
     const o = JSON.parse(localStorage.getItem("hq_tf") || "{}");
@@ -4619,7 +4730,7 @@ async function wsBody(sura, aya) {
         const sid = d.ids[d.offs[i] + k] || 0, c = sid ? wsOcc(d, sid).length : 0;
         rows.push(`<button class="ws-row"${sid ? ` data-act="ws-open" data-val="${sid}"` : " disabled"}><span class="ws-w">${M.words[f - 1 + k]}</span><span class="ws-s">${sid ? d.st[sid - 1] : "—"}</span><span class="ws-c">${c ? c + " آية" : ""}</span></button>`);
     }
-    return `<p class="muted">اضغط على الكلمة لترى الآيات التي ورد فيها أصلها.</p><div class="ws-list">${rows.join("")}</div>`;
+    return `<p class="muted hint-msg">اضغط على الكلمة لترى الآيات التي ورد فيها أصلها.</p><div class="ws-list">${rows.join("")}</div>`;
 }
 async function wsOpen(sid, shown = 60) {
     const d = await tfLoad("ws", "ws-data"), occ = wsOcc(d, +sid);
@@ -5058,7 +5169,7 @@ document.addEventListener("beforeinput", e => { const el = e.target; if (ui.view
 
 /* ===== مدة الجلسة: تظهر عند الإيقاف (كل تشغيل/إيقاف مدة مستقلة، وتتحمل ساعات) ===== */
 (function () {
-    let timer = 0;
+    let timer = 0, fadeT = 0, armT = 0, offTap = null;
     const two = n => String(n).padStart(2, "0");
     function words(ms) {
         const t = Math.floor(ms / 1000), h = Math.floor(t / 3600), m = Math.floor(t % 3600 / 60), s = t % 60;
@@ -5066,7 +5177,17 @@ document.addEventListener("beforeinput", e => { const el = e.target; if (ui.view
         if (m) return m + " دقيقة" + (s ? " و " + s + " ثانية" : "");
         return s + " ثانية";
     }
-    window.durHide = function () { clearTimeout(timer); const c = document.getElementById("durCard"); if (c) c.remove(); };
+    window.durHide = function () {
+        clearTimeout(timer); clearTimeout(fadeT); clearTimeout(armT);
+        if (offTap) { offTap(); offTap = null; }
+        const c = document.getElementById("durCard"); if (c) c.remove();
+    };
+    /** اختفاء ناعم ثم إزالة البطاقة. */
+    function durFade() {
+        const c = document.getElementById("durCard"); if (!c) return;
+        if (offTap) { offTap(); offTap = null; }
+        c.classList.add("out"); fadeT = setTimeout(window.durHide, 260);
+    }
     window.durShow = function (ms) {
         window.durHide();
         if (!(ms >= 1000)) return;
@@ -5075,7 +5196,13 @@ document.addEventListener("beforeinput", e => { const el = e.target; if (ui.view
         el.id = "durCard"; el.className = "dur-card"; el.dataset.act = "dur-close"; el.setAttribute("role", "status");
         el.innerHTML = `<small>مدة هذه الجلسة</small><b>${h ? h + ":" + two(m) : m}:${two(s)}</b><span>${words(ms)}</span>`;
         document.body.appendChild(el);
-        timer = setTimeout(window.durHide, 15000);
+        timer = setTimeout(durFade, 10000);   // تختفي وحدها بعد 10 ثوانٍ
+        // وتختفي بأول لمسة في أي مكان من الشاشة (نؤخّر التسجيل قليلًا كي لا تلتقط لمسة الإيقاف نفسها)
+        armT = setTimeout(() => {
+            const onTap = () => durFade();
+            document.addEventListener("pointerdown", onTap, { capture: true, once: true });
+            offTap = () => document.removeEventListener("pointerdown", onTap, { capture: true });
+        }, 350);
     };
     Object.assign(ACTIONS, { "dur-close": () => window.durHide() });
 })();
@@ -5094,6 +5221,47 @@ document.addEventListener("beforeinput", e => { const el = e.target; if (ui.view
     }
     calibrate();
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(calibrate);
+})();
+
+/* ===== توسيط رقم الصفحة: نقيس الحبر الفعلي لكل رقم داخل عنصر تجريبي مخفي (نفس الخط والتنسيق) ونزيحه ليقع في مركز الدائرة تمامًا ===== */
+(function () {
+    const cv = document.createElement("canvas").getContext("2d"), cache = new Map();
+    let probe = null;
+    function dyFor(el) {
+        const cs = getComputedStyle(el), txt = el.textContent.trim(), px = parseFloat(cs.fontSize) || 14, BIG = 400;
+        const key = [cs.fontStyle, cs.fontWeight, px, cs.fontFamily, txt].join("|");
+        if (cache.has(key)) return cache.get(key);
+        let dy = 0;
+        try {
+            if (!probe) {
+                probe = document.createElement("div");
+                probe.className = "page"; probe.setAttribute("aria-hidden", "true");
+                probe.style.cssText = "position:fixed;left:-9999px;top:0;width:60px;height:60px;visibility:hidden;pointer-events:none";
+                probe.innerHTML = '<span class="pnum" style="position:absolute;left:0;right:auto;top:0;bottom:auto"><span class="pn-t" style="transform:none"></span></span>';
+                document.body.appendChild(probe);
+            }
+            const pn = probe.firstChild, t = pn.firstChild;
+            t.textContent = txt; t.style.fontFamily = cs.fontFamily; t.style.fontWeight = cs.fontWeight; t.style.fontSize = px + "px";
+            pn.style.fontFamily = cs.fontFamily; pn.style.fontWeight = cs.fontWeight; pn.style.fontSize = px + "px";
+            cv.font = `${cs.fontStyle} ${cs.fontWeight} ${BIG}px ${cs.fontFamily}`;
+            const m = cv.measureText(txt), k = px / BIG;
+            if (m.fontBoundingBoxAscent != null && m.actualBoundingBoxAscent != null) {
+                const mk = document.createElement("i"); mk.style.cssText = "display:inline-block;width:0;height:0";
+                t.appendChild(mk);   // قاعدة هذا العنصر تقع على خط الأساس الفعلي كما رسمه المتصفح (يقرّب الارتفاعات لأعداد صحيحة)
+                const baseline = mk.getBoundingClientRect().bottom, box = pn.getBoundingClientRect();
+                const inkCenter = baseline - ((m.actualBoundingBoxAscent - m.actualBoundingBoxDescent) / 2) * k;   // مركز الحبر
+                dy = box.top + box.height / 2 - inkCenter;
+            }
+        } catch (err) { dy = 0; }
+        if (!isFinite(dy) || Math.abs(dy) > 6) dy = 0;
+        cache.set(key, dy);
+        return dy;
+    }
+    let raf = 0;
+    const run = () => document.querySelectorAll(".pnum .pn-t").forEach(el => el.style.setProperty("--pn-dy", dyFor(el).toFixed(2) + "px"));
+    new MutationObserver(() => { cancelAnimationFrame(raf); raf = requestAnimationFrame(run); }).observe(document.body, { childList: true, subtree: true });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { cache.clear(); run(); });
+    run();
 })();
 
 /* ===== 11. التشغيل ===== */
